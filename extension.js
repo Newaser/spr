@@ -1,9 +1,9 @@
 import { lib, game, ui, get, ai, _status } from '../../noname.js'
 const INFO = {
   author: 'Newaser',
-  version: '2.2.1',
+  version: '2.3.0',
   groupId: '929407593',
-  lastUpdated: '2025-05-03',
+  lastUpdated: '2025-05-30',
   minNoname: '1.10.5',
   adaptedExts: ['千幻聆音', '十周年UI'],
 }
@@ -90,6 +90,7 @@ const TEXTS = {
     spr_chenwudongxi: '殒身不恤',
     spr_caochun: '锐兵坚甲',
     spr_wangtaowangyue: '春悦桃秾',
+    spr_zhangji: '武威雄豪',
   },
   skininfo: {
     spr_machao: {
@@ -428,6 +429,26 @@ const TEXTS = {
         }
       },
     },
+    spr_zhangji: {
+      name: 'spr_zhangji',
+      origin: {
+        skill: {
+          die: {
+            content: '希望绣儿……可以继承我的大志……'
+          },
+          spr_lueming: {
+            content:
+              `哈哈，金银财宝，全都带走！
+              <br>看到的抢到的，就都是军饷！`
+          },
+          spr_tunjun: {
+            content:
+              `诸君在此扎营，等待出手的机会。
+              <br>隐忍一时，到时候来票大的！`
+          },
+        }
+      },
+    },
   },
   translate: {
     character: {
@@ -447,6 +468,7 @@ const TEXTS = {
         spr_chenwudongxi: '星陈武董袭',
         spr_caochun: '星曹纯',
         spr_wangtaowangyue: '星王桃王悦',
+        spr_zhangji: '星张济',
       },
       skill: {
         // 星马超 | spr_machao
@@ -666,6 +688,19 @@ const TEXTS = {
         spr_tongzheng: '同征',
         spr_tongzheng_info:
           '每回合限一次，当一名角色进入濒死状态时，当前回合角色可以令你摸两张牌并回复1点体力。',
+
+
+        // 星张济 | spr_zhangji
+        spr_lueming: '掠命',
+        spr_lueming_info:
+          `出牌阶段限一次，你可以令一名其他角色选择一项：视为你对其使用一张【乘火打劫】；
+          视为其对你使用一张伤害值+1的【决斗】。`,
+
+        spr_tunjun: '屯军',
+        spr_tunjun_info:
+          `出牌阶段限一次，你可以明置任意张【杀】并令之不计入手牌上限，然后你摸等量的牌。
+          当你死亡时，你可以将你明置的【杀】交给一名角色。`,
+        visible_spr_tunjun: '屯军',
       },
       other: {
         spr1: '☆SPR·其一',
@@ -831,6 +866,12 @@ game.import('extension', function (lib, game, ui, get, ai, _status) {
               3,
               ['spr_shuangbi', 'spr_tongzheng'],
             ],
+            spr_zhangji: [
+              'male',
+              'qun',
+              4,
+              ['spr_lueming', 'spr_tunjun'],
+            ],
           },
           characterIntro: TEXTS.characterIntro,
           characterTitle: TEXTS.characterTitle,
@@ -844,7 +885,7 @@ game.import('extension', function (lib, game, ui, get, ai, _status) {
                 'spr_zhangliao', 'spr_luoxian', 'spr_chendao', 'spr_chengui',
                 'spr_chenwudongxi', 'spr_caochun', 'spr_wangtaowangyue',
               ],
-              sprTest: [],
+              sprTest: ['spr_zhangji'],
             }
           },
           skill: {
@@ -3791,6 +3832,141 @@ game.import('extension', function (lib, game, ui, get, ai, _status) {
                       target.hasSkill('spr_tongzheng') &&
                       !target.isTempBanned('spr_tongzheng')
                     ) return [0, 2]
+                  },
+                },
+              },
+            },
+
+            // 星张济 | spr_zhangji
+            spr_lueming: {
+              audio: 'ext:☆SPR/audio/spr_zhangji:2',
+              enable: 'phaseUse',
+              usable: 1,
+              ai: {
+                order: 6,
+                result: {
+                  target: -1.5,
+                },
+              },
+              filter(event, player) {
+                return game.hasPlayer(i => lib.skill['spr_lueming'].filterTarget(null, player, i))
+              },
+              selectTarget: 1,
+              filterTarget(card, player, target) {
+                return player != target &&
+                  (player.canUse('chenghuodajie', target) || target.canUse('juedou', player))
+              },
+              content() {
+                'step 0'
+                const
+                  list = [],
+                  control1 = `视为${get.translation(player)}对你使用一张【趁火打劫】`,
+                  control2 = `视为你对${get.translation(player)}使用一张伤害值+1的【决斗】`
+
+                if (player.canUse('chenghuodajie', target)) {
+                  list.push(control1)
+                }
+                if (target.canUse('juedou', player)) {
+                  list.push(control2)
+                }
+                target
+                  .chooseControlList('掠命：你须选择一项', list)
+                  .set('ai', () => {
+                    if (list.includes(control1)) {
+                      return list.indexOf(control1)
+                    }
+                    return list.indexOf(control2)
+                  })
+                event.list = list
+                'step 1'
+                if (event.list[result.index].endsWith('【趁火打劫】')) {
+                  player.useCard(
+                    { name: 'chenghuodajie', isCard: true },
+                    target
+                  )
+                } else {
+                  target.useCard(
+                    { name: 'juedou', isCard: true, spr_lueming: true },
+                    player
+                  )
+                }
+              },
+              group: 'spr_lueming_damage',
+              subSkill: {
+                damage: {
+                  trigger: { source: "damageBegin1" },
+                  sourceSkill: "spr_lueming",
+                  sub: true,
+                  filter(event) {
+                    return event.card && event.card.spr_lueming === true
+                  },
+                  charlotte: true,
+                  forced: true,
+                  content() {
+                    trigger.num++
+                  },
+                  ai: {
+                    damageBonus: true,
+                  },
+                },
+              },
+            },
+            spr_tunjun: {
+              audio: 'ext:☆SPR/audio/spr_zhangji:2',
+              enable: 'phaseUse',
+              usable: 1,
+              lose: false,
+              discard: false,
+              selectCard: [1, Infinity],
+              filterCard(card, player) {
+                return card.name == 'sha' && !get.is.shownCard(card)
+              },
+              content() {
+                player.addShownCards(cards, 'visible_spr_tunjun')
+                player.draw(cards.length)
+              },
+              mod: {
+                ignoredHandcard(card, player) {
+                  if (card.hasGaintag('visible_spr_tunjun')) return true
+                },
+                cardDiscardable(card, player, name) {
+                  if (name == 'phaseDiscard' && card.hasGaintag('visible_spr_tunjun')) return false
+                },
+              },
+              ai: {
+                order() { return get.order({ name: 'sha' }) + 0.1 },
+                result: {
+                  player: 1,
+                },
+              },
+              group: 'spr_tunjun_die',
+              subSkill: {
+                die: {
+                  sub: true,
+                  sourceSkill: 'spr_tunjun',
+                  trigger: {
+                    player: 'die',
+                  },
+                  forceDie: true,
+                  direct: true,
+                  content() {
+                    'step 0'
+                    player
+                      .chooseTarget(`###${get.prompt('spr_tunjun')}###将你明置的【杀】交给一名角色`, function (card, player, target) {
+                        return player != target
+                      })
+                      .set('forceDie', true)
+                      .set('ai', function (target) {
+                        return get.attitude(get.player(), target)
+                      })
+                    'step 1'
+                    if (result.bool) {
+                      const target = result.targets[0]
+                      const toGive = player.getCards('h', i => get.is.shownCard(i) && i.name == 'sha')
+                      player.logSkill('spr_tunjun_die', target)
+                      player.line(target, 'green')
+                      player.give(toGive, target)
+                    }
                   },
                 },
               },
