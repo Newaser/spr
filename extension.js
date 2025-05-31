@@ -434,7 +434,7 @@ const TEXTS = {
       origin: {
         skill: {
           die: {
-            content: '希望绣儿……可以继承我的大志……'
+            content: '迷茫半生，终是命丧遭乱……'
           },
           spr_lueming: {
             content:
@@ -444,7 +444,8 @@ const TEXTS = {
           spr_tunjun: {
             content:
               `诸君在此扎营，等待出手的机会。
-              <br>隐忍一时，到时候来票大的！`
+              <br>隐忍一时，到时候来票大的！
+              <br>希望绣儿……可以继承我的大志……`
           },
         }
       },
@@ -693,14 +694,14 @@ const TEXTS = {
         // 星张济 | spr_zhangji
         spr_lueming: '掠命',
         spr_lueming_info:
-          `出牌阶段限一次，你可以令一名其他角色选择一项：视为你对其使用一张【乘火打劫】；
-          视为其对你使用一张伤害值+1的【决斗】。`,
+          `出牌阶段限一次，你可以令一名手牌数少于你的角色选择一项：
+          视为你对其使用一张【乘火打劫】；视为对你使用一张伤害值+1的【决斗】。`,
 
         spr_tunjun: '屯军',
         spr_tunjun_info:
-          `出牌阶段限一次，你可以明置任意张【杀】并令之不计入手牌上限，然后你摸等量的牌。
-          当你死亡时，你可以将你明置的【杀】交给一名角色。`,
-        visible_spr_tunjun: '屯军',
+          `出牌阶段限一次，你可以将至多两张【杀】置于武将上
+          （称为“军”，可如手牌般使用或打出）并摸等量的牌。
+          当你死亡时，你可以令一名其他角色获得所有“军”。`,
       },
       other: {
         spr1: '☆SPR·其一',
@@ -3853,9 +3854,10 @@ game.import('extension', function (lib, game, ui, get, ai, _status) {
               },
               selectTarget: 1,
               filterTarget(card, player, target) {
-                return player != target &&
+                return target.countCards('h') < player.countCards('h') &&
                   (player.canUse('chenghuodajie', target) || target.canUse('juedou', player))
               },
+              prompt: '令一名手牌比你少的角色选择视为被你【趁火打劫】或对你使用伤害+1的【决斗】',
               content() {
                 'step 0'
                 const
@@ -3870,7 +3872,7 @@ game.import('extension', function (lib, game, ui, get, ai, _status) {
                   list.push(control2)
                 }
                 target
-                  .chooseControlList('掠命：你须选择一项', list)
+                  .chooseControlList('掠命：你须选择一项', list, true)
                   .set('ai', () => {
                     if (list.includes(control1)) {
                       return list.indexOf(control1)
@@ -3894,16 +3896,16 @@ game.import('extension', function (lib, game, ui, get, ai, _status) {
               group: 'spr_lueming_damage',
               subSkill: {
                 damage: {
-                  trigger: { source: "damageBegin1" },
+                  trigger: { global: "useCard" },
                   sourceSkill: "spr_lueming",
                   sub: true,
-                  filter(event) {
-                    return event.card && event.card.spr_lueming === true
+                  filter(event, player) {
+                    return event.card.spr_lueming === true
                   },
                   charlotte: true,
                   forced: true,
                   content() {
-                    trigger.num++
+                    trigger.baseDamage++
                   },
                   ai: {
                     damageBonus: true,
@@ -3912,62 +3914,122 @@ game.import('extension', function (lib, game, ui, get, ai, _status) {
               },
             },
             spr_tunjun: {
-              audio: 'ext:☆SPR/audio/spr_zhangji:2',
-              enable: 'phaseUse',
-              usable: 1,
-              lose: false,
-              discard: false,
-              selectCard: [1, Infinity],
-              filterCard(card, player) {
-                return card.name == 'sha' && !get.is.shownCard(card)
-              },
-              content() {
-                player.addShownCards(cards, 'visible_spr_tunjun')
-                player.draw(cards.length)
-              },
-              mod: {
-                ignoredHandcard(card, player) {
-                  if (card.hasGaintag('visible_spr_tunjun')) return true
+              audio: 'ext:☆SPR/audio/spr_zhangji/integrated:3',
+              marktext: '军',
+              intro: {
+                mark(dialog, storage, player) {
+                  dialog.addAuto(
+                    player.getCards('s', function (card) {
+                      return card.hasGaintag('spr_tunjun')
+                    })
+                  );
                 },
-                cardDiscardable(card, player, name) {
-                  if (name == 'phaseDiscard' && card.hasGaintag('visible_spr_tunjun')) return false
+                markcount(storage, player) {
+                  return player.countCards('s', function (card) {
+                    return card.hasGaintag('spr_tunjun')
+                  })
+                },
+                onunmark(storage, player) {
+                  const cards = player.getCards('s', function (card) {
+                    return card.hasGaintag('spr_tunjun')
+                  })
+                  if (cards.length) {
+                    player.lose(cards, ui.discardPile)
+                    player.$throw(cards, 1000)
+                    game.log(cards, '进入了弃牌堆')
+                  }
                 },
               },
-              ai: {
-                order() { return get.order({ name: 'sha' }) + 0.1 },
-                result: {
-                  player: 1,
-                },
-              },
-              group: 'spr_tunjun_die',
+              group: [
+                'spr_tunjun_active',
+                'spr_tunjun_unmark',
+                'spr_tunjun_die',
+              ],
               subSkill: {
-                die: {
+                active: {
+                  audio: 'ext:☆SPR/audio/spr_zhangji:2',
+                  enable: 'phaseUse',
+                  usable: 1,
+                  lose: false,
+                  discard: false,
+                  filter(event, player) {
+                    return player.countCards('h', i => lib.skill['spr_tunjun_active'].filterCard(i, player))
+                  },
+                  selectCard: [1, 2],
+                  filterCard(card, player) {
+                    return card.name == 'sha' && !get.is.shownCard(card)
+                  },
+                  content() {
+                    'step 0'
+                    player.loseToSpecial(cards, 'spr_tunjun').visible = true
+                    game.log(player, '将', cards, '放到了武将牌上')
+                    'step 1'
+                    player.markSkill('spr_tunjun')
+                    player.draw(cards.length)
+                  },
+                  prompt: '将至多两【杀】置于武将上并摸等量的牌',
+                  ai: {
+                    order() { return get.order({ name: 'sha' }) + 0.1 },
+                    result: {
+                      player: 1,
+                    },
+                  },
                   sub: true,
                   sourceSkill: 'spr_tunjun',
+                },
+                unmark: {
+                  trigger: { player: 'loseAfter' },
+                  direct: true,
+                  filter(event, player) {
+                    if (!event.ss || !event.ss.length)
+                      return false
+                    for (const i in event.gaintag_map) {
+                      if (event.gaintag_map[i].includes('spr_tunjun'))
+                        return true
+                    }
+                    return false
+                  },
+                  content() {
+                    const num = player.countCards('s', i => i.hasGaintag('spr_tunjun'))
+                    if (num) player.markSkill('spr_tunjun')
+                    else player.unmarkSkill('spr_tunjun')
+                  },
+                  sub: true,
+                  sourceSkill: 'spr_tunjun',
+                },
+                die: {
+                  audio: 'ext:☆SPR/audio/spr_zhangji:1',
                   trigger: {
                     player: 'die',
                   },
                   forceDie: true,
                   direct: true,
+                  filter(event, player) {
+                    return player.countCards('s', i => i.hasGaintag('spr_tunjun'))
+                  },
                   content() {
                     'step 0'
                     player
-                      .chooseTarget(`###${get.prompt('spr_tunjun')}###将你明置的【杀】交给一名角色`, function (card, player, target) {
-                        return player != target
-                      })
+                      .chooseTarget(
+                        `###${get.prompt('spr_tunjun')}###令一名其他角色获得所有“军”`,
+                        (card, player, target) => player != target
+                      )
                       .set('forceDie', true)
-                      .set('ai', function (target) {
+                      .set('ai', target => {
                         return get.attitude(get.player(), target)
                       })
                     'step 1'
                     if (result.bool) {
                       const target = result.targets[0]
-                      const toGive = player.getCards('h', i => get.is.shownCard(i) && i.name == 'sha')
+                      const toGain = player.getCards('s', i => i.hasGaintag('spr_tunjun'))
                       player.logSkill('spr_tunjun_die', target)
                       player.line(target, 'green')
-                      player.give(toGive, target)
+                      target.gain(player, toGain, true, 'giveAuto')
+                      // player.give(toGive, target)
                     }
                   },
+                  sub: true,
+                  sourceSkill: 'spr_tunjun',
                 },
               },
             },
@@ -4192,6 +4254,7 @@ game.import('extension', function (lib, game, ui, get, ai, _status) {
       lib.rank.rarity.rare.addArray([
         'spr_shenpei',
         'spr_caozhang',
+        'spr_zhangji',
       ])
       /** 默认是银龙
        * 'spr_machao',
