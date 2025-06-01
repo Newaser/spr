@@ -91,6 +91,7 @@ const TEXTS = {
     spr_caochun: '锐兵坚甲',
     spr_wangtaowangyue: '春悦桃秾',
     spr_zhangji: '武威雄豪',
+    spr_wanghou: '殉身厌众',
   },
   skininfo: {
     spr_machao: {
@@ -450,6 +451,31 @@ const TEXTS = {
         }
       },
     },
+    spr_wanghou: {
+      name: 'spr_wanghou',
+      origin: {
+        skill: {
+          die: {
+            content: '既为主忧，死亦其分……'
+          },
+          spr_jieliang: {
+            content:
+              `粮尽将断，唯以小斛济时艰。
+              <br>兵多粮少，且依丞相之令行。`
+          },
+          spr_tizui: {
+            content:
+              `某实无罪，为何当此断头？
+              <br>唉，忠臣被罪，俯首成羊。`
+          },
+          spr_pingyuan: {
+            content:
+              `私取官粮，王某罪不容诛……
+              <br>此身即去，惟愿众怨得平。`
+          },
+        }
+      },
+    },
   },
   translate: {
     character: {
@@ -470,6 +496,7 @@ const TEXTS = {
         spr_caochun: '星曹纯',
         spr_wangtaowangyue: '星王桃王悦',
         spr_zhangji: '星张济',
+        spr_wanghou: '星王垕',
       },
       skill: {
         // 星马超 | spr_machao
@@ -702,6 +729,17 @@ const TEXTS = {
           `出牌阶段限一次，你可以将至多两张【杀】置于武将上
           （称为“军”，可如手牌般使用或打出）并摸等量的牌。
           当你死亡时，你可以令一名其他角色获得所有“军”。`,
+
+
+        // 星王垕 | spr_wanghou
+        spr_jieliang: '竭粮',
+        spr_jieliang_info: '出牌阶段，你可以将一张黑色牌当【兵粮寸断】置入一名角色的判定区内，然后其摸三张牌。',
+
+        spr_tizui: '替罪',
+        spr_tizui_info: '限定技，当其他角色受到致命伤害时，你可以与其交换座次，然后将此伤害转移给你。',
+
+        spr_pingyuan: '平怨',
+        spr_pingyuan_info: '当你受到1点伤害后或死亡后，你可以令至多两名角色重铸其区域内的一张牌。',
       },
       other: {
         spr1: '☆SPR·其一',
@@ -873,6 +911,12 @@ game.import('extension', function (lib, game, ui, get, ai, _status) {
               4,
               ['spr_lueming', 'spr_tunjun'],
             ],
+            spr_wanghou: [
+              'male',
+              'wei',
+              3,
+              ['spr_jieliang', 'spr_tizui', 'spr_pingyuan'],
+            ],
           },
           characterIntro: TEXTS.characterIntro,
           characterTitle: TEXTS.characterTitle,
@@ -886,7 +930,7 @@ game.import('extension', function (lib, game, ui, get, ai, _status) {
                 'spr_zhangliao', 'spr_luoxian', 'spr_chendao', 'spr_chengui',
                 'spr_chenwudongxi', 'spr_caochun', 'spr_wangtaowangyue',
               ],
-              sprTest: ['spr_zhangji'],
+              sprTest: ['spr_zhangji', 'spr_wanghou'],
             }
           },
           skill: {
@@ -4033,6 +4077,155 @@ game.import('extension', function (lib, game, ui, get, ai, _status) {
                 },
               },
             },
+
+            // 星王垕 | spr_wanghou
+            spr_jieliang: {
+              audio: 'ext:☆SPR/audio/spr_wanghou:2',
+              enable: 'phaseUse',
+              lose: false,
+              discard: false,
+              filter(event, player) {
+                return player.hasCard(function (i) {
+                  return lib.skill['spr_jieliang'].filterCard(i, player) &&
+                    game.hasPlayer(j => lib.skill['spr_jieliang'].filterTarget(i, player, j))
+                }, 'he')
+              },
+              selectCard: 1,
+              filterCard(card, player) {
+                return get.color(card, player) == 'black'
+              },
+              selectTarget: 1,
+              filterTarget(card, player, target) {
+                return target.canAddJudge(get.autoViewAs({ name: 'bingliang' }, [card]))
+              },
+              content() {
+                target.addJudge({ name: 'bingliang' }, cards)
+                target.draw(3)
+              },
+              prompt: '将一张黑色牌当【兵粮寸断】置入一名角色的判定区，其摸3张牌',
+              ai: {
+                order: 9.3,
+                result: {
+                  player: -0.7,
+                  target: 2,
+                },
+              },
+            },
+            spr_tizui: {
+              audio: 'ext:☆SPR/audio/spr_wanghou:2',
+              limited: true,
+              skillAnimation: true,
+              animationColor: 'thunder',
+              trigger: {
+                global: 'damageBegin4',
+              },
+              filter(event, player) {
+                return event.player != player && event.num >= (event.player.hp + event.player.hujia)
+              },
+              check(event, player) {
+                return get.damageEffect(player, event.source, player) > get.damageEffect(event.player, event.source, player)
+              },
+              content() {
+                'step 0'
+                player.awakenSkill('spr_tizui')
+                game.broadcastAll(
+                  function (target1, target2) {
+                    game.swapSeat(target1, target2)
+                  },
+                  player,
+                  trigger.player
+                )
+                'step 1'
+                trigger.player = player
+              },
+            },
+            spr_pingyuan: {
+              audio: 'ext:☆SPR/audio/spr_wanghou:2',
+              trigger: { player: "damageEnd" },
+              direct: true,
+              content() {
+                'step 0'
+                event.i = trigger.num
+                'step 1'
+                if (event.i == 0) {
+                  event.finish()
+                  return
+                }
+                event.i--
+                player
+                  .chooseTarget(
+                    `###${get.prompt('spr_pingyuan')}###你可以令至多2名角色重铸其区域内的一张牌`,
+                    [1, 2],
+                    function (card, player, target) {
+                      return target.countCards('hej')
+                    }
+                  )
+                  .set('ai', target => get.attitude(player, target))
+                'step 2'
+                if (!result.bool) {
+                  event.finish()
+                  return
+                }
+                event.targets = result.targets
+                event.targets.sortBySeat(_status.currentPhase)
+                player.logSkill('spr_pingyuan', event.targets)
+                'step 3'
+                event.target = event.targets.shift()
+                event.target
+                  .choosePlayerCard(
+                    '平怨：你须重铸你区域内的一张牌',
+                    event.target,
+                    true,
+                    'hej',
+                  )
+                  .set('filterButton', function (button) {
+                    return get.player().canRecast(button.link)
+                  })
+                  .set('ai', function (button) {
+                    const card = button.link
+                    if (get.position(card) == 'j') {
+                      switch (get.name(card)) {
+                        case 'lebu':
+                          return 1002
+
+                        case 'bingliang':
+                          return 1001
+
+                        case 'shandian':
+                          return 1000
+                      }
+                    }
+                    return -get.value(card, player)
+                  })
+                'step 4'
+                event.target.recast(result.cards)
+                if (event.targets.length == 0)
+                  event.goto(1)
+                else
+                  event.goto(3)
+              },
+              ai: {
+                maixie: true,
+                maixie_hp: true,
+                effect: {
+                  target(card, player, target) {
+                    if (get.tag(card, "damage")) {
+                      if (player.hasSkillTag("jueqing", false, target)) return [1, -2];
+                      if (!target.hasFriend()) return;
+                      const eff1 = 0.5, eff2 = 3
+                      var num = game.countPlayer(i => {
+                        return get.attitude(player, i) > 0 && i.hasCard(j => get.name(j, i) != 'shandian', 'j')
+                      })
+                      num = Math.min(num, 2)
+                      const eff = eff2 * num + eff1 * (2 - num)
+                      if (target.hp >= 4) return [1, eff * 1];
+                      if (target.hp == 3) return [1, eff * 0.75];
+                      if (target.hp == 2) return [1, eff * 0.25];
+                    }
+                  },
+                },
+              },
+            },
           },
           translate: {
             ...TEXTS.translate.character.id,
@@ -4255,6 +4448,7 @@ game.import('extension', function (lib, game, ui, get, ai, _status) {
         'spr_shenpei',
         'spr_caozhang',
         'spr_zhangji',
+        'spr_wanghou',
       ])
       /** 默认是银龙
        * 'spr_machao',
