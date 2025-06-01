@@ -733,7 +733,7 @@ const TEXTS = {
 
         // 星王垕 | spr_wanghou
         spr_jieliang: '竭粮',
-        spr_jieliang_info: '出牌阶段，你可以将一张黑色牌当【兵粮寸断】置入一名角色的判定区内，然后其摸三张牌。',
+        spr_jieliang_info: '出牌阶段，你可以将一张♣手牌当【兵粮寸断】置入一名角色的判定区内，然后其摸三张牌。',
 
         spr_tizui: '替罪',
         spr_tizui_info: '限定技，当其他角色受到致命伤害时，你可以与其交换座次，然后将此伤害转移给你。',
@@ -4092,7 +4092,7 @@ game.import('extension', function (lib, game, ui, get, ai, _status) {
               },
               selectCard: 1,
               filterCard(card, player) {
-                return get.color(card, player) == 'black'
+                return get.suit(card, player) == 'club'
               },
               selectTarget: 1,
               filterTarget(card, player, target) {
@@ -4102,7 +4102,7 @@ game.import('extension', function (lib, game, ui, get, ai, _status) {
                 target.addJudge({ name: 'bingliang' }, cards)
                 target.draw(3)
               },
-              prompt: '将一张黑色牌当【兵粮寸断】置入一名角色的判定区，其摸3张牌',
+              prompt: '将一张♣手牌当【兵粮寸断】置入一名角色的判定区，其摸3张牌',
               ai: {
                 order: 9.3,
                 result: {
