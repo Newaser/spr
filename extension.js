@@ -736,10 +736,10 @@ const TEXTS = {
         spr_jieliang_info: '出牌阶段，你可以将一张♣手牌当【兵粮寸断】置入一名角色的判定区内，然后其摸三张牌。',
 
         spr_tizui: '替罪',
-        spr_tizui_info: '限定技，当其他角色受到致命伤害时，你可以与其交换座次，然后将此伤害转移给你。',
+        spr_tizui_info: '<b>限定技</b>，当其他角色受到致命伤害时，你可以与其交换座次，然后将此伤害转移给你。',
 
         spr_pingyuan: '平怨',
-        spr_pingyuan_info: '当你受到1点伤害后或死亡后，你可以令至多两名角色重铸其区域内的一张牌。',
+        spr_pingyuan_info: '当你受到1点伤害后或死亡时，你可以令至多两名角色重铸其区域内的一张牌。',
       },
       other: {
         spr1: '☆SPR·其一',
@@ -4138,14 +4138,22 @@ game.import('extension', function (lib, game, ui, get, ai, _status) {
                 'step 1'
                 trigger.player = player
               },
+              prompt2(event, player) {
+                const name = get.translation(event.player)
+                return `限定技，与${name}交换座次，然后将对${name}造成的伤害转移给你`
+              },
             },
             spr_pingyuan: {
               audio: 'ext:☆SPR/audio/spr_wanghou:2',
-              trigger: { player: "damageEnd" },
+              trigger: { player: ['damageEnd', 'die'] },
               direct: true,
+              forceDie: true,
+              filter(event, player) {
+                return player.isAlive() || event.name == 'die'
+              },
               content() {
                 'step 0'
-                event.i = trigger.num
+                event.i = event.triggername == 'damageEnd' ? trigger.num : 1
                 'step 1'
                 if (event.i == 0) {
                   event.finish()
@@ -4218,9 +4226,8 @@ game.import('extension', function (lib, game, ui, get, ai, _status) {
                       })
                       num = Math.min(num, 2)
                       const eff = eff2 * num + eff1 * (2 - num)
-                      if (target.hp >= 4) return [1, eff * 1];
-                      if (target.hp == 3) return [1, eff * 0.75];
-                      if (target.hp == 2) return [1, eff * 0.25];
+                      if (target.hp >= 3) return [1, eff * 1];
+                      if (target.hp == 2) return [1, eff * 0.85];
                     }
                   },
                 },
