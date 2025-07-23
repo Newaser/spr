@@ -3496,12 +3496,16 @@ game.import('extension', function (lib, game, ui, get, ai, _status) {
                 event.otherSkills =
                   lib.skill['spr_fenming'].getOtherSkills(player, 'spr_fenming')
                 if (!event.otherSkills.length) {
-                  player.chooseBool(
+                  player
+                  .chooseBool(
                     `###${get.prompt('spr_fenming')}###` +
                     '你可以失去1点体力，然后获得' +
                     get.translation(trigger.player) +
                     '一张牌'
                   )
+                  .set('ai', () => {
+                    return get.attitude(get.player(), trigger.player) < 0
+                  })
                 }
                 'step 1'
                 if (typeof result.bool == 'boolean') {
