@@ -3,22 +3,24 @@ import { content } from "./main/content.js";
 import { precontent } from "./main/precontent.js";
 
 const extensionInfo = await lib.init.promises.json(`${lib.assetURL}extension/☆SPR/info.json`);
-let extensionPackage = {
-  name: "☆SPR",
+
+/** @type {importExtensionConfig} */
+const extension = {
+  name: "",
   editable: false,
   config: {},
-  content,
-  help: {},
   package: {},
+  content,
   precontent,
-  files: { character: [], card: [], skill: [], audio: [] },
 };
 
-Object.keys(extensionInfo)
+extension.name = extensionInfo.name;
+Object
+  .keys(extensionInfo)
   .filter(key => key !== "name")
   .forEach(key => {
-    extensionPackage.package[key] = extensionInfo[key];
+    extension.package[key] = extensionInfo[key];
   });
 
-export let type = "extension";
-export default extensionPackage;
+export const type = "extension";
+export default extension;
