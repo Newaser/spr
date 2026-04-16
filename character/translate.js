@@ -14,7 +14,7 @@ const voices = {
   "#ext:☆SPR/audio/spr_shenpei/integrated/spr_shouye2": "袁幽州不日便至，当行策建功以报之。",
   "#ext:☆SPR/audio/spr_shenpei/integrated/spr_shouye3": "今伐曹氏，譬如覆手之举。",
   "#ext:☆SPR/audio/spr_shenpei/integrated/spr_shouye4": "十，则围之；五，则攻之。",
-  // "#ext:☆SPR/audio/die/spr_shenpei:die": "吾君在北，但求面北而亡。",
+  "#ext:☆SPR/audio/die/spr_shenpei:die": "吾君在北，但求面北而亡。",
   "#spr_shenpei:die": "吾君在北，但求面北而亡。",
 };
 
