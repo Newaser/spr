@@ -1,4 +1,11 @@
 /**
+ * @file note.js
+ * @description Personal development notes and code snippets.
+ * This file is for experimentation only.
+ * @author Newaser
+ */
+
+/**
  * @typedef {(string | number | boolean)} AudioInfoItem
  * @typedef {(AudioInfoItem[] | string | number | boolean)} AudioInfo
  */
@@ -16,4 +23,4 @@ const note = {
   logAudio: function (event, player, name, indexedData, evt) {
     return true
   }
-}
+};

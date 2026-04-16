@@ -7,15 +7,15 @@ const skill = {
   spr_liezhi: {
     audio: "ext:☆SPR/audio/spr_shenpei:2",
     init(player, skill) {
-      player.addMark("spr_liezhi", 1, false)
+      player.addMark("spr_liezhi", 1, false);
     },
     log: false,
     enable: "phaseUse",
     usable: 1,
     async precontent(event, trigger, player) {
-      player.logSkill("spr_liezhi")
-      await player.damage({ num: player.countMark("spr_liezhi"), nosource: true })
-      player.addMark("spr_liezhi", 1, false)
+      player.logSkill("spr_liezhi");
+      await player.damage({ num: player.countMark("spr_liezhi"), nosource: true });
+      player.addMark("spr_liezhi", 1, false);
     },
     selectCard: -1,
     filterCard: (card, player) => false,
@@ -26,46 +26,46 @@ const skill = {
     intro: {
       name2: "烈直",
       content(storage, player, skill) {
-        return "下次烈直的伤害：" + player.countMark("spr_liezhi")
+        return "下次烈直的伤害：" + player.countMark("spr_liezhi");
       },
     },
     ai: {
       result: {
         target(player, target, card) {
-          let nh = target.countCards("h")
+          const nh = target.countCards("h");
           if (get.mode() == "identity") {
-            if (target.isZhu && nh <= 2 && target.hp <= 1) return -100
+            if (target.isZhu && nh <= 2 && target.hp <= 1) return -100;
           }
-          if (nh == 0) return -2
-          if (nh == 1) return -1.7
-          return -1.5
+          if (nh == 0) return -2;
+          if (nh == 1) return -1.7;
+          return -1.5;
         },
         target_use(player, target) {
-          if (player.hasUnknown(2) && get.mode() != "guozhan") return 0
-          let nh = target.countCards("h")
+          if (player.hasUnknown(2) && get.mode() != "guozhan") return 0;
+          const nh = target.countCards("h");
           if (get.mode() == "identity") {
-            if (target.isZhu && nh <= 2 && target.hp <= 1) return -100
+            if (target.isZhu && nh <= 2 && target.hp <= 1) return -100;
           }
-          if (nh == 0) return -2
-          if (nh == 1) return -1.7
-          return -1.5
+          if (nh == 0) return -2;
+          if (nh == 1) return -1.7;
+          return -1.5;
         },
         player(player) {
           const saveCards = player.countCards("h", i =>
             get.tag(i, "save")
-          )
+          );
           const damage = player
             .getEquips(2)
             .some(i => i.name == "baiyin")
             ? 1
-            : player.countMark("spr_liezhi")
-          if (damage >= player.hp + saveCards) return -Infinity
+            : player.countMark("spr_liezhi");
+          if (damage >= player.hp + saveCards) return -Infinity;
           if (
             player.hasSkill("spr_shouye") &&
             !player.storage.spr_shouye
           )
-            return Math.min(player.getDamagedHp(true), 2 - damage) * 2
-          return -damage * 2
+            return Math.min(player.getDamagedHp(true), 2 - damage) * 2;
+          return -damage * 2;
         },
       },
       basic: {
@@ -99,14 +99,13 @@ const skill = {
             target.hp == 1 ||
             Math.random() < 0.7
           )
-            return 0
+            return 0;
         }
       },
     },
   },
   spr_shouye: {
-    // audio: "ext:☆SPR/audio/spr_shenpei/integrated:4",
-    // audioname: ["spr_shouye_1", "spr_shouye_2"],
+    audio: "ext:☆SPR/audio/spr_shenpei/integrated:4",
     mark: true,
     marktext: "☯",
     zhuanhuanji: true,
@@ -114,80 +113,79 @@ const skill = {
       content(storage, player, skill) {
         return storage ?
           "当你造成伤害后，你可以弃置至多两名角色各一张牌。" :
-          "当你受到伤害后，你可以回复2点体力。"
+          "当你受到伤害后，你可以回复2点体力。";
       },
     },
-    group: ["spr_shouye_1", "spr_shouye_2"],
-    subSkill: {
-      "1": {
-        audio: "ext:☆SPR/audio/spr_shenpei:2",
-        trigger: {
-          player: "damageEnd",
-        },
-        filter(event, player) {
-          return !player.storage.spr_shouye && player.isDamaged()
-        },
-        prompt2: "当你受到伤害后，你可以回复2点体力。",
-        check(event, player, triggername, target) {
-          return player.maxHp < 3 || player.getDamagedHp() >= 2
-        },
-        async content(event, trigger, player) {
-          player.changeZhuanhuanji("spr_shouye")
-          await player.recover({ num: 2 })
-        },
-        ai: {
-          threaten(player) {
-            if (player.storage.spr_shouye)
-              return
-            return 0.9
-          },
-          skillTagFilter(player, tag, arg) {
-            return !player.storage.spr_shouye
-          },
-          tag: {
-            "maixie_defend": 1,
-          },
-        },
-      },
-      "2": {
-        audio: "ext:☆SPR/audio/spr_shenpei:2",
-        trigger: {
-          source: "damageSource",
-        },
-        filter(event, player, name, target) {
-          return player.storage.spr_shouye
-        },
-        direct: true,
-        async content(event, trigger, player) {
-          /** @type {Result} */
-          const result = await player
-            .chooseTarget({
-              prompt: get.prompt("spr_shouye"),
-              prompt2: "当你造成伤害后，你可以弃置至多两名角色各一张牌。",
-              filterTarget: (card, player, target) => {
-                return target.countCards("he") > 0
-              },
-              selectTarget: [1, 2],
-              ai: target => {
-                return 1 - get.attitude(get.player(), target)
-              },
-            })
-            .forResult()
-          if (result.bool) {
-            player.changeZhuanhuanji("spr_shouye")
-            result.targets.sortBySeat(_status.currentPhase)
-            event.targets = result.targets
-            player.line(result.targets, "green")
-            player.logSkill("spr_shouye_2", result.targets)
-
-            for (const target of result.targets) {
-              await player.discardPlayerCard({
-                forced: true,
-                target: target,
-              })
-            }
+    trigger: {
+      player: "damageEnd",
+      source: "damageSource",
+    },
+    filter(event, player, name, target) {
+      if (name == "damageEnd") {
+        return !player.storage.spr_shouye && player.isDamaged();
+      }
+      if (name == "damageSource") {
+        return player.storage.spr_shouye;
+      }
+    },
+    async cost(event, trigger, player) {
+      if (!player.storage.spr_shouye) {
+        event.result = await player.chooseBool({
+          prompt: get.prompt("spr_shouye"),
+          prompt2: "当你受到伤害后，你可以回复2点体力。",
+          ai: (event, player) => {
+            return player.maxHp < 3 || player.getDamagedHp() >= 2;
           }
-        },
+        }).forResult();
+      } else {
+        event.result = await player.chooseTarget({
+          prompt: get.prompt("spr_shouye"),
+          prompt2: "当你造成伤害后，你可以弃置至多两名角色各一张牌。",
+          filterTarget: (card, player, target) => {
+            return target.countCards("he") > 0;
+          },
+          selectTarget: [1, 2],
+          ai: target => {
+            return 1 - get.attitude(get.player(), target);
+          },
+        }).forResult();
+      }
+    },
+    /**
+     * @param {GameEvent} event 
+     * @param {Player} player 
+     * @param {string} name trigger name
+     * @param {number} indexedData 
+     * @param {GameEvent} evt cost result
+     */
+    logAudio(event, player, name, indexedData, evt) {
+      let idx = [1, 2].randomGet();
+      if (player.storage.spr_shouye) idx += 2;
+      return "ext:☆SPR/audio/spr_shenpei/integrated/spr_shouye" + idx + ".mp3";
+    },
+    async content(event, trigger, player) {
+      player.changeZhuanhuanji("spr_shouye");
+      if (player.storage.spr_shouye) {
+        await player.recover({ num: 2 });
+      } else {
+        for (const target of event.targets.sortBySeat(_status.currentPhase)) {
+          await player.discardPlayerCard({
+            forced: true,
+            target: target,
+          });
+        }
+      }
+    },
+    ai: {
+      threaten(player) {
+        if (player.storage.spr_shouye === false)
+          return 0.9;
+      },
+      skillTagFilter(player, tag, arg) {
+        return !player.storage.spr_shouye;
+      },
+      tag: {
+        "maixie_defend": 1,
       },
     },
   },
