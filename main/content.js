@@ -28,5 +28,4 @@ export const content = (config, pack) => {
       }
     }
   }
-
-}
+};

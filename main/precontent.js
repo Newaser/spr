@@ -83,4 +83,4 @@ export const precontent = (data) => {
 
   // set name prefix style
   lib.namePrefix.set('星', { color: '#FFECB3', nature: 'soilmm' })
-}
+};

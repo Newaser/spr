@@ -108,4 +108,4 @@ export default new SkillData("spr_liezhi|烈直", {
       },
     },
   },
-})
+});

@@ -15,6 +15,6 @@ pkg.addCharacter("spr_shenpei|星审配", {
   dieVoice: "吾君在北，但求面北而亡。",
   rank: "a",
   rarity: "rare",
-})
+});
 
-export default pkg
+export default pkg;

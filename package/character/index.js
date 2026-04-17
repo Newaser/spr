@@ -6,4 +6,4 @@ export default [
 	spr1,
 	// spr2,
 	// spr3,
-]
+];
