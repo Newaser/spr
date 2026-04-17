@@ -36,6 +36,43 @@ export const DEFAULT_EXTENSION_NAME = "☆SPR";
  * @property {Rarity=} rarity - 稀有度
  * @property {string=} dieVoice - 阵亡台词
  * @property {string=} victoryVoice - 胜利台词
+ * @property {Record<string,string[]>=} audioRedirect
+ * ### 技能语音重定向
+ * 
+ * 格式：
+ * ```javascript
+ * audioRedirect: {
+ *   "已有技能的id": [ "台词1", "台词2", ... ],
+ *   ...
+ * },
+ * ```
+ * 
+ * 对应地，相应的音频文件应命名为：
+ * 
+ * - `已有技能的id__武将id1.mp3`
+ * - `已有技能的id__武将id2.mp3`
+ * - `...`
+ * 
+ * 放在扩展的技能语音目录下。
+
+ * ---
+
+ * ### 案例
+
+ * 以武将`spr_guanyu`举例，若其有如下值：
+ * 
+ * ```javascript
+ * audioRedirect: {
+ *   "wusheng": [
+ *     "可知关某之威！",
+ *     "关某既出，敌将定皆披靡！",
+ *   ],
+ * },
+ * ```
+
+   则相应的音频文件应命名为：
+   - `wusheng__spr_guanyu1.mp3`
+   - `wusheng__spr_guanyu2.mp3`
  */
 
 /**

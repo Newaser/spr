@@ -1,5 +1,6 @@
 import { lib, game, ui, get, ai, _status } from "../../../noname.js";
 import { Character } from "../../../noname/library/element/index.js";
+import { SkillData } from "../import/structs.js";
 import characterPkgs from "../package/character/index.js";
 import characterSkills from "../skill/character/index.js";
 
@@ -23,12 +24,15 @@ export const precontent = (data) => {
     skill = {},
 
     /** @type {Record<string, string>} */
-    translate = {};
+    translate = {},
 
-  for (let pkg of characterPkgs) {
-    let sort = [];
-    for (let characterData of pkg.dataset) {
-      let info = characterData.getInfo();
+    /** @type {SkillData[]} */
+    audioRedirectSkills = [];
+
+  for (const pkg of characterPkgs) {
+    const sort = [];
+    for (const characterData of pkg.dataset) {
+      const info = characterData.getInfo();
       character[characterData.id] = info.character;
       character[characterData.id].img =
         "extension/☆SPR/image/character/standard/" + characterData.id + ".jpg";
@@ -41,19 +45,29 @@ export const precontent = (data) => {
         characterTitle[characterData.id] = info.title;
       }
       sort.push(characterData.id);
+      if (info.audioRedirect !== undefined) {
+        for (const skillId in info.audioRedirect) {
+          audioRedirectSkills.push(new SkillData(skillId + "__" + characterData.id, {
+            voices: info.audioRedirect[skillId],
+            skill: {
+              audio: "ext:☆SPR/audio/skill:" + info.audioRedirect[skillId].length,
+            },
+          }));
+        }
+      }
     }
     characterSort.spr[pkg.id] = sort;
     Object.assign(translate, pkg.getTranslates());
   }
 
-  for (let characterSkill of characterSkills) {
+  for (const characterSkill of characterSkills.concat(audioRedirectSkills)) {
     skill[characterSkill.id] = characterSkill.getInfo().skill;
     Object.assign(translate, characterSkill.getTranslates());
   }
 
   game.import("character", function () {
     /** @type {importCharacterConfig} */
-    let config = {
+    const config = {
       name: "spr",
       character,
       characterIntro,
