@@ -17,18 +17,19 @@ export default new SkillData("spr_yingzi|英姿", {
 		},
 		async content(event, trigger, player) {
 			let v = 1;
-			if (player.storage.spr_jinzi_shown && player.storage.spr_jinzi_shown >= 3) {
+			if (player.storage.spr_jinzi_shown &&
+				player.storage.spr_jinzi_shown > 3) {
 				v *= 2;
 			}
 			trigger.num += v;
 		},
 		prompt2(event, player) {
-			const info = get.skillInfoTranslation("spr_yingzi");
-			return (
-				player.storage.spr_jinzi_shown &&
-				player.storage.spr_jinzi_shown >= 3
-			) ? info.replace("一", "<span class=\"bluetext\">两</span>") :
-				info;
+			let info = get.skillInfoTranslation("spr_yingzi");
+			if (player.storage.spr_jinzi_shown &&
+				player.storage.spr_jinzi_shown > 3) {
+				info = info.replace("一", "两");
+			}
+			return info;
 		},
 	},
 });
