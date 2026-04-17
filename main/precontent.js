@@ -1,6 +1,7 @@
 import { lib, game, ui, get, ai, _status } from "../../../noname.js";
 import { Character } from "../../../noname/library/element/index.js";
-import characterPkgs from "../character-packages/index.js";
+import characterPkgs from "../package/character/index.js";
+import characterSkills from "../skill/character/index.js";
 
 /** @type {importExtensionConfig['precontent']} */
 export const precontent = (data) => {
@@ -38,6 +39,11 @@ export const precontent = (data) => {
     }
     characterSort.spr[pkg.id] = sort;
     Object.assign(translate, pkg.getTranslates());
+  }
+
+  for (let characterSkill of characterSkills) {
+    skill[characterSkill.id] = characterSkill.info.skill;
+    Object.assign(translate, characterSkill.getTranslates());
   }
 
   game.import("character", function () {
