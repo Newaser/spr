@@ -88,7 +88,7 @@ import { Character } from "../../../../noname/library/element/index.js";
 
 const pkg = new CharacterPackageMaker("sprTest|☆SPR·测试");
 
-export default pkg
+export default pkg;
 
 ```
 2. 打开 `./package/character/index.js` ，添加包索引：
@@ -180,7 +180,7 @@ export default new SkillData("spr_biyue|闭月", {
     "羡慕吧。",
   ],
   skill: {
-    
+    audio: "ext:☆SPR/audio/skill:2",
   },
 });
 ```
