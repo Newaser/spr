@@ -24,5 +24,5 @@ packageData.intro = `
   <br>更新日期：${info.lastUpdated}
   <br>支持的无名杀最低版本：v${info.minNoname}
   ${info.adaptedExts.length > 0 ?
-    "<br>适配的其他扩展：" + info.adaptedExts.join('、') : ""}
+		`<br>适配的其他扩展：${  info.adaptedExts.join("、")}` : ""}
 </p>`;

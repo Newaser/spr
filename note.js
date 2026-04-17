@@ -11,7 +11,7 @@
  */
 
 const note = {
-  /**
+	/**
    * 
    * @param {GameEvent} event 
    * @param {Player} player 
@@ -20,7 +20,7 @@ const note = {
    * @param {GameEvent} evt cost result
    * @returns {AudioInfo}
    */
-  logAudio: function (event, player, name, indexedData, evt) {
-    return true
-  }
+	logAudio: function (event, player, name, indexedData, evt) {
+		return true;
+	},
 };

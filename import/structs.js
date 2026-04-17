@@ -93,56 +93,56 @@ export const DEFAULT_EXTENSION_NAME = "☆SPR";
  * @template T
  */
 class AbstractData {
-  /**
+	/**
    * @param {string} formattedName
    * @param {T} data
    * @param {string=} extensionName
    */
-  constructor(formattedName, data, extensionName) {
-    const [id, name] = formattedName.split("|");
+	constructor(formattedName, data, extensionName) {
+		const [id, name] = formattedName.split("|");
 
-    /** 
+		/** 
      * 此类型数据对应的id
      * @type {string}
      */
-    this.id = id;
+		this.id = id;
 
-    /** 
+		/** 
      * 此类型数据对应的译名
      * @type {string|undefined}
      */
-    this.name = name || undefined;
+		this.name = name || undefined;
 
-    /** 
+		/** 
      * 此类型数据对应的信息
      * @type {T} 
      * @protected
      */
-    this.info = data;
+		this.info = data;
 
-    /** 
+		/** 
      * 扩展名
      * @type {string}
      * @protected
      */
-    this.extensionName = extensionName || DEFAULT_EXTENSION_NAME;
-  }
+		this.extensionName = extensionName || DEFAULT_EXTENSION_NAME;
+	}
 
-  /**
+	/**
    * 获取此类型数据对应的信息
    * @returns {T}
    */
-  getInfo() {
-    return this.info;
-  }
+	getInfo() {
+		return this.info;
+	}
 
-  /** 
+	/** 
    * 获取此类型数据的相关翻译文本
    * @returns {Record<string,string>} 
    */
-  getTranslates() {
-    throw new Error("Abstract method");
-  }
+	getTranslates() {
+		throw new Error("Abstract method");
+	}
 }
 
 /**
@@ -150,44 +150,44 @@ class AbstractData {
  * @extends {AbstractData<CharacterInfo>}
  */
 export class CharacterData extends AbstractData {
-  /**
+	/**
    * 创建一个武将数据对象，用于存储武将的id、名称、信息等。
    * @param {string} formattedName 格式化的武将名称，格式为 `id|译名`
    * @param {CharacterInfo} data 武将数据
    * @param {string=} extensionName 扩展名，默认为 `☆SPR`
    */
-  constructor(formattedName, data, extensionName) {
-    super(formattedName, data, extensionName);
-  }
+	constructor(formattedName, data, extensionName) {
+		super(formattedName, data, extensionName);
+	}
 
-  /**
+	/**
    * 获取武将信息
    *  @returns {CharacterInfo} 
    */
-  getInfo() {
-    return super.getInfo();
-  }
+	getInfo() {
+		return super.getInfo();
+	}
 
-  /** 
+	/** 
    * 获取武将相关的翻译文本
    * @returns {Record<string,string>} 
    */
-  getTranslates() {
-    /** @type {Record<string,string>} */
-    const ret = {};
+	getTranslates() {
+		/** @type {Record<string,string>} */
+		const ret = {};
 
-    if (this.name !== undefined) {
-      ret[this.id] = this.name;
-    }
+		if (this.name !== undefined) {
+			ret[this.id] = this.name;
+		}
 
-    if (this.info.dieVoice !== undefined) {
-      ret[`#ext:${this.extensionName}/audio/die/${this.id}:die`] =
+		if (this.info.dieVoice !== undefined) {
+			ret[`#ext:${this.extensionName}/audio/die/${this.id}:die`] =
         this.info.dieVoice;
-      ret[`#${this.id}:die`] = this.info.dieVoice;
-    }
+			ret[`#${this.id}:die`] = this.info.dieVoice;
+		}
 
-    return ret;
-  }
+		return ret;
+	}
 }
 
 /**
@@ -195,57 +195,57 @@ export class CharacterData extends AbstractData {
  * @extends {AbstractData<SkillInfo>}
  */
 export class SkillData extends AbstractData {
-  /**
+	/**
    * 创建一个技能数据对象，用于存储技能的id、名称、信息等。
    * @param {string} formattedName 格式化的技能名称，格式为 `id|译名`
    * @param {SkillInfo} data 技能数据
    * @param {string=} extensionName 扩展名，默认为 `☆SPR`
    */
-  constructor(formattedName, data, extensionName) {
-    super(
-      formattedName,
-      data,
-      extensionName || DEFAULT_EXTENSION_NAME
-    );
-  }
+	constructor(formattedName, data, extensionName) {
+		super(
+			formattedName,
+			data,
+			extensionName || DEFAULT_EXTENSION_NAME,
+		);
+	}
 
-  /**
+	/**
    * 获取技能信息
    * @returns {SkillInfo} 
    */
-  getInfo() {
-    return super.getInfo();
-  }
+	getInfo() {
+		return super.getInfo();
+	}
 
-  /** 
+	/** 
    * 获取技能相关的翻译文本
    * @returns {Record<string,string>} 
    */
-  getTranslates() {
-    /** @type {Record<string,string>} */
-    const ret = {};
+	getTranslates() {
+		/** @type {Record<string,string>} */
+		const ret = {};
 
-    if (this.name !== undefined) {
-      ret[this.id] = this.name;
-    }
+		if (this.name !== undefined) {
+			ret[this.id] = this.name;
+		}
 
-    if (this.info.description !== undefined) {
-      ret[this.id + "_info"] = this.info.description;
-    }
+		if (this.info.description !== undefined) {
+			ret[`${this.id  }_info`] = this.info.description;
+		}
 
-    if (Array.isArray(this.info.voices)) {
-      for (let i = 0; i < this.info.voices.length; i++) {
-        const voice = this.info.voices[i];
-        ret[`#ext:${this.extensionName}/audio/skill/${this.id}${i + 1}`] = voice;
-      }
-    }
+		if (Array.isArray(this.info.voices)) {
+			for (let i = 0; i < this.info.voices.length; i++) {
+				const voice = this.info.voices[i];
+				ret[`#ext:${this.extensionName}/audio/skill/${this.id}${i + 1}`] = voice;
+			}
+		}
 
-    if (this.info.texts) {
-      for (const [key, value] of Object.entries(this.info.texts)) {
-        ret[key] = value;
-      }
-    }
+		if (this.info.texts) {
+			for (const [key, value] of Object.entries(this.info.texts)) {
+				ret[key] = value;
+			}
+		}
 
-    return ret;
-  }
+		return ret;
+	}
 }

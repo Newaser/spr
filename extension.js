@@ -5,12 +5,12 @@ import { precontent } from "./main/precontent.js";
 
 /** @type {importExtensionConfig} */
 const extension = {
-  name: "☆SPR",
-  editable: false,
-  config,
-  package: packageData,
-  content,
-  precontent,
+	name: "☆SPR",
+	editable: false,
+	config,
+	package: packageData,
+	content,
+	precontent,
 };
 
 export const type = "extension";

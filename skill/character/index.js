@@ -1,7 +1,9 @@
+import jinzi from "./jinzi.js";
 import liezhi from "./liezhi.js";
 import shouye from "./shouye.js";
 
 export default [
-  liezhi,
-  shouye,
+	jinzi,
+	liezhi,
+	shouye,
 ];
