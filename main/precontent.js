@@ -28,12 +28,17 @@ export const precontent = (data) => {
   for (let pkg of characterPkgs) {
     let sort = [];
     for (let characterData of pkg.dataset) {
-      character[characterData.id] = characterData.info.character;
-      if (characterData.info.intro !== undefined) {
-        characterIntro[characterData.id] = characterData.info.intro;
+      let info = characterData.getInfo();
+      character[characterData.id] = info.character;
+      character[characterData.id].img =
+        "extension/☆SPR/image/character/standard/" + characterData.id + ".jpg";
+      character[characterData.id].dieAudios =
+        ["ext:☆SPR/audio/die/" + characterData.id + ".mp3"];
+      if (info.intro !== undefined) {
+        characterIntro[characterData.id] = info.intro;
       }
-      if (characterData.info.title !== undefined) {
-        characterTitle[characterData.id] = characterData.info.title;
+      if (info.title !== undefined) {
+        characterTitle[characterData.id] = info.title;
       }
       sort.push(characterData.id);
     }
@@ -42,7 +47,7 @@ export const precontent = (data) => {
   }
 
   for (let characterSkill of characterSkills) {
-    skill[characterSkill.id] = characterSkill.info.skill;
+    skill[characterSkill.id] = characterSkill.getInfo().skill;
     Object.assign(translate, characterSkill.getTranslates());
   }
 

@@ -4,33 +4,50 @@ import {
 } from "./structs.js";
 
 /**
- * 武将包制作器
+ * **武将包制作器**
+ * 
+ * 用于格式化地创建武将包（子包），包含多个武将数据。
  */
 export class CharacterPackageMaker {
   /**
-   * @param {string} formattedName
-   * @param {string=} extensionName
+   * 生成一个武将包制作器，用于格式化地创建武将包
+   * @param {string} formattedName 武将包（子包）的名称，格式为 `id|译名`
+   * @param {string=} extensionName 扩展包的名称，默认为 `☆SPR`
    */
   constructor(formattedName, extensionName) {
-    /** @type {CharacterData[]} */
+    /** 
+     * 武将数据集
+     * @type {CharacterData[]}
+     */
     this.dataset = [];
 
     const [id, name] = formattedName.split("|");
 
-    /** @type {string} */
+    /** 
+     * 武将包id
+     * @type {string} 
+     * */
     this.id = id;
 
-    /** @type {string|undefined} */
+    /** 
+     * 武将包名
+     * @type {string|undefined} 
+     */
     this.name = name || undefined;
 
-    /** @protected */
+    /** 
+     * 扩展名
+     * @protected
+     * @type {string}
+     */
     this.extensionName =
       extensionName || DEFAULT_EXTENSION_NAME;
   }
 
   /**
-   * @param {string} formattedName
-   * @param {import("./structs.js").CharacterInfo} data
+   * 添加一个武将
+   * @param {string} formattedName 格式化的武将名称，格式为 `id|译名`
+   * @param {import("./structs.js").CharacterInfo} data 武将数据
    */
   addCharacter(formattedName, data) {
     const character = new CharacterData(
@@ -41,7 +58,10 @@ export class CharacterPackageMaker {
     this.dataset.push(character);
   }
 
-  /** @returns {Record<string,string>} */
+  /** 
+   * 获取武将包以及本包所有武将相关的翻译文本
+   * @returns {Record<string,string>}
+   */
   getTranslates() {
     /** @type {Record<string,string>} */
     const ret = {};

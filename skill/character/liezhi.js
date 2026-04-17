@@ -9,7 +9,7 @@ export default new SkillData("spr_liezhi|烈直", {
     "身殒事小，秉节事大。",
   ],
   skill: {
-    audio: "ext:☆SPR/audio/spr_shenpei:2",
+    audio: "ext:☆SPR/audio/skill:2",
     init(player, skill) {
       player.addMark("spr_liezhi", 1, false);
     },

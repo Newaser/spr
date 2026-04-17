@@ -11,7 +11,7 @@ export default new SkillData("spr_shouye|守邺", {
     "十，则围之；五，则攻之。",
   ],
   skill: {
-    audio: "ext:☆SPR/audio/spr_shenpei/integrated:4",
+    audio: "ext:☆SPR/audio/skill:4",
     mark: true,
     marktext: "☯",
     zhuanhuanji: true,
