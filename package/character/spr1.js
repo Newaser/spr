@@ -11,11 +11,10 @@ pkg.addCharacter("spr_shenpei|星审配", {
 		maxHp: 3,
 		skills: ["spr_liezhi", "spr_shouye"],
   }),
-  // no intro
   title: "正南义北",
+  dieVoice: "吾君在北，但求面北而亡。",
   rank: "a",
   rarity: "rare",
-  dieVoice: "吾君在北，但求面北而亡。",
 })
 
 export default pkg

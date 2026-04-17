@@ -35,7 +35,7 @@ export const precontent = (data) => {
       const info = characterData.getInfo();
       character[characterData.id] = info.character;
       character[characterData.id].img =
-        "extension/☆SPR/image/character/standard/" + characterData.id + ".jpg";
+        "extension/☆SPR/image/character/" + characterData.id + ".jpg";
       character[characterData.id].dieAudios =
         ["ext:☆SPR/audio/die/" + characterData.id + ".mp3"];
       if (info.intro !== undefined) {

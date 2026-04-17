@@ -29,13 +29,13 @@ export const DEFAULT_EXTENSION_NAME = "☆SPR";
  * 
  * 包含武将的基本信息、介绍、称号、评级、稀有度、台词等。
  * @typedef {Object} CharacterInfo
- * @property {Character} character - 武将基本信息
- * @property {string=} intro - 武将介绍
- * @property {string=} title - 武将称号
- * @property {Rank=} rank - 武将评级
- * @property {Rarity=} rarity - 稀有度
- * @property {string=} dieVoice - 阵亡台词
- * @property {string=} victoryVoice - 胜利台词
+ * @property {Character} character 武将基本信息
+ * @property {string=} intro 武将介绍
+ * @property {string=} title 武将称号
+ * @property {string=} dieVoice 阵亡台词
+ * @property {string=} victoryVoice 胜利台词
+ * @property {Rank=} rank 武将评级
+ * @property {Rarity=} rarity 稀有度
  * @property {Record<string,string[]>=} audioRedirect
  * ### 技能语音重定向
  * 
@@ -80,10 +80,10 @@ export const DEFAULT_EXTENSION_NAME = "☆SPR";
  * 
  * 包含技能的名称、代码、描述、台词等。
  * @typedef {Object} SkillInfo
- * @property {Skill} skill - 技能代码
- * @property {string=} description - 技能描述
- * @property {string[]=} voices - 技能台词
- * @property {Record<string,string>=} texts - 技能包含的文本信息
+ * @property {Skill} skill 技能代码
+ * @property {string=} description 技能描述
+ * @property {string[]=} voices 技能台词
+ * @property {Record<string,string>=} texts 技能包含的文本信息
  */
 
 /**
