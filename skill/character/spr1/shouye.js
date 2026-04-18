@@ -57,13 +57,7 @@ export default new SkillData("spr_shouye|守邺", {
 				}).forResult();
 			}
 		},
-		/**
-		 * @param {GameEvent} event 
-		 * @param {Player} player 
-		 * @param {string} name trigger name
-		 * @param {number} indexedData 
-		 * @param {GameEvent} evt cost result
-		 */
+		/** @type {LogAudioFunc} */
 		logAudio(event, player, name, indexedData, evt) {
 			let idx = [1, 2].randomGet();
 			if (player.storage.spr_shouye) idx += 2;

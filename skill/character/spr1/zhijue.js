@@ -51,7 +51,6 @@ export default new SkillData("spr_zhijue|智绝", {
 			backup(links, player) {
 				/**@type {Skill} */
 				const viewAsSkill = {
-					// audio: true,
 					selectCard: 1,
 					filterCard: true,
 					position: "hes",

@@ -4,6 +4,9 @@ import mengjin from "./spr1/mengjin.js";
 import yingzi from "./spr1/yingzi.js";
 import shichou from "./spr1/shichou.js";
 
+import nuzhan from "./spr1/nuzhan.js";
+import nianen from "./spr1/nianen.js";
+
 import qunbian from "./spr1/qunbian.js";
 import zhijue from "./spr1/zhijue.js";
 
@@ -16,6 +19,9 @@ export default [
 	mengjin,
 	yingzi,
 	shichou,
+
+	nuzhan,
+	nianen,
 
 	qunbian,
 	zhijue,

@@ -34,6 +34,32 @@ pkg.addCharacter("spr_zhugeliang|星诸葛亮", {
 	rarity: "legend",
 });
 
+pkg.addCharacter("spr_guanyu|星关羽", {
+	character: new Character({
+		sex: "male",
+		group: "wei",
+		hp: 4,
+		skills: ["wusheng", "spr_nuzhan", "spr_nianen"],
+	}),
+	intro: `
+字云长，河东郡解县人。跟从刘备起兵，镇压黄巾起义。\
+刘备夺取徐州后，行下邳太守。建安五年，曹操东征刘备，\
+关羽兵败被俘，暂时投靠曹操。参加官渡之战，诛杀颜良，\
+解白马之围，受封汉寿亭侯。得知刘备下落后，前往投奔。
+`.trim(),
+	title: "单骑千里",
+	dieVoice: "大哥，三弟，云长去矣……",
+	rank: "a",
+	rarity: "rare",
+	audioRedirect: {
+		"wusheng": [
+			"可知关某之威！",
+			"关某既出，敌将定皆披靡！",
+		],
+	},
+});
+
+
 pkg.addCharacter("spr_shenpei|星审配", {
 	character: new Character({
 		sex: "male",
