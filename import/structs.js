@@ -82,8 +82,14 @@ export const DEFAULT_EXTENSION_NAME = "☆SPR";
  * @typedef {Object} SkillInfo
  * @property {Skill} skill 技能代码
  * @property {string=} description 技能描述
+ * @property {(player: Player,desc:string)=>string|undefined=} dynamicDescription
+ * 技能描述动态翻译函数（Skill Description Dynamic Translation Function）
+ * 
+ * _@param_ `player` 技能拥有者
+ * 
+ * _@param_ `desc` 原始描述
  * @property {string[]=} voices 技能台词
- * @property {Record<string,string>=} texts 技能包含的文本信息
+ * @property {Record<string,string>=} texts 技能包含的其他文本信息
  */
 
 /**
@@ -94,52 +100,52 @@ export const DEFAULT_EXTENSION_NAME = "☆SPR";
  */
 class AbstractData {
 	/**
-   * @param {string} formattedName
-   * @param {T} data
-   * @param {string=} extensionName
-   */
+	 * @param {string} formattedName
+	 * @param {T} data
+	 * @param {string=} extensionName
+	 */
 	constructor(formattedName, data, extensionName) {
 		const [id, name] = formattedName.split("|");
 
 		/** 
-     * 此类型数据对应的id
-     * @type {string}
-     */
+		 * 此类型数据对应的id
+		 * @type {string}
+		 */
 		this.id = id;
 
 		/** 
-     * 此类型数据对应的译名
-     * @type {string|undefined}
-     */
+		 * 此类型数据对应的译名
+		 * @type {string|undefined}
+		 */
 		this.name = name || undefined;
 
 		/** 
-     * 此类型数据对应的信息
-     * @type {T} 
-     * @protected
-     */
-		this.info = data;
+		 * 此类型数据对应的信息
+		 * @type {T} 
+		 * @protected
+		 */
+		this._info = data;
 
 		/** 
-     * 扩展名
-     * @type {string}
-     * @protected
-     */
-		this.extensionName = extensionName || DEFAULT_EXTENSION_NAME;
+		 * 扩展名
+		 * @type {string}
+		 * @protected
+		 */
+		this._extensionName = extensionName || DEFAULT_EXTENSION_NAME;
 	}
 
 	/**
-   * 获取此类型数据对应的信息
-   * @returns {T}
-   */
+	 * 获取此类型数据对应的信息
+	 * @returns {T}
+	 */
 	getInfo() {
-		return this.info;
+		return this._info;
 	}
 
 	/** 
-   * 获取此类型数据的相关翻译文本
-   * @returns {Record<string,string>} 
-   */
+	 * 获取此类型数据的相关翻译文本
+	 * @returns {Record<string,string>} 
+	 */
 	getTranslates() {
 		throw new Error("Abstract method");
 	}
@@ -151,27 +157,27 @@ class AbstractData {
  */
 export class CharacterData extends AbstractData {
 	/**
-   * 创建一个武将数据对象，用于存储武将的id、名称、信息等。
-   * @param {string} formattedName 格式化的武将名称，格式为 `id|译名`
-   * @param {CharacterInfo} data 武将数据
-   * @param {string=} extensionName 扩展名，默认为 `☆SPR`
-   */
+	 * 创建一个武将数据对象，用于存储武将的id、名称、信息等。
+	 * @param {string} formattedName 格式化的武将名称，格式为 `id|译名`
+	 * @param {CharacterInfo} data 武将数据
+	 * @param {string=} extensionName 扩展名，默认为 `☆SPR`
+	 */
 	constructor(formattedName, data, extensionName) {
 		super(formattedName, data, extensionName);
 	}
 
 	/**
-   * 获取武将信息
-   *  @returns {CharacterInfo} 
-   */
+	 * 获取武将信息
+	 *  @returns {CharacterInfo} 
+	 */
 	getInfo() {
 		return super.getInfo();
 	}
 
 	/** 
-   * 获取武将相关的翻译文本
-   * @returns {Record<string,string>} 
-   */
+	 * 获取武将相关的翻译文本
+	 * @returns {Record<string,string>} 
+	 */
 	getTranslates() {
 		/** @type {Record<string,string>} */
 		const ret = {};
@@ -180,10 +186,10 @@ export class CharacterData extends AbstractData {
 			ret[this.id] = this.name;
 		}
 
-		if (this.info.dieVoice !== undefined) {
-			ret[`#ext:${this.extensionName}/audio/die/${this.id}:die`] =
-        this.info.dieVoice;
-			ret[`#${this.id}:die`] = this.info.dieVoice;
+		if (this._info.dieVoice !== undefined) {
+			ret[`#ext:${this._extensionName}/audio/die/${this.id}:die`] =
+				this._info.dieVoice;
+			ret[`#${this.id}:die`] = this._info.dieVoice;
 		}
 
 		return ret;
@@ -196,11 +202,11 @@ export class CharacterData extends AbstractData {
  */
 export class SkillData extends AbstractData {
 	/**
-   * 创建一个技能数据对象，用于存储技能的id、名称、信息等。
-   * @param {string} formattedName 格式化的技能名称，格式为 `id|译名`
-   * @param {SkillInfo} data 技能数据
-   * @param {string=} extensionName 扩展名，默认为 `☆SPR`
-   */
+	 * 创建一个技能数据对象，用于存储技能的id、名称、信息等。
+	 * @param {string} formattedName 格式化的技能名称，格式为 `id|译名`
+	 * @param {SkillInfo} data 技能数据
+	 * @param {string=} extensionName 扩展名，默认为 `☆SPR`
+	 */
 	constructor(formattedName, data, extensionName) {
 		super(
 			formattedName,
@@ -210,17 +216,17 @@ export class SkillData extends AbstractData {
 	}
 
 	/**
-   * 获取技能信息
-   * @returns {SkillInfo} 
-   */
+	 * 获取技能信息
+	 * @returns {SkillInfo} 
+	 */
 	getInfo() {
 		return super.getInfo();
 	}
 
 	/** 
-   * 获取技能相关的翻译文本
-   * @returns {Record<string,string>} 
-   */
+	 * 获取技能相关的翻译文本
+	 * @returns {Record<string,string>} 
+	 */
 	getTranslates() {
 		/** @type {Record<string,string>} */
 		const ret = {};
@@ -229,23 +235,38 @@ export class SkillData extends AbstractData {
 			ret[this.id] = this.name;
 		}
 
-		if (this.info.description !== undefined) {
-			ret[`${this.id  }_info`] = this.info.description;
+		if (this._info.description !== undefined) {
+			ret[`${this.id}_info`] = this._info.description;
 		}
 
-		if (Array.isArray(this.info.voices)) {
-			for (let i = 0; i < this.info.voices.length; i++) {
-				const voice = this.info.voices[i];
-				ret[`#ext:${this.extensionName}/audio/skill/${this.id}${i + 1}`] = voice;
+		if (Array.isArray(this._info.voices)) {
+			for (let i = 0; i < this._info.voices.length; i++) {
+				const voice = this._info.voices[i];
+				ret[`#ext:${this._extensionName}/audio/skill/${this.id}${i + 1}`] = voice;
 			}
 		}
 
-		if (this.info.texts) {
-			for (const [key, value] of Object.entries(this.info.texts)) {
+		if (this._info.texts) {
+			for (const [key, value] of Object.entries(this._info.texts)) {
 				ret[key] = value;
 			}
 		}
 
 		return ret;
+	}
+
+	/** 
+	 * 获取技能描述的动态翻译
+	 * @returns {((player: Player) => string) | void} 
+	 */
+	getDynamicTranslate() {
+		const
+			desc = this._info.description,
+			defaultDesc = `${this.id}_info`,
+			dynamicDesc = this._info.dynamicDescription;
+		if (dynamicDesc) {
+			return (player) =>
+				dynamicDesc(player, desc || defaultDesc) || desc || defaultDesc;
+		}
 	}
 }

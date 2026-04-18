@@ -3,6 +3,12 @@ import { lib, game, ui, get, ai, _status } from "../../../../../noname.js";
 
 export default new SkillData("spr_yingzi|英姿", {
 	description: "摸牌阶段，你可以多摸一张牌。",
+	dynamicDescription(player, desc) {
+		if (player.storage.spr_jinzi_shown &&
+			player.storage.spr_jinzi_shown > 3) {
+			return desc.replace("一", "两");
+		}
+	},
 	voices: [
 		"鸾铃到处，敌皆破胆！",
 	],
@@ -22,14 +28,6 @@ export default new SkillData("spr_yingzi|英姿", {
 				v *= 2;
 			}
 			trigger.num += v;
-		},
-		prompt2(event, player) {
-			let info = get.skillInfoTranslation("spr_yingzi");
-			if (player.storage.spr_jinzi_shown &&
-				player.storage.spr_jinzi_shown > 3) {
-				info = info.replace("一", "两");
-			}
-			return info;
 		},
 	},
 });

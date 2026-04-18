@@ -16,18 +16,8 @@ export default new SkillData("spr_nuzhan|怒斩", {
 	],
 	skill: {
 		audio: "ext:☆SPR/audio/skill:5",
-		chargeSkill: true,
-		init(player) {
-			if (!player.storage.maxCharge) {
-				player.storage.maxCharge = 0;
-			}
-			player.storage.maxCharge += 3;
-		},
-		onremove(player, type) {
-			if (player.storage.maxCharge) {
-				player.storage.maxCharge -= 3;
-			}
-		},
+
+		chargeSkill: 3,
 		group: [
 			"spr_nuzhan_phaseUse",
 			"spr_nuzhan_onDamage",
@@ -40,12 +30,12 @@ export default new SkillData("spr_nuzhan|怒斩", {
 				usable: 1,
 				filter(event, player, name, target) {
 					return player.countCards("he") > 0 &&
-						player.countMark("charge") < player.storage.maxCharge;
+						player.countCharge(true) > 0;
 				},
 				filterCard: true,
 				position: "he",
 				prompt: "弃置一张牌并获得1点蓄力点",
-				/** @type {LogAudioFunc} */
+				/** @type {import("../../../type.ts").LogAudioFunc} */
 				logAudio(event, player, name, indexedData, evt) {
 					const idx = [1, 2].randomGet();
 					return `ext:☆SPR/audio/skill/spr_nuzhan${idx}.mp3`;
@@ -55,7 +45,7 @@ export default new SkillData("spr_nuzhan|怒斩", {
 					return 7 - get.value(card);
 				},
 				async content(event, trigger, player) {
-					player.addMark("charge");
+					player.addCharge();
 				},
 				ai: {
 					order() { return get.order({ name: "jiu" }) - 0.1; },
@@ -70,9 +60,9 @@ export default new SkillData("spr_nuzhan|怒斩", {
 				},
 				filter(event, player, name, target) {
 					return player.countCards("he") > 0 &&
-						player.countMark("charge") < player.storage.maxCharge;
+						player.countCharge(true) > 0;
 				},
-				/** @type {LogAudioFunc} */
+				/** @type {import("../../../type.ts").LogAudioFunc} */
 				logAudio(event, player, name, indexedData, evt) {
 					const idx = [3, 4].randomGet();
 					return `ext:☆SPR/audio/skill/spr_nuzhan${idx}.mp3`;
@@ -81,13 +71,14 @@ export default new SkillData("spr_nuzhan|怒斩", {
 					event.result = await player.chooseToDiscard({
 						prompt: get.prompt("spr_nuzhan"),
 						prompt2: "弃置一张牌并获得1点蓄力点",
+						position: "he",
 						ai(card) {
 							return 7 - get.useful(card);
 						},
 					}).forResult();
 				},
 				async content(event, trigger, player) {
-					player.addMark("charge");
+					player.addCharge();
 				},
 			},
 			enchant: {
@@ -99,20 +90,24 @@ export default new SkillData("spr_nuzhan|怒斩", {
 					return (
 						event.card.name == "sha" &&
 						get.suit(event.card) == "heart" &&
-						player.hasMark("charge")
+						player.countCharge() > 0
 					);
 				},
-				/** @type {LogAudioFunc} */
-				logAudio(event, player, name, indexedData, evt) {
-					return "ext:☆SPR/audio/skill/spr_nuzhan5.mp3";
+				/** @type {import("../../../type.ts").LogAudioFunc} */
+				logAudio(event, player, name, indexedData, result) {
+					if (player.countCharge() > 2) {
+						return "ext:☆SPR/audio/skill/spr_nuzhan5.mp3";
+					}
+					return false;
 				},
 				async content(event, trigger, player) {
-					const x = player.countMark("charge");
-					player.removeMark("charge", x);
+					const x = player.countCharge();
+					player.removeCharge(x);
 					game.setNature(trigger.card, "fire");
 					trigger.baseDamage += x;
 					if (x > 1) {
-						if (!trigger.card.storage) trigger.card.storage = {};
+						if (!trigger.card.storage)
+							trigger.card.storage = {};
 						trigger.card.storage.spr_nuzhan = x - 1;
 					}
 				},
@@ -121,11 +116,12 @@ export default new SkillData("spr_nuzhan|怒斩", {
 					damageBonus: true,
 					effect: {
 						player(card, player, target, result1) {
+							const charge = player.countCharge();
 							if (
 								card.name == "sha" &&
 								get.suit(card) == "heart" &&
-								player.hasMark("charge")
-							) return player.countMark("charge");
+								charge > 0
+							) return charge;
 						},
 					},
 				},

@@ -49,7 +49,9 @@ export default new SkillData("spr_zhijue|智绝", {
 				return player.getUseValue(button.link[2]);
 			},
 			backup(links, player) {
-				/**@type {Skill} */
+				/** @type {string} */
+				const cardname = links[0][2];
+				/** @type {Skill} */
 				const viewAsSkill = {
 					selectCard: 1,
 					filterCard: true,
@@ -60,16 +62,15 @@ export default new SkillData("spr_zhijue|智绝", {
 						return 7 - get.value(card);
 					},
 					viewAs: {
-						name: links[0][2],
+						name: cardname,
+					},
+					/** @type {import("../../../type.ts").LogAudioFunc} */
+					logAudio(event, player, name, indexedData, evt) {
+						const idx = ["wuzhong", "guohe", "wuxie"].indexOf(cardname) + 1;
+						return `ext:☆SPR/audio/skill/spr_zhijue${idx}.mp3`;
 					},
 					onuse(result, player) {
-						player.storage.spr_zhijue_used.push(links[0][2]);
-						const idx = ["wuzhong", "guohe", "wuxie"].indexOf(links[0][2]) + 1;
-						game.broadcastAll(() => {
-							// @ts-expect-error lib.config为动态加入，不能被ts解析
-							if (lib.config.background_speak)
-								game.playAudio({ path: `ext:☆SPR/audio/skill/spr_zhijue${idx}.mp3` });
-						});
+						player.storage.spr_zhijue_used.push(cardname);
 					},
 				};
 				return viewAsSkill;

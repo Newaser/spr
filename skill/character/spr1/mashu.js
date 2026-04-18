@@ -3,6 +3,12 @@ import { lib, game, ui, get, ai, _status } from "../../../../../noname.js";
 
 export default new SkillData("spr_mashu|马术", {
 	description: "<b>锁定技</b>，你与其他角色的距离-1。",
+	dynamicDescription(player, desc) {
+		if (player.storage.spr_jinzi_shown &&
+			player.storage.spr_jinzi_shown > 3) {
+			return desc.replace("1", "2");
+		}
+	},
 	skill: {
 		locked: true,
 		mod: {

@@ -8,23 +8,26 @@ import characterSkills from "../skill/character/index.js";
 export const precontent = (data) => {
 	// add characters
 	const
-		/** @type {Record<string, Character>} */
+		/** @type {importCharacterConfig['character'] & Record<string, Character>} */
 		character = {},
 
-		/** @type {Record<string, string>} */
+		/** @type {importCharacterConfig['characterIntro']} */
 		characterIntro = {},
 
-		/** @type {Record<string, string>} */
+		/** @type {importCharacterConfig['characterTitle']} */
 		characterTitle = {},
 
-		/** @type {Record<string, Record<string, string[]>>} */
+		/** @type {importCharacterConfig['characterSort']} */
 		characterSort = { spr: {} },
 
-		/** @type {Record<string, Skill>} */
+		/** @type {importCharacterConfig['skill']} */
 		skill = {},
 
-		/** @type {Record<string, string>} */
+		/** @type {importCharacterConfig['translate']} */
 		translate = {},
+
+		/** @type {importCharacterConfig['dynamicTranslate']} */
+		dynamicTranslate = {},
 
 		/** @type {SkillData[]} */
 		audioRedirectSkills = [];
@@ -35,9 +38,9 @@ export const precontent = (data) => {
 			const info = characterData.getInfo();
 			character[characterData.id] = info.character;
 			character[characterData.id].img =
-        `extension/☆SPR/image/character/${  characterData.id  }.jpg`;
+				`extension/☆SPR/image/character/${characterData.id}.jpg`;
 			character[characterData.id].dieAudios =
-        [`ext:☆SPR/audio/die/${  characterData.id  }.mp3`];
+				[`ext:☆SPR/audio/die/${characterData.id}.mp3`];
 			if (info.intro !== undefined) {
 				characterIntro[characterData.id] = info.intro;
 			}
@@ -47,10 +50,10 @@ export const precontent = (data) => {
 			sort.push(characterData.id);
 			if (info.audioRedirect !== undefined) {
 				for (const skillId in info.audioRedirect) {
-					audioRedirectSkills.push(new SkillData(`${skillId  }__${  characterData.id}`, {
+					audioRedirectSkills.push(new SkillData(`${skillId}__${characterData.id}`, {
 						voices: info.audioRedirect[skillId],
 						skill: {
-							audio: `ext:☆SPR/audio/skill:${  info.audioRedirect[skillId].length}`,
+							audio: `ext:☆SPR/audio/skill:${info.audioRedirect[skillId].length}`,
 						},
 					}));
 				}
@@ -63,6 +66,10 @@ export const precontent = (data) => {
 	for (const characterSkill of characterSkills.concat(audioRedirectSkills)) {
 		skill[characterSkill.id] = characterSkill.getInfo().skill;
 		Object.assign(translate, characterSkill.getTranslates());
+		const dynamicDesc = characterSkill.getDynamicTranslate();
+		if (dynamicDesc !== undefined) {
+			dynamicTranslate[characterSkill.id] = dynamicDesc;
+		}
 	}
 
 	game.import("character", function () {
@@ -75,6 +82,7 @@ export const precontent = (data) => {
 			characterSort,
 			skill,
 			translate,
+			dynamicTranslate,
 		};
 		return config;
 	});

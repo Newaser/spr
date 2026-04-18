@@ -3,6 +3,12 @@ import { lib, game, ui, get, ai, _status } from "../../../../../noname.js";
 
 export default new SkillData("spr_mengjin|猛进", {
 	description: "当你使用的【杀】被【闪】抵消时，你可以弃置目标角色的一张牌。",
+	dynamicDescription(player, desc) {
+		if (player.storage.spr_jinzi_shown &&
+			player.storage.spr_jinzi_shown > 3) {
+			return desc.replace("一", "两");
+		}
+	},
 	voices: [
 		"休想跑！",
 		"趁锐气正盛，擒敌军之将！",
@@ -30,14 +36,6 @@ export default new SkillData("spr_mengjin|猛进", {
 				target: trigger.target,
 				selectButton: v,
 			});
-		},
-		prompt2(event, player) {
-			let info = get.skillInfoTranslation("spr_mengjin");
-			if (player.storage.spr_jinzi_shown &&
-				player.storage.spr_jinzi_shown > 3) {
-				info = info.replace("一", "两");
-			}
-			return info;
 		},
 	},
 });
