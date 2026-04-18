@@ -1,5 +1,5 @@
-import { SkillData } from "../../import/structs.js";
-import { lib, game, ui, get, ai, _status } from "../../../../noname.js";
+import { SkillData } from "../../../import/structs.js";
+import { lib, game, ui, get, ai, _status } from "../../../../../noname.js";
 
 export default new SkillData("spr_mengjin|猛进", {
 	description: "当你使用的【杀】被【闪】抵消时，你可以弃置目标角色的一张牌。",

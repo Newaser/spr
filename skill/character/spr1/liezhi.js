@@ -1,9 +1,9 @@
-import { SkillData } from "../../import/structs.js";
-import { lib, game, ui, get, ai, _status } from "../../../../noname.js";
+import { SkillData } from "../../../import/structs.js";
+import { lib, game, ui, get, ai, _status } from "../../../../../noname.js";
 
 export default new SkillData("spr_liezhi|烈直", {
 	description:
-    "出牌阶段限一次，你可以受到X点无来源伤害（X为你发动此技能的次数），然后视为使用一张【万箭齐发】。",
+		"出牌阶段限一次，你可以受到X点无来源伤害（X为你发动此技能的次数），然后视为使用一张【万箭齐发】。",
 	voices: [
 		"只恨箭支太少，不能射杀汝等！",
 		"身殒事小，秉节事大。",
@@ -29,7 +29,7 @@ export default new SkillData("spr_liezhi|烈直", {
 		},
 		intro: {
 			content(storage, player, skill) {
-				return `下次烈直的伤害：${  player.countMark("spr_liezhi")}`;
+				return `下次烈直的伤害：${player.countMark("spr_liezhi")}`;
 			},
 		},
 		ai: {
@@ -65,7 +65,7 @@ export default new SkillData("spr_liezhi|烈直", {
 					if (damage >= player.hp + saveCards) return -Infinity;
 					if (
 						player.hasSkill("spr_shouye") &&
-            !player.storage.spr_shouye
+						!player.storage.spr_shouye
 					)
 						return Math.min(player.getDamagedHp(true), 2 - damage) * 2;
 					return -damage * 2;
@@ -84,23 +84,23 @@ export default new SkillData("spr_liezhi|烈直", {
 				multineg: 1,
 			},
 			/**
-       * 
-       * @param {Player} target 
-       * @param {Card} card 
-       * @param {Player} player 
-       * @param {Player} viewer 
-       * @param {number} status 
-       * @returns {number|void}
-       */
+	   * 
+	   * @param {Player} target 
+	   * @param {Card} card 
+	   * @param {Player} player 
+	   * @param {Player} viewer 
+	   * @param {number} status 
+	   * @returns {number|void}
+	   */
 			wuxie(target, card, player, viewer, status) {
 				if (
 					get.attitude(viewer, target) > 0 &&
-          target.countCards("h", "shan")
+					target.countCards("h", "shan")
 				) {
 					if (
 						!target.countCards("h") ||
-            target.hp == 1 ||
-            Math.random() < 0.7
+						target.hp == 1 ||
+						Math.random() < 0.7
 					)
 						return 0;
 				}

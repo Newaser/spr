@@ -1,5 +1,5 @@
-import { SkillData } from "../../import/structs.js";
-import { lib, game, ui, get, ai, _status } from "../../../../noname.js";
+import { SkillData } from "../../../import/structs.js";
+import { lib, game, ui, get, ai, _status } from "../../../../../noname.js";
 
 export default new SkillData("spr_jinzi|锦姿", {
 	description:

@@ -1,11 +1,14 @@
-import jinzi from "./jinzi.js";
-import mashu from "./mashu.js";
-import mengjin from "./mengjin.js";
-import yingzi from "./yingzi.js";
-import shichou from "./shichou.js";
+import jinzi from "./spr1/jinzi.js";
+import mashu from "./spr1/mashu.js";
+import mengjin from "./spr1/mengjin.js";
+import yingzi from "./spr1/yingzi.js";
+import shichou from "./spr1/shichou.js";
 
-import liezhi from "./liezhi.js";
-import shouye from "./shouye.js";
+import qunbian from "./spr1/qunbian.js";
+import zhijue from "./spr1/zhijue.js";
+
+import liezhi from "./spr1/liezhi.js";
+import shouye from "./spr1/shouye.js";
 
 export default [
 	jinzi,
@@ -13,6 +16,9 @@ export default [
 	mengjin,
 	yingzi,
 	shichou,
+
+	qunbian,
+	zhijue,
 
 	liezhi,
 	shouye,

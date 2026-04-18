@@ -1,5 +1,5 @@
-import { SkillData } from "../../import/structs.js";
-import { lib, game, ui, get, ai, _status } from "../../../../noname.js";
+import { SkillData } from "../../../import/structs.js";
+import { lib, game, ui, get, ai, _status } from "../../../../../noname.js";
 
 export default new SkillData("spr_yingzi|英姿", {
 	description: "摸牌阶段，你可以多摸一张牌。",

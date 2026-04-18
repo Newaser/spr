@@ -1,5 +1,5 @@
-import { SkillData } from "../../import/structs.js";
-import { lib, game, ui, get, ai, _status } from "../../../../noname.js";
+import { SkillData } from "../../../import/structs.js";
+import { lib, game, ui, get, ai, _status } from "../../../../../noname.js";
 
 export default new SkillData("spr_mashu|马术", {
 	description: "<b>锁定技</b>，你与其他角色的距离-1。",
