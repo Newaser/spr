@@ -1,4 +1,4 @@
-import { SkillData } from "../../../util/import.js";
+import { SkillData } from "../../../utils/import.js";
 import { lib, game, ui, get, ai, _status } from "../../../../../noname.js";
 
 export default new SkillData("spr_mengjin|猛进", {
@@ -14,7 +14,6 @@ export default new SkillData("spr_mengjin|猛进", {
 		"趁锐气正盛，擒敌军之将！",
 	],
 	skill: {
-		audio: "ext:☆SPR/audio/skill:2",
 		trigger: {
 			player: "shaMiss",
 		},

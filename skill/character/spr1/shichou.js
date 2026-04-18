@@ -1,4 +1,4 @@
-import { SkillData } from "../../../util/import.js";
+import { SkillData } from "../../../utils/import.js";
 import { lib, game, ui, get, ai, _status } from "../../../../../noname.js";
 
 
@@ -81,7 +81,6 @@ export default new SkillData("spr_shichou|誓仇", {
 		"不枭曹贼之首祀于父前，吾枉为人子！",
 	],
 	skill: {
-		audio: "ext:☆SPR/audio/skill:2",
 		enable: "chooseToUse",
 		filter(event, player, name, target) {
 			return (

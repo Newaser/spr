@@ -1,4 +1,5 @@
-import { SkillData } from "../../../util/import.js";
+import { URL } from "../../../constants.js";
+import { SkillData } from "../../../utils/import.js";
 import { lib, game, ui, get, ai, _status } from "../../../../../noname.js";
 
 export default new SkillData("spr_shouye|守邺", {
@@ -11,7 +12,6 @@ export default new SkillData("spr_shouye|守邺", {
 		"十，则围之；五，则攻之。",
 	],
 	skill: {
-		audio: "ext:☆SPR/audio/skill:4",
 		mark: true,
 		marktext: "☯",
 		zhuanhuanji: true,
@@ -57,11 +57,11 @@ export default new SkillData("spr_shouye|守邺", {
 				}).forResult();
 			}
 		},
-		/** @type {import("../../../util/type.ts").LogAudioFunc} */
+		/** @type {import("../../../utils/type.ts").LogAudioFunc} */
 		logAudio(event, player, name, indexedData, evt) {
 			let idx = [1, 2].randomGet();
 			if (player.storage.spr_shouye) idx += 2;
-			return `ext:☆SPR/audio/skill/spr_shouye${idx}.mp3`;
+			return `ext:${URL.SKILL_AUDIO}/spr_shouye${idx}.mp3`;
 		},
 		async content(event, trigger, player) {
 			player.changeZhuanhuanji("spr_shouye");

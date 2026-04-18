@@ -1,4 +1,4 @@
-import { SkillData } from "../../../util/import.js";
+import { SkillData } from "../../../utils/import.js";
 import { lib, game, ui, get, ai, _status } from "../../../../../noname.js";
 
 export default new SkillData("spr_nianen|念恩", {
@@ -8,7 +8,6 @@ export default new SkillData("spr_nianen|念恩", {
 		"心念桃园兄弟义，不背屯土忠君誓！",
 	],
 	skill: {
-		audio: "ext:☆SPR/audio/skill:2",
 		forced: true,
 		trigger: {
 			player: ["useCard", "respond"],

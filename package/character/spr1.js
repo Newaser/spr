@@ -1,4 +1,4 @@
-import { CharacterPackage } from "../../util/import.js";
+import { CharacterPackage } from "../../utils/import.js";
 import { Character } from "../../../../noname/library/element/index.js";
 
 export default new CharacterPackage("spr1|☆SPR·其一")

@@ -1,4 +1,4 @@
-import { SkillData } from "../../../util/import.js";
+import { SkillData } from "../../../utils/import.js";
 import { lib, game, ui, get, ai, _status } from "../../../../../noname.js";
 
 export default new SkillData("spr_yingzi|英姿", {
@@ -13,7 +13,6 @@ export default new SkillData("spr_yingzi|英姿", {
 		"鸾铃到处，敌皆破胆！",
 	],
 	skill: {
-		audio: "ext:☆SPR/audio/skill:1",
 		trigger: {
 			player: "phaseDrawBegin2",
 		},

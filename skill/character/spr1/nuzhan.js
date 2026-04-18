@@ -1,4 +1,5 @@
-import { SkillData } from "../../../util/import.js";
+import { URL } from "../../../constants.js";
+import { SkillData } from "../../../utils/import.js";
 import { lib, game, ui, get, ai, _status } from "../../../../../noname.js";
 
 export default new SkillData("spr_nuzhan|怒斩", {
@@ -15,8 +16,6 @@ export default new SkillData("spr_nuzhan|怒斩", {
 		"喝啊！！！",
 	],
 	skill: {
-		audio: "ext:☆SPR/audio/skill:5",
-
 		chargeSkill: 3,
 		group: [
 			"spr_nuzhan_phaseUse",
@@ -35,10 +34,10 @@ export default new SkillData("spr_nuzhan|怒斩", {
 				filterCard: true,
 				position: "he",
 				prompt: "弃置一张牌并获得1点蓄力点",
-				/** @type {import("../../../util/type.ts").LogAudioFunc} */
+				/** @type {import("../../../utils/type.ts").LogAudioFunc} */
 				logAudio(event, player, name, indexedData, evt) {
 					const idx = [1, 2].randomGet();
-					return `ext:☆SPR/audio/skill/spr_nuzhan${idx}.mp3`;
+					return `${URL.SKILL_AUDIO}/spr_nuzhan${idx}.mp3`;
 				},
 				/** @param {Card} card */
 				check(card) {
@@ -62,10 +61,10 @@ export default new SkillData("spr_nuzhan|怒斩", {
 					return player.countCards("he") > 0 &&
 						player.countCharge(true) > 0;
 				},
-				/** @type {import("../../../util/type.ts").LogAudioFunc} */
+				/** @type {import("../../../utils/type.ts").LogAudioFunc} */
 				logAudio(event, player, name, indexedData, evt) {
 					const idx = [3, 4].randomGet();
-					return `ext:☆SPR/audio/skill/spr_nuzhan${idx}.mp3`;
+					return `ext:${URL.SKILL_AUDIO}/spr_nuzhan${idx}.mp3`;
 				},
 				async cost(event, trigger, player) {
 					event.result = await player.chooseToDiscard({
@@ -93,10 +92,10 @@ export default new SkillData("spr_nuzhan|怒斩", {
 						player.countCharge() > 0
 					);
 				},
-				/** @type {import("../../../util/type.ts").LogAudioFunc} */
+				/** @type {import("../../../utils/type.ts").LogAudioFunc} */
 				logAudio(event, player, name, indexedData, result) {
 					if (player.countCharge() > 2) {
-						return "ext:☆SPR/audio/skill/spr_nuzhan5.mp3";
+						return `ext:${URL.SKILL_AUDIO}/spr_nuzhan5.mp3`;
 					}
 					return false;
 				},

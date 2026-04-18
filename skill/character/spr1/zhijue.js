@@ -1,4 +1,5 @@
-import { SkillData } from "../../../util/import.js";
+import { URL } from "../../../constants.js";
+import { SkillData } from "../../../utils/import.js";
 import { lib, game, ui, get, ai, _status } from "../../../../../noname.js";
 
 export default new SkillData("spr_zhijue|智绝", {
@@ -9,7 +10,6 @@ export default new SkillData("spr_zhijue|智绝", {
 		"尽料敌计，使其无计可施。",
 	],
 	skill: {
-		audio: "ext:☆SPR/audio/skill:3",
 		enable: "chooseToUse",
 		init(player, skill) {
 			player.storage.spr_zhijue_used = [];
@@ -64,10 +64,10 @@ export default new SkillData("spr_zhijue|智绝", {
 					viewAs: {
 						name: cardname,
 					},
-					/** @type {import("../../../util/type.ts").LogAudioFunc} */
+					/** @type {import("../../../utils/type.ts").LogAudioFunc} */
 					logAudio(event, player, name, indexedData, evt) {
 						const idx = ["wuzhong", "guohe", "wuxie"].indexOf(cardname) + 1;
-						return `ext:☆SPR/audio/skill/spr_zhijue${idx}.mp3`;
+						return `ext:${URL.SKILL_AUDIO}/spr_zhijue${idx}.mp3`;
 					},
 					onuse(result, player) {
 						player.storage.spr_zhijue_used.push(cardname);

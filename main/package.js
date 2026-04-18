@@ -1,9 +1,10 @@
+import { EXTENSION } from "../constants.js";
 import { lib } from "../../../noname.js";
 
 /** @type {importExtensionConfig['package']} */
 export const packageData = {};
 
-const info = await lib.init.promises.json(`${lib.assetURL}extension/☆SPR/info.json`);
+const info = await lib.init.promises.json(`${lib.assetURL}extension/${EXTENSION.NAME}/info.json`);
 
 packageData.author = `<span class="bluetext">${info.author}</span>`;
 packageData.version = info.version;
@@ -24,5 +25,5 @@ packageData.intro = `
   <br>更新日期：${info.lastUpdated}
   <br>支持的无名杀最低版本：v${info.minNoname}
   ${info.adaptedExts.length > 0 ?
-		`<br>适配的其他扩展：${  info.adaptedExts.join("、")}` : ""}
+		`<br>适配的其他扩展：${info.adaptedExts.join("、")}` : ""}
 </p>`;

@@ -4,7 +4,7 @@ import characterPkgs from "../package/character/index.js";
 /** @type {importExtensionConfig['content']} */
 export const content = (config, pack) => {
 	for (const pkg of characterPkgs) {
-		for (const characterData of pkg.dataset) {
+		for (const characterData of pkg.characterData) {
 			const info = characterData.getInfo();
 
 			// character rank

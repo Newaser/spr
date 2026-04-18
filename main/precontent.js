@@ -1,6 +1,7 @@
+import { EXTENSION, URL, STYLE } from "../constants.js";
 import { lib, game, ui, get, ai, _status } from "../../../noname.js";
 import { Character } from "../../../noname/library/element/index.js";
-import { SkillData } from "../util/import.js";
+import { SkillData } from "../utils/import.js";
 import characterPkgs from "../package/character/index.js";
 import characterSkills from "../skill/character/index.js";
 
@@ -18,7 +19,7 @@ export const precontent = (data) => {
 		characterTitle = {},
 
 		/** @type {importCharacterConfig['characterSort']} */
-		characterSort = { spr: {} },
+		characterSort = { [EXTENSION.ID]: {} },
 
 		/** @type {importCharacterConfig['skill']} */
 		skill = {},
@@ -34,13 +35,13 @@ export const precontent = (data) => {
 
 	for (const pkg of characterPkgs) {
 		const sort = [];
-		for (const characterData of pkg.dataset) {
+		for (const characterData of pkg.characterData) {
 			const info = characterData.getInfo();
 			character[characterData.id] = info.character;
 			character[characterData.id].img =
-				`extension/☆SPR/image/character/${characterData.id}.jpg`;
+				`extension/${EXTENSION.NAME}/image/character/${characterData.id}.jpg`;
 			character[characterData.id].dieAudios =
-				[`ext:☆SPR/audio/die/${characterData.id}.mp3`];
+				[`ext:${EXTENSION.NAME}/audio/die/${characterData.id}.mp3`];
 			if (info.intro !== undefined) {
 				characterIntro[characterData.id] = info.intro;
 			}
@@ -53,7 +54,7 @@ export const precontent = (data) => {
 					audioRedirectSkills.push(new SkillData(`${skillId}__${characterData.id}`, {
 						voices: info.audioRedirect[skillId],
 						skill: {
-							audio: `ext:☆SPR/audio/skill:${info.audioRedirect[skillId].length}`,
+							audio: `ext:${EXTENSION.NAME}/audio/skill:${info.audioRedirect[skillId].length}`,
 						},
 					}));
 				}
@@ -65,6 +66,10 @@ export const precontent = (data) => {
 
 	for (const characterSkill of characterSkills.concat(audioRedirectSkills)) {
 		skill[characterSkill.id] = characterSkill.getInfo().skill;
+		const voices = characterSkill.getInfo().voices;
+		if (characterSkill.isAudioFormatted && voices && voices.length > 0) {
+			skill[characterSkill.id].audio = `${URL.SKILL_AUDIO}:${voices.length}`;
+		}
 		Object.assign(translate, characterSkill.getTranslates());
 		const dynamicDesc = characterSkill.getDynamicTranslate();
 		if (dynamicDesc !== undefined) {
@@ -75,7 +80,7 @@ export const precontent = (data) => {
 	game.import("character", function () {
 		/** @type {importCharacterConfig} */
 		const config = {
-			name: "spr",
+			name: EXTENSION.ID,
 			character,
 			characterIntro,
 			characterTitle,
@@ -87,8 +92,8 @@ export const precontent = (data) => {
 		return config;
 	});
 
-	lib.translate.spr_character_config = "☆SPR";
+	lib.translate.spr_character_config = EXTENSION.NAME;
 
 	// set name prefix style
-	lib.namePrefix.set("星", { color: "#FFECB3", nature: "soilmm" });
+	lib.namePrefix.set(EXTENSION.NAME_PREFIX, STYLE.EXTENSION_NAME_PREFIX);
 };

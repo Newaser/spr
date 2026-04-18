@@ -3,9 +3,8 @@
  * 导入扩展数据相关
  * 
  */
+import { EXTENSION } from "../constants.js";
 import { Character } from "../../../noname/library/element/index.js";
-
-export const DEFAULT_EXTENSION_NAME = "☆SPR";
 
 /**
  * 武将评级
@@ -107,9 +106,8 @@ class AbstractData {
 	/**
 	 * @param {string} formattedName
 	 * @param {T} data
-	 * @param {string=} extensionName
 	 */
-	constructor(formattedName, data, extensionName) {
+	constructor(formattedName, data) {
 		const [id, name] = formattedName.split("|");
 
 		/** 
@@ -130,13 +128,6 @@ class AbstractData {
 		 * @protected
 		 */
 		this._info = data;
-
-		/** 
-		 * 扩展名
-		 * @type {string}
-		 * @protected
-		 */
-		this._extensionName = extensionName || DEFAULT_EXTENSION_NAME;
 	}
 
 	/**
@@ -165,10 +156,9 @@ export class CharacterData extends AbstractData {
 	 * 创建一个武将数据对象，用于存储武将的id、名称、信息等。
 	 * @param {string} formattedName 格式化的武将名称，格式为 `id|译名`
 	 * @param {CharacterInfo} data 武将数据
-	 * @param {string=} extensionName 扩展名，默认为 `☆SPR`
 	 */
-	constructor(formattedName, data, extensionName) {
-		super(formattedName, data, extensionName);
+	constructor(formattedName, data) {
+		super(formattedName, data);
 		this._info.intro = this._info.intro?.trim();
 	}
 
@@ -193,7 +183,7 @@ export class CharacterData extends AbstractData {
 		}
 
 		if (this._info.dieVoice !== undefined) {
-			ret[`#ext:${this._extensionName}/audio/die/${this.id}:die`] =
+			ret[`#ext:${EXTENSION.NAME}/audio/die/${this.id}:die`] =
 				this._info.dieVoice;
 			ret[`#${this.id}:die`] = this._info.dieVoice;
 		}
@@ -211,15 +201,17 @@ export class SkillData extends AbstractData {
 	 * 创建一个技能数据对象，用于存储技能的id、名称、信息等。
 	 * @param {string} formattedName 格式化的技能名称，格式为 `id|译名`
 	 * @param {SkillInfo} data 技能数据
-	 * @param {string=} extensionName 扩展名，默认为 `☆SPR`
+	 * @param {boolean} isAudioFormatted
+	 * 技能的语音是否格式化，即一句台词对应一句语音。默认为 `true`
 	 */
-	constructor(formattedName, data, extensionName) {
-		super(
-			formattedName,
-			data,
-			extensionName || DEFAULT_EXTENSION_NAME,
-		);
+	constructor(formattedName, data, isAudioFormatted = true) {
+		super(formattedName, data);
 		this._info.description = this._info.description?.trim();
+
+		/**
+		 * @type {boolean}
+		 */
+		this.isAudioFormatted = isAudioFormatted;
 	}
 
 	/**
@@ -249,7 +241,7 @@ export class SkillData extends AbstractData {
 		if (Array.isArray(this._info.voices)) {
 			for (let i = 0; i < this._info.voices.length; i++) {
 				const voice = this._info.voices[i];
-				ret[`#ext:${this._extensionName}/audio/skill/${this.id}${i + 1}`] = voice;
+				ret[`#ext:${EXTENSION.NAME}/audio/skill/${this.id}${i + 1}`] = voice;
 			}
 		}
 
@@ -287,14 +279,13 @@ export class CharacterPackage {
 	/**
 	 * 格式化地创建一个武将包
 	 * @param {string} formattedName 武将包（子包）的名称，格式为 `id|译名`
-	 * @param {string=} extensionName 扩展包的名称，默认为 `☆SPR`
 	 */
-	constructor(formattedName, extensionName) {
+	constructor(formattedName) {
 		/** 
 		 * 武将数据集
 		 * @type {CharacterData[]}
 		 */
-		this.dataset = [];
+		this.characterData = [];
 
 		const [id, name] = formattedName.split("|");
 
@@ -309,14 +300,6 @@ export class CharacterPackage {
 		 * @type {string|undefined} 
 		 */
 		this.name = name || undefined;
-
-		/** 
-		 * 扩展名
-		 * @protected
-		 * @type {string}
-		 */
-		this.extensionName =
-			extensionName || DEFAULT_EXTENSION_NAME;
 	}
 
 	/**
@@ -326,12 +309,8 @@ export class CharacterPackage {
 	 * @returns {CharacterPackage} 返回自身。支持链式添加武将
 	 */
 	addCharacter(formattedName, data) {
-		const character = new CharacterData(
-			formattedName,
-			data,
-			this.extensionName,
-		);
-		this.dataset.push(character);
+		const character = new CharacterData(formattedName, data);
+		this.characterData.push(character);
 		return this;
 	}
 
@@ -347,7 +326,7 @@ export class CharacterPackage {
 			ret[this.id] = this.name;
 		}
 
-		for (const character of this.dataset) {
+		for (const character of this.characterData) {
 			Object.assign(ret, character.getTranslates());
 		}
 

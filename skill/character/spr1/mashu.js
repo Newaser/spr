@@ -1,4 +1,4 @@
-import { SkillData } from "../../../util/import.js";
+import { SkillData } from "../../../utils/import.js";
 import { lib, game, ui, get, ai, _status } from "../../../../../noname.js";
 
 export default new SkillData("spr_mashu|马术", {

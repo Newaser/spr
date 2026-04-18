@@ -1,4 +1,4 @@
-import { SkillData } from "../../../util/import.js";
+import { SkillData } from "../../../utils/import.js";
 import { lib, game, ui, get, ai, _status } from "../../../../../noname.js";
 
 const DERIVED_SKILLS = ["spr_mashu", "spr_mengjin", "spr_yingzi"];
@@ -13,7 +13,6 @@ ${get.poptip("spr_mashu")}/${get.poptip("spr_mengjin")}/${get.poptip("spr_yingzi
 		"让你们看看，我西凉健儿的雄姿！",
 	],
 	skill: {
-		audio: "ext:☆SPR/audio/skill:1",
 		forced: true,
 		trigger: {
 			player: "phaseBegin",
