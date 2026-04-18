@@ -1,4 +1,4 @@
-import { SkillData } from "../../../import/structs.js";
+import { SkillData } from "../../../util/import.js";
 import { lib, game, ui, get, ai, _status } from "../../../../../noname.js";
 
 /**
@@ -21,7 +21,7 @@ export default new SkillData("spr_qunbian|群辩", {
 	description: `
 当你成为其他角色使用锦囊牌的目标后，若你<b>为</b>/<b>不为</b>唯一目标，\
 你可以令此牌的<b>使用者</b>/<b>至多两个其他目标</b>选择一项：交给你一张牌；你弃置其一张牌。
-`.trim(),
+`,
 	voices: [
 		"可笑汝错漏百出，却仍不自知。",
 		"哼！班门弄斧。",

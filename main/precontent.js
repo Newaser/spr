@@ -1,6 +1,6 @@
 import { lib, game, ui, get, ai, _status } from "../../../noname.js";
 import { Character } from "../../../noname/library/element/index.js";
-import { SkillData } from "../import/structs.js";
+import { SkillData } from "../util/import.js";
 import characterPkgs from "../package/character/index.js";
 import characterSkills from "../skill/character/index.js";
 

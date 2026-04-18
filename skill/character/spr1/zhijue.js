@@ -1,4 +1,4 @@
-import { SkillData } from "../../../import/structs.js";
+import { SkillData } from "../../../util/import.js";
 import { lib, game, ui, get, ai, _status } from "../../../../../noname.js";
 
 export default new SkillData("spr_zhijue|智绝", {
@@ -64,7 +64,7 @@ export default new SkillData("spr_zhijue|智绝", {
 					viewAs: {
 						name: cardname,
 					},
-					/** @type {import("../../../type.ts").LogAudioFunc} */
+					/** @type {import("../../../util/type.ts").LogAudioFunc} */
 					logAudio(event, player, name, indexedData, evt) {
 						const idx = ["wuzhong", "guohe", "wuxie"].indexOf(cardname) + 1;
 						return `ext:☆SPR/audio/skill/spr_zhijue${idx}.mp3`;

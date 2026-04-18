@@ -1,4 +1,4 @@
-import { SkillData } from "../../../import/structs.js";
+import { SkillData } from "../../../util/import.js";
 import { lib, game, ui, get, ai, _status } from "../../../../../noname.js";
 
 export default new SkillData("spr_nuzhan|怒斩", {
@@ -6,7 +6,7 @@ export default new SkillData("spr_nuzhan|怒斩", {
 <b>蓄力技（0/3）</b>，出牌阶段限一次或当你受到伤害后，\
 你可以弃置一张牌并获得1点蓄力点。当你使用♥【杀】时，你消耗所有蓄力点，\
 令此【杀】视为火属性、基础伤害+X、且需使用X张【闪】才能抵消（X为你消耗的蓄力点数）。
-`.trim(),
+`,
 	voices: [
 		"狂妄贼子，速来领死！",
 		"汝等若不早降，顷刻便为吾刀下之鬼！",
@@ -35,7 +35,7 @@ export default new SkillData("spr_nuzhan|怒斩", {
 				filterCard: true,
 				position: "he",
 				prompt: "弃置一张牌并获得1点蓄力点",
-				/** @type {import("../../../type.ts").LogAudioFunc} */
+				/** @type {import("../../../util/type.ts").LogAudioFunc} */
 				logAudio(event, player, name, indexedData, evt) {
 					const idx = [1, 2].randomGet();
 					return `ext:☆SPR/audio/skill/spr_nuzhan${idx}.mp3`;
@@ -62,7 +62,7 @@ export default new SkillData("spr_nuzhan|怒斩", {
 					return player.countCards("he") > 0 &&
 						player.countCharge(true) > 0;
 				},
-				/** @type {import("../../../type.ts").LogAudioFunc} */
+				/** @type {import("../../../util/type.ts").LogAudioFunc} */
 				logAudio(event, player, name, indexedData, evt) {
 					const idx = [3, 4].randomGet();
 					return `ext:☆SPR/audio/skill/spr_nuzhan${idx}.mp3`;
@@ -93,7 +93,7 @@ export default new SkillData("spr_nuzhan|怒斩", {
 						player.countCharge() > 0
 					);
 				},
-				/** @type {import("../../../type.ts").LogAudioFunc} */
+				/** @type {import("../../../util/type.ts").LogAudioFunc} */
 				logAudio(event, player, name, indexedData, result) {
 					if (player.countCharge() > 2) {
 						return "ext:☆SPR/audio/skill/spr_nuzhan5.mp3";

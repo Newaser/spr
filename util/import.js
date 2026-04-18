@@ -1,3 +1,8 @@
+/**
+ * 
+ * 导入扩展数据相关
+ * 
+ */
 import { Character } from "../../../noname/library/element/index.js";
 
 export const DEFAULT_EXTENSION_NAME = "☆SPR";
@@ -164,6 +169,7 @@ export class CharacterData extends AbstractData {
 	 */
 	constructor(formattedName, data, extensionName) {
 		super(formattedName, data, extensionName);
+		this._info.intro = this._info.intro?.trim();
 	}
 
 	/**
@@ -213,6 +219,7 @@ export class SkillData extends AbstractData {
 			data,
 			extensionName || DEFAULT_EXTENSION_NAME,
 		);
+		this._info.description = this._info.description?.trim();
 	}
 
 	/**
@@ -268,5 +275,82 @@ export class SkillData extends AbstractData {
 			return (player) =>
 				dynamicDesc(player, desc || defaultDesc) || desc || defaultDesc;
 		}
+	}
+}
+
+/**
+ * **武将包（子包）**
+ * 
+ * 即一个扩展中，武将包的一个子包，可包含多个武将数据。
+ */
+export class CharacterPackage {
+	/**
+	 * 格式化地创建一个武将包
+	 * @param {string} formattedName 武将包（子包）的名称，格式为 `id|译名`
+	 * @param {string=} extensionName 扩展包的名称，默认为 `☆SPR`
+	 */
+	constructor(formattedName, extensionName) {
+		/** 
+		 * 武将数据集
+		 * @type {CharacterData[]}
+		 */
+		this.dataset = [];
+
+		const [id, name] = formattedName.split("|");
+
+		/** 
+		 * 武将包id
+		 * @type {string} 
+		 * */
+		this.id = id;
+
+		/** 
+		 * 武将包名
+		 * @type {string|undefined} 
+		 */
+		this.name = name || undefined;
+
+		/** 
+		 * 扩展名
+		 * @protected
+		 * @type {string}
+		 */
+		this.extensionName =
+			extensionName || DEFAULT_EXTENSION_NAME;
+	}
+
+	/**
+	 * 添加一个武将
+	 * @param {string} formattedName 格式化的武将名称，格式为 `id|译名`
+	 * @param {CharacterInfo} data 武将数据
+	 * @returns {CharacterPackage} 返回自身。支持链式添加武将
+	 */
+	addCharacter(formattedName, data) {
+		const character = new CharacterData(
+			formattedName,
+			data,
+			this.extensionName,
+		);
+		this.dataset.push(character);
+		return this;
+	}
+
+	/** 
+	 * 获取武将包以及本包所有武将相关的翻译文本
+	 * @returns {Record<string,string>}
+	 */
+	getTranslates() {
+		/** @type {Record<string,string>} */
+		const ret = {};
+
+		if (this.name !== undefined) {
+			ret[this.id] = this.name;
+		}
+
+		for (const character of this.dataset) {
+			Object.assign(ret, character.getTranslates());
+		}
+
+		return ret;
 	}
 }

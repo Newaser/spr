@@ -1,4 +1,4 @@
-import { SkillData } from "../../../import/structs.js";
+import { SkillData } from "../../../util/import.js";
 import { lib, game, ui, get, ai, _status } from "../../../../../noname.js";
 
 export default new SkillData("spr_liezhi|烈直", {

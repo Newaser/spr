@@ -1,4 +1,4 @@
-import { SkillData } from "../../../import/structs.js";
+import { SkillData } from "../../../util/import.js";
 import { lib, game, ui, get, ai, _status } from "../../../../../noname.js";
 
 export default new SkillData("spr_shouye|守邺", {
@@ -57,7 +57,7 @@ export default new SkillData("spr_shouye|守邺", {
 				}).forResult();
 			}
 		},
-		/** @type {LogAudioFunc} */
+		/** @type {import("../../../util/type.ts").LogAudioFunc} */
 		logAudio(event, player, name, indexedData, evt) {
 			let idx = [1, 2].randomGet();
 			if (player.storage.spr_shouye) idx += 2;
