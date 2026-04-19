@@ -25,6 +25,10 @@ import shouye from "./skills/shouye.js";
 // 星曹彰
 import jiangchi from "./skills/jiangchi.js";
 
+// 星郭淮
+import jingce from "./skills/jingce.js";
+import juyu from "./skills/juyu.js";
+
 export default [
 	jinzi,
 	mashu,
@@ -46,4 +50,7 @@ export default [
 	shouye,
 
 	jiangchi,
+
+	jingce,
+	juyu,
 ];

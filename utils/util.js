@@ -24,14 +24,29 @@ function parseIndex(idx, isRange = false) {
  * @param {string} skillname - 技能名称
  * @param {number|number[]} idx - 音频索引。若为数组，则随机选取其中一个索引。
  * @param {boolean} isRange - 是否为索引范围，默认不为
+ * @param {Player|undefined} texter - 顺带发出对应台词的角色，默认无
  */
-export function playSkillAudio(skillname, idx, isRange = false) {
-	const url = `${URL.SKILL_AUDIO}/${skillname}${parseIndex(idx, isRange)}.mp3`;
+export function playSkillAudio(skillname, idx, isRange = false, texter = undefined) {
+	const parsedIdx = parseIndex(idx, isRange);
+	const url = `${URL.SKILL_AUDIO}/${skillname}${parsedIdx}.mp3`;
 	game.broadcastAll(() => {
 		// @ts-expect-error lib.config运行时存在的
 		if (lib.config.background_speak)
 			game.playAudio({ path: url });
 	});
+	if (texter) {
+		texter.say(getSkillVoice(skillname, parsedIdx));
+	}
+}
+
+/**
+ * 获取技能台词
+ * @param {string} skillname - 技能名称
+ * @param {number|number[]} idx - 台词索引
+ * @returns {string}
+ */
+export function getSkillVoice(skillname, idx) {
+	return get.translation(`#${URL.SKILL_AUDIO}/${skillname}${idx}`);
 }
 
 /**
@@ -47,4 +62,28 @@ export function logSkillAudio(skillname, idx, isRange = false) {
 	return function (event, player, name, indexedData, result) {
 		return url;
 	};
+}
+
+/**
+ * 解析以 "(poptip)" 开头的字符串，提取 id 和 name
+ * @param {string} str - 输入的字符串
+ * @returns {{id:string,name:string}|null} 返回一个包含 id 和 name 的对象，或返回 null 如果格式不正确
+ */
+export function parsePoptip(str) {
+	// 检查字符串是否以 "(poptip)" 开头，并匹配后面的 id 和 name
+	const regex = /^\(poptip\)(\w+)\|(.+)$/;
+
+	// 匹配字符串
+	const match = str.match(regex);
+
+	// 如果匹配成功，则返回一个包含 id 和 name 的对象
+	if (match) {
+		return {
+			id: match[1],  // 第一个捕获组是 id
+			name: match[2], // 第二个捕获组是 name
+		};
+	}
+
+	// 如果字符串不符合要求，返回 null
+	return null;
 }

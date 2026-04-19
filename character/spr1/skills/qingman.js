@@ -72,11 +72,9 @@ export default new SkillData("spr_qingman|轻慢", {
 			result: {
 				player(player) {
 					if (player.isDying()) return 1;
-					if (
-						player.hasSkill("spr_shigong") &&
-						!player.storage.spr_shigong
-					)
-						player.storage.gettingSpr_qingmanResult = true;
+					if (player.hasSkill("spr_shigong") &&
+						!player.storage.spr_shigong)
+						player.storage.gettingQingmanResult = true;
 					const jiuEff = get.effect(
 						player,
 						{ name: "jiu", isCard: true },
@@ -95,7 +93,7 @@ export default new SkillData("spr_qingman|轻慢", {
 								),
 							),
 					);
-					delete player.storage.gettingSpr_qingmanResult;
+					delete player.storage.gettingQingmanResult;
 					const res = jiuEff + maxJuedouEff;
 					return res;
 				},

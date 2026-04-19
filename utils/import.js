@@ -1,3 +1,4 @@
+import * as util from "../utils/util.js";
 import { EXTENSION, URL } from "./constants.js";
 import { lib } from "../../../noname.js";
 import { Character } from "../../../noname/library/element/index.js";
@@ -44,7 +45,7 @@ class AbstractData {
 	 * 获取此类型数据对应的信息
 	 * @returns {T}
 	 */
-	getInfo() {
+	get info() {
 		return this._info;
 	}
 
@@ -75,8 +76,8 @@ export class CharacterData extends AbstractData {
 	 * 获取武将信息
 	 *  @returns {CharacterInfo} 
 	 */
-	getInfo() {
-		return super.getInfo();
+	get info() {
+		return super.info;
 	}
 
 	/** 
@@ -165,8 +166,8 @@ export class SkillData extends AbstractData {
 	 * 获取技能信息
 	 * @returns {SkillInfo} 
 	 */
-	getInfo() {
-		return super.getInfo();
+	get info() {
+		return super.info;
 	}
 
 	/** 
@@ -188,7 +189,7 @@ export class SkillData extends AbstractData {
 		if (Array.isArray(this._info.voices)) {
 			for (let i = 0; i < this._info.voices.length; i++) {
 				const voice = this._info.voices[i];
-				ret[`#ext:${EXTENSION.NAME}/audio/skill/${this.id}${i + 1}`] = voice;
+				ret[`#${URL.SKILL_AUDIO}/${this.id}${i + 1}`] = voice;
 			}
 		}
 
@@ -386,7 +387,7 @@ export class CharacterPackage {
 			// add characters
 			const sort = [];
 			for (const character of pkg.characters) {
-				const info = character.getInfo();
+				const info = character.info;
 				characterBasic[character.id] = info.basic;
 				characterBasic[character.id].img =
 					`${URL.CHARACTER_IMAGE.STANDARD}/${character.id}.jpg`;
@@ -414,10 +415,23 @@ export class CharacterPackage {
 
 			// add skills
 			for (const skill of pkg.skills.concat(audioRedirectSkills)) {
-				skills[skill.id] = skill.getInfo().skill;
+				skills[skill.id] = skill.info.skill;
 				const dynamicDesc = skill.getDynamicTranslate();
 				if (dynamicDesc !== undefined) {
 					dynamicTranslate[skill.id] = dynamicDesc;
+				}
+				if (skill.info.texts) {
+					for (const [k, v] of Object.entries(skill.info.texts)) {
+						const parse = util.parsePoptip(k);
+						if (parse) {
+							lib.poptip.add({
+								type: "rule",
+								id: parse.id,
+								name: parse.name,
+								info: v,
+							});
+						}
+					}
 				}
 			}
 

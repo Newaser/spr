@@ -96,6 +96,7 @@ export default new CharacterSubackage("spr1|☆SPR·其一")
 		rarity: "rare",
 	})
 
+
 	.addCharacter("spr_caozhang|星曹彰", {
 		basic: new Character({
 			sex: "male",
@@ -107,5 +108,20 @@ export default new CharacterSubackage("spr1|☆SPR·其一")
 		dieVoice: "黄须金甲，也难敌骨肉毒心……",
 		rank: "bp",
 		rarity: "rare",
+	})
+
+
+	.addCharacter("spr_guohuai|星郭淮", {
+		basic: new Character({
+			sex: "male",
+			group: "wei",
+			hp: 4,
+			skills: ["spr_jingce"],
+		}),
+		title: "垂问秦淮",
+		dieVoice: "五子哀母，不惜其身，淮又安能坐视……",
+		rank: "a",
+		rarity: "epic",
 	});
+
 

@@ -130,7 +130,6 @@ type AudioInfo = AudioInfo[] | string | number | boolean;
  * @param name triggername
  * @param indexedData trigger times的索引
  * @param result cost事件的result
- * @returns
  */
 export type LogAudioFunc = (
 	event: GameEvent,
@@ -139,3 +138,19 @@ export type LogAudioFunc = (
 	indexedData?: number,
 	result?: Result
 ) => AudioInfo;
+
+/**
+ * `wuxie()` 方法，在SKillAI里使用
+ * @param target 
+ * @param card 
+ * @param player 
+ * @param  viewer 
+ * @param  status 
+ */
+export type AIwuxieFunc = (
+	target: Player,
+	card: Card,
+	player: Player,
+	viewer: Player,
+	status: number,
+) => number | void;

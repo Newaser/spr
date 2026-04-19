@@ -3,12 +3,16 @@ import { SkillData } from "../../../utils/import.js";
 import { lib, game, ui, get, ai, _status } from "../../../../../noname.js";
 
 export default new SkillData("spr_zhijue|智绝", {
-	description: "每回合每种智囊各限一次，你可以将一张牌当任意智囊使用。",
+	description:
+		`每回合每种${get.poptip("mobile_zhinangs")}各限一次，你可以将一张牌当任意智囊使用。`,
 	voices: [
 		"已有胜算七成，此策当再添三分。",
 		"以今日之时局，唯以此策解之。",
 		"尽料敌计，使其无计可施。",
 	],
+	texts: {
+		"(poptip)mobile_zhinangs|智囊": "即【过河拆桥】、【无懈可击】、【无中生有】。",
+	},
 	skill: {
 		enable: "chooseToUse",
 		init(player, skill) {

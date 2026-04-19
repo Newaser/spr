@@ -82,15 +82,7 @@ export default new SkillData("spr_liezhi|烈直", {
 				multitarget: 1,
 				multineg: 1,
 			},
-			/**
-	   * 
-	   * @param {Player} target 
-	   * @param {Card} card 
-	   * @param {Player} player 
-	   * @param {Player} viewer 
-	   * @param {number} status 
-	   * @returns {number|void}
-	   */
+			/** @type {import("../../../utils/type.ts").AIwuxieFunc} */
 			wuxie(target, card, player, viewer, status) {
 				if (
 					get.attitude(viewer, target) > 0 &&

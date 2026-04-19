@@ -45,7 +45,7 @@ export default new SkillData("spr_shouye|守邺", {
 				event.result = await player.chooseBool({
 					prompt: get.prompt("spr_shouye"),
 					prompt2: "当你受到伤害后，你可以回复2点体力。",
-					ai: (event, player) => {
+					ai(event, player) {
 						return player.maxHp < 3 || player.getDamagedHp() >= 2;
 					},
 				}).forResult();
@@ -57,8 +57,8 @@ export default new SkillData("spr_shouye|守邺", {
 						return target.countCards("he") > 0;
 					},
 					selectTarget: [1, 2],
-					ai: target => {
-						return 1 - get.attitude(get.player(), target);
+					ai(target) {
+						return 1 - get.attitude(player, target);
 					},
 				}).forResult();
 			}
