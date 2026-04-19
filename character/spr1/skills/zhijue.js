@@ -67,7 +67,7 @@ export default new SkillData("spr_zhijue|智绝", {
 					/** @type {import("../../../utils/type.ts").LogAudioFunc} */
 					logAudio(event, player, name, indexedData, evt) {
 						const idx = ["wuzhong", "guohe", "wuxie"].indexOf(cardname) + 1;
-						return `ext:${URL.SKILL_AUDIO}/spr_zhijue${idx}.mp3`;
+						return `${URL.SKILL_AUDIO}/spr_zhijue${idx}.mp3`;
 					},
 					onuse(result, player) {
 						player.storage.spr_zhijue_used.push(cardname);

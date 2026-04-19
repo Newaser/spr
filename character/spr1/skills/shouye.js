@@ -12,6 +12,12 @@ export default new SkillData("spr_shouye|守邺", {
 		"十，则围之；五，则攻之。",
 	],
 	skill: {
+		/** @type {import("../../../utils/type.ts").LogAudioFunc} */
+		logAudio(event, player, name, indexedData, evt) {
+			let idx = [1, 2].randomGet();
+			if (player.storage.spr_shouye) idx += 2;
+			return `${URL.SKILL_AUDIO}/spr_shouye${idx}.mp3`;
+		},
 		mark: true,
 		marktext: "☯",
 		zhuanhuanji: true,
@@ -56,12 +62,6 @@ export default new SkillData("spr_shouye|守邺", {
 					},
 				}).forResult();
 			}
-		},
-		/** @type {import("../../../utils/type.ts").LogAudioFunc} */
-		logAudio(event, player, name, indexedData, evt) {
-			let idx = [1, 2].randomGet();
-			if (player.storage.spr_shouye) idx += 2;
-			return `ext:${URL.SKILL_AUDIO}/spr_shouye${idx}.mp3`;
 		},
 		async content(event, trigger, player) {
 			player.changeZhuanhuanji("spr_shouye");

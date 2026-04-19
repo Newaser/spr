@@ -64,7 +64,7 @@ export default new SkillData("spr_nuzhan|怒斩", {
 				/** @type {import("../../../utils/type.ts").LogAudioFunc} */
 				logAudio(event, player, name, indexedData, evt) {
 					const idx = [3, 4].randomGet();
-					return `ext:${URL.SKILL_AUDIO}/spr_nuzhan${idx}.mp3`;
+					return `${URL.SKILL_AUDIO}/spr_nuzhan${idx}.mp3`;
 				},
 				async cost(event, trigger, player) {
 					event.result = await player.chooseToDiscard({
@@ -95,7 +95,7 @@ export default new SkillData("spr_nuzhan|怒斩", {
 				/** @type {import("../../../utils/type.ts").LogAudioFunc} */
 				logAudio(event, player, name, indexedData, result) {
 					if (player.countCharge() > 2) {
-						return `ext:${URL.SKILL_AUDIO}/spr_nuzhan5.mp3`;
+						return `${URL.SKILL_AUDIO}/spr_nuzhan5.mp3`;
 					}
 					return false;
 				},
