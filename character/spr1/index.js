@@ -2,8 +2,8 @@ import skills from "./skill-index.js";
 import { CharacterSubackage } from "../../utils/import.js";
 import { Character } from "../../../../noname/library/element/index.js";
 
-export default new CharacterSubackage("spr1|☆SPR·其一").addSkills(skills)
-
+export default new CharacterSubackage("spr1|☆SPR·其一")
+	.addSkills(skills)
 	.addCharacter("spr_machao|星马超", {
 		basic: new Character({
 			sex: "male",
@@ -16,6 +16,7 @@ export default new CharacterSubackage("spr1|☆SPR·其一").addSkills(skills)
 		rank: "ap",
 		rarity: "epic",
 	})
+
 
 	.addCharacter("spr_zhugeliang|星诸葛亮", {
 		basic: new Character({
@@ -34,6 +35,7 @@ export default new CharacterSubackage("spr1|☆SPR·其一").addSkills(skills)
 		rank: "s",
 		rarity: "legend",
 	})
+
 
 	.addCharacter("spr_guanyu|星关羽", {
 		basic: new Character({
@@ -59,6 +61,7 @@ export default new CharacterSubackage("spr1|☆SPR·其一").addSkills(skills)
 		},
 	})
 
+
 	.addCharacter("spr_xuyou|星许攸", {
 		basic: new Character({
 			sex: "male",
@@ -77,6 +80,7 @@ export default new CharacterSubackage("spr1|☆SPR·其一").addSkills(skills)
 		rank: "ap",
 		rarity: "epic",
 	})
+
 
 	.addCharacter("spr_shenpei|星审配", {
 		basic: new Character({
