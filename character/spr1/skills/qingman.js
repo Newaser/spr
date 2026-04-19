@@ -1,3 +1,4 @@
+import * as util from "../../../utils/util.js";
 import { URL } from "../../../utils/constants.js";
 import { SkillData } from "../../../utils/import.js";
 import { lib, game, ui, get, ai, _status } from "../../../../../noname.js";
@@ -12,10 +13,7 @@ export default new SkillData("spr_qingman|轻慢", {
 		"你也配姓许？！",
 	],
 	skill: {
-		/** @type {import("../../../utils/type.ts").LogAudioFunc} */
-		logAudio(event, player, name, indexedData, evt) {
-			return `${URL.SKILL_AUDIO}/spr_qingman${[1, 2].randomGet()}.mp3`;
-		},
+		logAudio: util.logSkillAudio("spr_qingman", [1, 2]),
 		enable: "phaseUse",
 		round: 1,
 		hiddenCard(player, name) {
@@ -33,10 +31,7 @@ export default new SkillData("spr_qingman|轻慢", {
 		group: "spr_qingman_afterJiu",
 		subSkill: {
 			afterJiu: {
-				/** @type {import("../../../utils/type.ts").LogAudioFunc} */
-				logAudio(event, player, name, indexedData, evt) {
-					return `${URL.SKILL_AUDIO}/spr_qingman${[3, 4].randomGet()}.mp3`;
-				},
+				logAudio: util.logSkillAudio("spr_qingman", [3, 4]),
 				trigger: {
 					player: "useCardAfter",
 				},

@@ -1,3 +1,4 @@
+import * as util from "../../../utils/util.js";
 import { URL } from "../../../utils/constants.js";
 import { SkillData } from "../../../utils/import.js";
 import { lib, game, ui, get, ai, _status } from "../../../../../noname.js";
@@ -77,6 +78,7 @@ export default new SkillData("spr_jiangchi|将驰", {
 					}
 				},
 				async content(event, trigger, player) {
+					// util.playSkillAudio("spr_nuzhan", [1, 2, 3]);
 					if (event.cost_data && event.cost_data.spr_jiangchi === true) {
 						await player.draw();
 					} else {
@@ -88,15 +90,12 @@ export default new SkillData("spr_jiangchi|将驰", {
 				},
 			},
 			onKill: {
+				logAudio: util.logSkillAudio("spr_jiangchi", 5),
 				trigger: {
 					source: "dieAfter",
 				},
 				forced: true,
 				locked: false,
-				/** @type {import("../../../utils/type.ts").LogAudioFunc} */
-				logAudio(event, player, name, indexedData, result) {
-					return `${URL.SKILL_AUDIO}/spr_jiangchi5.mp3`;
-				},
 				async content(event, trigger, player) {
 					player.refreshSkill("spr_jiangchi");
 				},

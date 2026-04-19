@@ -1,3 +1,4 @@
+import * as util from "../../../utils/util.js";
 import { URL } from "../../../utils/constants.js";
 import { SkillData } from "../../../utils/import.js";
 import { lib, game, ui, get, ai, _status } from "../../../../../noname.js";
@@ -25,6 +26,7 @@ export default new SkillData("spr_nuzhan|怒斩", {
 		],
 		subSkill: {
 			phaseUse: {
+				logAudio: util.logSkillAudio("spr_nuzhan", [1, 2]),
 				enable: "phaseUse",
 				usable: 1,
 				filter(event, player, name, target) {
@@ -34,11 +36,6 @@ export default new SkillData("spr_nuzhan|怒斩", {
 				filterCard: true,
 				position: "he",
 				prompt: "弃置一张牌并获得1点蓄力",
-				/** @type {import("../../../utils/type.ts").LogAudioFunc} */
-				logAudio(event, player, name, indexedData, evt) {
-					const idx = [1, 2].randomGet();
-					return `${URL.SKILL_AUDIO}/spr_nuzhan${idx}.mp3`;
-				},
 				/** @param {Card} card */
 				check(card) {
 					return 7 - get.value(card);
@@ -54,17 +51,13 @@ export default new SkillData("spr_nuzhan|怒斩", {
 				},
 			},
 			onDamage: {
+				logAudio: util.logSkillAudio("spr_nuzhan", [3, 4]),
 				trigger: {
 					player: "damageEnd",
 				},
 				filter(event, player, name, target) {
 					return player.countCards("he") > 0 &&
 						player.countCharge(true) > 0;
-				},
-				/** @type {import("../../../utils/type.ts").LogAudioFunc} */
-				logAudio(event, player, name, indexedData, evt) {
-					const idx = [3, 4].randomGet();
-					return `${URL.SKILL_AUDIO}/spr_nuzhan${idx}.mp3`;
 				},
 				async cost(event, trigger, player) {
 					event.result = await player.chooseToDiscard({
@@ -81,6 +74,7 @@ export default new SkillData("spr_nuzhan|怒斩", {
 				},
 			},
 			enchant: {
+				logAudio: util.logSkillAudio("spr_nuzhan", 5),
 				trigger: {
 					player: "useCard1",
 				},
@@ -92,13 +86,6 @@ export default new SkillData("spr_nuzhan|怒斩", {
 						get.suit(event.card) == "heart" &&
 						player.countCharge() > 0
 					);
-				},
-				/** @type {import("../../../utils/type.ts").LogAudioFunc} */
-				logAudio(event, player, name, indexedData, result) {
-					if (player.countCharge() > 2) {
-						return `${URL.SKILL_AUDIO}/spr_nuzhan5.mp3`;
-					}
-					return false;
 				},
 				async content(event, trigger, player) {
 					const x = player.countCharge();
