@@ -42,5 +42,6 @@ ${get.poptip("spr_mashu")}/${get.poptip("spr_mengjin")}/${get.poptip("spr_yingzi
 				onremove: true,
 			},
 		},
+		derivation: DERIVED_SKILLS,
 	},
 });

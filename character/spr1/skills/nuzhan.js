@@ -1,4 +1,4 @@
-import { URL } from "../../../constants.js";
+import { URL } from "../../../utils/constants.js";
 import { SkillData } from "../../../utils/import.js";
 import { lib, game, ui, get, ai, _status } from "../../../../../noname.js";
 
@@ -33,7 +33,7 @@ export default new SkillData("spr_nuzhan|怒斩", {
 				},
 				filterCard: true,
 				position: "he",
-				prompt: "弃置一张牌并获得1点蓄力点",
+				prompt: "弃置一张牌并获得1点蓄力",
 				/** @type {import("../../../utils/type.ts").LogAudioFunc} */
 				logAudio(event, player, name, indexedData, evt) {
 					const idx = [1, 2].randomGet();
@@ -69,7 +69,7 @@ export default new SkillData("spr_nuzhan|怒斩", {
 				async cost(event, trigger, player) {
 					event.result = await player.chooseToDiscard({
 						prompt: get.prompt("spr_nuzhan"),
-						prompt2: "弃置一张牌并获得1点蓄力点",
+						prompt2: "弃置一张牌并获得1点蓄力",
 						position: "he",
 						ai(card) {
 							return 7 - get.useful(card);

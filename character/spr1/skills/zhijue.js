@@ -1,4 +1,4 @@
-import { URL } from "../../../constants.js";
+import { URL } from "../../../utils/constants.js";
 import { SkillData } from "../../../utils/import.js";
 import { lib, game, ui, get, ai, _status } from "../../../../../noname.js";
 

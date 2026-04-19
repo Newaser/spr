@@ -1,15 +1,15 @@
-import { EXTENSION } from "../constants.js";
+import { EXTENSION } from "../utils/constants.js";
 import { lib } from "../../../noname.js";
 
 /** @type {importExtensionConfig['package']} */
-export const packageData = {};
+export const packageInfo = {};
 
 const info = await lib.init.promises.json(`${lib.assetURL}extension/${EXTENSION.NAME}/info.json`);
 
-packageData.author = `<span class="bluetext">${info.author}</span>`;
-packageData.version = info.version;
+packageInfo.author = `<span class="bluetext">${info.author}</span>`;
+packageInfo.version = info.version;
 
-packageData.intro = `
+packageInfo.intro = `
 <span style="text-align: center;">
   <h3 style="color: darkKhaki;">
     始于对☆SP系列武将进行重置，但不止于此。

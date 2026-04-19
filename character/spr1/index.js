@@ -1,10 +1,11 @@
-import { CharacterPackage } from "../../utils/import.js";
+import skills from "./skill-index.js";
+import { CharacterSubackage } from "../../utils/import.js";
 import { Character } from "../../../../noname/library/element/index.js";
 
-export default new CharacterPackage("spr1|☆SPR·其一")
+export default new CharacterSubackage("spr1|☆SPR·其一").addSkills(skills)
 
 	.addCharacter("spr_machao|星马超", {
-		character: new Character({
+		basic: new Character({
 			sex: "male",
 			group: "qun",
 			hp: 4,
@@ -17,7 +18,7 @@ export default new CharacterPackage("spr1|☆SPR·其一")
 	})
 
 	.addCharacter("spr_zhugeliang|星诸葛亮", {
-		character: new Character({
+		basic: new Character({
 			sex: "male",
 			group: "shu",
 			hp: 3,
@@ -35,7 +36,7 @@ export default new CharacterPackage("spr1|☆SPR·其一")
 	})
 
 	.addCharacter("spr_guanyu|星关羽", {
-		character: new Character({
+		basic: new Character({
 			sex: "male",
 			group: "wei",
 			hp: 4,
@@ -59,7 +60,7 @@ export default new CharacterPackage("spr1|☆SPR·其一")
 	})
 
 	.addCharacter("spr_xuyou|星许攸", {
-		character: new Character({
+		basic: new Character({
 			sex: "male",
 			group: "wei",
 			hp: 3,
@@ -78,7 +79,7 @@ export default new CharacterPackage("spr1|☆SPR·其一")
 	})
 
 	.addCharacter("spr_shenpei|星审配", {
-		character: new Character({
+		basic: new Character({
 			sex: "male",
 			group: "qun",
 			hp: 2,
