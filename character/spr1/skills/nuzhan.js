@@ -85,6 +85,7 @@ export default new SkillData("spr_nuzhan|怒斩", {
 					player: "useCard1",
 				},
 				forced: true,
+				locked: false,
 				filter(event, player, name, target) {
 					return (
 						event.card.name == "sha" &&

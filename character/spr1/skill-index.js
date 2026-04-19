@@ -22,6 +22,9 @@ import siyan from "./skills/siyan.js";
 import liezhi from "./skills/liezhi.js";
 import shouye from "./skills/shouye.js";
 
+// 星曹彰
+import jiangchi from "./skills/jiangchi.js";
+
 export default [
 	jinzi,
 	mashu,
@@ -41,4 +44,6 @@ export default [
 
 	liezhi,
 	shouye,
+
+	jiangchi,
 ];

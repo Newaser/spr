@@ -94,4 +94,18 @@ export default new CharacterSubackage("spr1|☆SPR·其一")
 		dieVoice: "吾君在北，但求面北而亡。",
 		rank: "a",
 		rarity: "rare",
+	})
+
+	.addCharacter("spr_caozhang|星曹彰", {
+		basic: new Character({
+			sex: "male",
+			group: "wei",
+			hp: 4,
+			skills: ["spr_jiangchi"],
+		}),
+		title: "神勇壮猛",
+		dieVoice: "黄须金甲，也难敌骨肉毒心……",
+		rank: "bp",
+		rarity: "rare",
 	});
+
