@@ -1,10 +1,10 @@
-import { EXTENSION } from "../utils/constants.js";
+import { EXTENSION, URL } from "../utils/constants.js";
 import { lib } from "../../../noname.js";
 
 /** @type {importExtensionConfig['package']} */
 export const packageInfo = {};
 
-const info = await lib.init.promises.json(`${lib.assetURL}extension/${EXTENSION.NAME}/info.json`);
+const info = await lib.init.promises.json(URL.PACKAGE_INFO);
 
 packageInfo.author = `<span class="bluetext">${info.author}</span>`;
 packageInfo.version = info.version;

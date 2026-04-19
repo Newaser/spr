@@ -389,9 +389,9 @@ export class CharacterPackage {
 				const info = character.getInfo();
 				characterBasic[character.id] = info.basic;
 				characterBasic[character.id].img =
-					`extension/${EXTENSION.NAME}/image/character/${character.id}.jpg`;
+					`${URL.CHARACTER_IMAGE.STANDARD}/${character.id}.jpg`;
 				characterBasic[character.id].dieAudios =
-					[`ext:${EXTENSION.NAME}/audio/die/${character.id}.mp3`];
+					[`${URL.DIE_AUDIO}/${character.id}.mp3`];
 				if (info.intro !== undefined) {
 					characterIntro[character.id] = info.intro;
 				}
@@ -404,7 +404,7 @@ export class CharacterPackage {
 						audioRedirectSkills.push(new SkillData(`${skillId}__${character.id}`, {
 							voices: info.audioRedirect[skillId],
 							skill: {
-								audio: `ext:${EXTENSION.NAME}/audio/skill:${info.audioRedirect[skillId].length}`,
+								audio: `${URL.SKILL_AUDIO}:${info.audioRedirect[skillId].length}`,
 							},
 						}));
 					}
