@@ -29,6 +29,11 @@ import jiangchi from "./skills/jiangchi.js";
 import jingce from "./skills/jingce.js";
 import juyu from "./skills/juyu.js";
 
+// 星邹氏
+import xunxin from "./skills/xunxin.js";
+import zhenxia from "./skills/zhenxia.js";
+import huoshui from "./skills/huoshui.js";
+
 export default [
 	jinzi,
 	mashu,
@@ -53,4 +58,8 @@ export default [
 
 	jingce,
 	juyu,
+
+	xunxin,
+	zhenxia,
+	huoshui,
 ];

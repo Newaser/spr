@@ -31,8 +31,9 @@ function getColoredShaEff(player, cards, color) {
  * @param {Player} player
  * @param {Card[]} cards
  * @param {string} color
+ * @param {boolean} log
  */
-function getNextColoredEffs(player, cards, color) {
+function getNextColoredEffs(player, cards, color, log = false) {
 	const nextEffs = [];
 	for (let i = 0; i < cards.length; i++) {
 		const thisEff = player.getUseValue(cards[i]);
@@ -42,7 +43,15 @@ function getNextColoredEffs(player, cards, color) {
 			nextCards.length ?
 				getColoredShaEff(player, nextCards, color) : 0;
 		nextEffs.push(thisEff + nextEff);
+		if (log) {
+			console.log([
+				"[getNextColoredEffs]",
+				`thisEff: ${thisEff.toFixed(4)}`,
+				`nextEff: ${nextEff.toFixed(4)}`,
+			].join("\n"));
+		}
 	}
+
 	return nextEffs;
 }
 /**
@@ -164,6 +173,12 @@ export default new SkillData("spr_shichou|誓仇", {
 				player(player, target, card) {
 					const [color, eff] = getOpt(player);
 					const nextOptEff = getNextOptEff(player);
+					// // for test
+					// console.log([
+					// 	"[result]",
+					// 	`opt: ${color}, ${eff.toFixed(4)}`,
+					// 	`nextEff: ${nextOptEff.toFixed(4)}`,
+					// ].join("\n"));
 					return (eff > 0 && eff >= nextOptEff) ? 1 : -1;
 				},
 			},

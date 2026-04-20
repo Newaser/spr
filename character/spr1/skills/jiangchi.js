@@ -6,9 +6,10 @@ import { lib, game, ui, get, ai, _status } from "../../../../../noname.js";
 /**
  * @param {Player} player
  * @param {Card} card 
+ * @param {boolean} log 
  * @returns {number}
  */
-function jiangchiUseValue(player, card) {
+function jiangchiUseValue(player, card, log = false) {
 	const
 		// effect of using the card restrictedly
 		// @ts-expect-error distance can be assigned with true
@@ -21,6 +22,18 @@ function jiangchiUseValue(player, card) {
 		useEff = (1 - incWeight) * unrEff + incWeight * (unrEff - rEff),
 		// effect of drawing a card
 		drawEff = get.effect(player, { name: "draw" }, player, player);
+
+	// for test
+	if (log) {
+		console.log([
+			`card: ${get.translation(card)}`,
+			`rEff: ${rEff.toFixed(4)}`,
+			`unrEff: ${unrEff.toFixed(4)}`,
+			`incWeight: ${incWeight.toFixed(4)}`,
+			`useEff: ${useEff.toFixed(4)}`,
+			`drawEff: ${drawEff.toFixed(4)}`,
+		].join("\n"));
+	}
 
 	if (useEff <= drawEff || unrEff <= rEff) return -1;
 	return useEff;
@@ -65,7 +78,7 @@ export default new SkillData("spr_jiangchi|将驰", {
 					event.result = await player.chooseToUse({
 						prompt: "将驰：你可以无距离与次数限制地使用一张牌，或点“取消”摸一张牌",
 						ai1(card) {
-							return jiangchiUseValue(player, card);
+							return jiangchiUseValue(player, card, true);
 						},
 						filterTarget(card, player, target) {
 							return lib.filter.targetEnabled(card, player, target) || false;

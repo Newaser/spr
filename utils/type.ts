@@ -88,6 +88,10 @@ export interface CharacterInfo {
 	 * - `wusheng__spr_guanyu2.mp3`
 	 */
 	audioRedirect?: Record<string, string[]>;
+	/**
+	 * 武将包含的其他文本信息
+	 */
+	texts?: Record<string, string>;
 }
 
 /**

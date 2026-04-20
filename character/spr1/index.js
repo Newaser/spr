@@ -122,6 +122,19 @@ export default new CharacterSubackage("spr1|☆SPR·其一")
 		dieVoice: "五子哀母，不惜其身，淮又安能坐视……",
 		rank: "a",
 		rarity: "epic",
-	});
+	})
 
+
+	.addCharacter("spr_zoushi|星邹氏", {
+		basic: new Character({
+			sex: "female",
+			group: "qun",
+			hp: 3,
+			skills: ["spr_xunxin", "spr_zhenxia"],
+		}),
+		title: "醉琴卧花",
+		dieVoice: "世间的成败得失，都要怪红颜祸水吗……",
+		rank: "c",
+		rarity: "junk",
+	});
 

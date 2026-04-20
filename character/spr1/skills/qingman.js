@@ -95,6 +95,12 @@ export default new SkillData("spr_qingman|轻慢", {
 					);
 					delete player.storage.gettingQingmanResult;
 					const res = jiuEff + maxJuedouEff;
+					// // for test
+					// console.log([
+					// 	`jiuEff: ${jiuEff.toFixed(4)}`,
+					// 	`maxJuedouEff: ${maxJuedouEff.toFixed(4)}`,
+					// 	`spr_qingman result to player: ${res.toFixed(4)}`,
+					// ].join("\n"));
 					return res;
 				},
 			},
