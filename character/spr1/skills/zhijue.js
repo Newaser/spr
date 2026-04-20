@@ -65,7 +65,7 @@ export default new SkillData("spr_zhijue|智绝", {
 					position: "hes",
 					popname: true,
 					/**  @param {Card} card  */
-					ai1(card) {
+					check(card) {
 						return 7 - get.value(card);
 					},
 					viewAs: {

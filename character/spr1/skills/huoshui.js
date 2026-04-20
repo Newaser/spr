@@ -73,6 +73,18 @@ export default new SkillData("spr_huoshui|祸水", {
 					player.storage.spr_huoshui_sources = new Set();
 				},
 				onremove: true,
+				ai: {
+					effect: {
+						target(card, player, target, result2) {
+							if (get.color(card, player) == "black" &&
+								get.is.damageCard(card)) {
+								const damageEff =
+									get.damageEffect(target, player, target);
+								return [1, damageEff];
+							}
+						},
+					},
+				},
 			},
 		},
 	},
