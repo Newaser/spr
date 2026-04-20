@@ -14,39 +14,32 @@ import { Character } from "../../../noname/library/element/index.js";
  * @template T
  */
 class AbstractData {
+	#id; #name; #info;
+	/**
+	 * 数据ID
+	 * @returns {string}
+	 */
+	get id() { return this.#id; }
+	/**
+	 * 译名
+	 * @returns {string|undefined}
+	 */
+	get name() { return this.#name; }
+	/**
+	 * 数据信息
+	 * @type {T}
+	 */
+	get info() { return this.#info; }
+
 	/**
 	 * @param {string} formattedName
 	 * @param {T} data
 	 */
 	constructor(formattedName, data) {
 		const [id, name] = formattedName.split("|");
-
-		/** 
-		 * 此类型数据对应的id
-		 * @type {string}
-		 */
-		this.id = id;
-
-		/** 
-		 * 此类型数据对应的译名
-		 * @type {string|undefined}
-		 */
-		this.name = name || undefined;
-
-		/** 
-		 * 此类型数据对应的信息
-		 * @type {T} 
-		 * @protected
-		 */
-		this._info = data;
-	}
-
-	/**
-	 * 获取此类型数据对应的信息
-	 * @returns {T}
-	 */
-	get info() {
-		return this._info;
+		this.#id = id;
+		this.#name = name || undefined;
+		this.#info = data;
 	}
 
 	/** 
@@ -71,14 +64,6 @@ export class CharacterData extends AbstractData {
 		super(formattedName, data);
 	}
 
-	/**
-	 * 获取武将信息
-	 *  @returns {CharacterInfo} 
-	 */
-	get info() {
-		return super.info;
-	}
-
 	/** 
 	 * 获取武将相关的翻译文本
 	 * @returns {Record<string,string>} 
@@ -91,14 +76,14 @@ export class CharacterData extends AbstractData {
 			ret[this.id] = this.name;
 		}
 
-		if (this._info.dieVoice !== undefined) {
+		if (this.info.dieVoice !== undefined) {
 			ret[`#ext:${EXTENSION.NAME}/audio/die/${this.id}:die`] =
-				this._info.dieVoice;
-			ret[`#${this.id}:die`] = this._info.dieVoice;
+				this.info.dieVoice;
+			ret[`#${this.id}:die`] = this.info.dieVoice;
 		}
 
-		if (this._info.audioRedirect !== undefined) {
-			for (const [skillId, voices] of Object.entries(this._info.audioRedirect)) {
+		if (this.info.audioRedirect !== undefined) {
+			for (const [skillId, voices] of Object.entries(this.info.audioRedirect)) {
 				for (let i = 0; i < voices.length; i++) {
 					const key =
 						`#ext:${EXTENSION.NAME}/audio/skill/${skillId}__${this.id}${i + 1}`;
@@ -106,6 +91,8 @@ export class CharacterData extends AbstractData {
 				}
 			}
 		}
+
+		Object.assign(ret, this.info.texts || {});
 
 		return ret;
 	}
@@ -116,11 +103,11 @@ export class CharacterData extends AbstractData {
 	registerRank() {
 		const rank = /** @type {any} */ (lib).rank;
 		if (rank) {
-			if (this._info.rank) {
-				rank[this._info.rank].push(this.id);
+			if (this.info.rank) {
+				rank[this.info.rank].push(this.id);
 			}
-			if (rank.rarity && this._info.rarity) {
-				rank.rarity[this._info.rarity].push(this.id);
+			if (rank.rarity && this.info.rarity) {
+				rank.rarity[this.info.rarity].push(this.id);
 			}
 		}
 	}
@@ -129,8 +116,8 @@ export class CharacterData extends AbstractData {
 	 * 将武将的技能语音重定向注册到游戏内（须运行时操作）
 	 */
 	registerAudioRedirects() {
-		if (this._info.audioRedirect !== undefined) {
-			for (const skillId in this._info.audioRedirect) {
+		if (this.info.audioRedirect !== undefined) {
+			for (const skillId in this.info.audioRedirect) {
 				if (!lib.skill[skillId].audioname2) {
 					lib.skill[skillId].audioname2 = {};
 				}
@@ -148,24 +135,14 @@ export class SkillData extends AbstractData {
 	 * 创建一个技能数据对象，用于存储技能的id、名称、信息等。
 	 * @param {string} formattedName 格式化的技能名称，格式为 `id|译名`
 	 * @param {SkillInfo} data 技能数据
-	 * @param {boolean} isAudioFormatted
-	 * 技能的语音是否格式化，即一句台词对应一句语音。默认为 `true`
 	 */
-	constructor(formattedName, data, isAudioFormatted = true) {
+	constructor(formattedName, data) {
 		super(formattedName, data);
 
-		const voices = this._info.voices;
-		if (isAudioFormatted && voices && voices.length > 0) {
-			this._info.skill.audio = `${URL.SKILL_AUDIO}:${voices.length}`;
+		if (this.info.voices?.length) {
+			this.info.skill.audio =
+				`${URL.SKILL_AUDIO}:${this.info.voices.length}`;
 		}
-	}
-
-	/**
-	 * 获取技能信息
-	 * @returns {SkillInfo} 
-	 */
-	get info() {
-		return super.info;
 	}
 
 	/** 
@@ -180,22 +157,18 @@ export class SkillData extends AbstractData {
 			ret[this.id] = this.name;
 		}
 
-		if (this._info.description !== undefined) {
-			ret[`${this.id}_info`] = this._info.description;
+		if (this.info.description !== undefined) {
+			ret[`${this.id}_info`] = this.info.description;
 		}
 
-		if (Array.isArray(this._info.voices)) {
-			for (let i = 0; i < this._info.voices.length; i++) {
-				const voice = this._info.voices[i];
+		if (this.info.voices !== undefined) {
+			for (let i = 0; i < this.info.voices.length; i++) {
+				const voice = this.info.voices[i];
 				ret[`#${URL.SKILL_AUDIO}/${this.id}${i + 1}`] = voice;
 			}
 		}
 
-		if (this._info.texts) {
-			for (const [key, value] of Object.entries(this._info.texts)) {
-				ret[key] = value;
-			}
-		}
+		Object.assign(ret, this.info.texts || {});
 
 		return ret;
 	}
@@ -206,9 +179,9 @@ export class SkillData extends AbstractData {
 	 */
 	getDynamicTranslate() {
 		const
-			desc = this._info.description,
+			desc = this.info.description,
 			defaultDesc = `${this.id}_info`,
-			dynamicDesc = this._info.dynamicDescription;
+			dynamicDesc = this.info.dynamicDescription;
 		if (dynamicDesc) {
 			return (player) =>
 				dynamicDesc(player, desc || defaultDesc) || desc || defaultDesc;
@@ -381,6 +354,7 @@ export class CharacterPackage {
 
 			/** @type {SkillData[]} */
 			audioRedirectSkills = [];
+
 		for (const pkg of this._subpkgs) {
 			// add characters
 			const sort = [];
