@@ -41,7 +41,8 @@ function jiangchiUseValue(player, card, log = false) {
 
 export default new SkillData("spr_jiangchi|将驰", {
 	description:
-		"出牌阶段限两次，你可以使用一张牌（无距离和次数限制）或摸一张牌。当你杀死一名角色后，你视为未发动此技能。",
+		"出牌阶段限两次，你可以使用一张牌（无距离和次数限制）或摸一张牌。" +
+		"当你杀死一名角色后，你视为未发动此技能。",
 	voices: [
 		"策马扬鞭，奔驰万里！",
 		"掩敌不备，一鼓而擒！",

@@ -2,7 +2,8 @@ import { SkillData } from "../../../utils/import.js";
 import { lib, game, ui, get, ai, _status } from "../../../../../noname.js";
 
 export default new SkillData("spr_juyu|拒御", {
-	description: "每回合限一次，当其他角色使用伤害类卡牌时，你可以弃置一张相同牌名的牌，令此牌无效。",
+	description:
+		"每回合限一次，当其他角色使用伤害类卡牌时，你可以弃置一张相同牌名的牌，令此牌无效。",
 	voices: [
 		"知汝必将攻此，吾已早设防备。",
 		"有淮御蜀，必保魏境无虞。",

@@ -141,10 +141,9 @@ function estimateHuogongEffect(player, target, thief, log = false) {
 }
 
 export default new SkillData("spr_xunxin|熏心", {
-	description: `
-出牌阶段限一次，你可以令一名其他角色视为使用一张不能被响应的【火攻】。\
-若此【火攻】未造成伤害，你观看其手牌，获得其两张红色牌。
-`,
+	description:
+		"出牌阶段限一次，你可以令一名其他角色视为使用一张不能被响应的【火攻】。" +
+		"若此【火攻】未造成伤害，你观看其手牌，获得其两张红色牌。",
 	voices: [
 		"一笑倾城，再笑倾国。",
 		"汉有游女，不可求思。",

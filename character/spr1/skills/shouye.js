@@ -4,7 +4,8 @@ import { lib, game, ui, get, ai, _status } from "../../../../../noname.js";
 
 export default new SkillData("spr_shouye|守邺", {
 	description:
-		"<b>转换技</b>，阳：当你受到伤害后，你可以回复2点体力。阴：当你造成伤害后，你可以弃置至多两名角色各一张牌。",
+		"<b>转换技</b>，阳：当你受到伤害后，你可以回复2点体力。" +
+		"阴：当你造成伤害后，你可以弃置至多两名角色各一张牌。",
 	voices: [
 		"敌军攻势渐殆，还望诸位依策坚守。",
 		"袁幽州不日便至，当行策建功以报之。",

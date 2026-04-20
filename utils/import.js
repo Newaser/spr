@@ -69,7 +69,6 @@ export class CharacterData extends AbstractData {
 	 */
 	constructor(formattedName, data) {
 		super(formattedName, data);
-		this._info.intro = this._info.intro?.trim();
 	}
 
 	/**
@@ -154,7 +153,6 @@ export class SkillData extends AbstractData {
 	 */
 	constructor(formattedName, data, isAudioFormatted = true) {
 		super(formattedName, data);
-		this._info.description = this._info.description?.trim();
 
 		const voices = this._info.voices;
 		if (isAudioFormatted && voices && voices.length > 0) {

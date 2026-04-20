@@ -5,10 +5,10 @@ import { lib, game, ui, get, ai, _status } from "../../../../../noname.js";
 const zhengsuOptions = ["zhengsu_leijin", "zhengsu_bianzhen", "zhengsu_mingzhi"];
 
 export default new SkillData("spr_jingce|精策", {
-	description: `
-出牌阶段开始时，你可以进行任意次“${get.poptip("rule_zhengsu")}”。若如此做，弃牌阶段结束后，\
-若这些整肃均未失败，你依次获得这些整肃的奖励，然后获得${get.poptip("spr_juyu")}直到你的下回合开始。
-`,
+	description:
+		`出牌阶段开始时，你可以进行任意次“${get.poptip("rule_zhengsu")}”。` +
+		"若如此做，弃牌阶段结束后，若这些整肃均未失败，你依次获得这些整肃的奖励，" +
+		`然后获得${get.poptip("spr_juyu")}直到你的下回合开始。`,
 	voices: [
 		"思我之薄弱，知敌之计谋。",
 		"精细入微，策敌制胜。",
