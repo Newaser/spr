@@ -17,14 +17,14 @@ function getTos(trigger, player) {
 	return targets;
 }
 
-export default new SkillData("spr_qunbian|群辩", {
+export default new SkillData("spr_miaobian|妙辩", {
 	description:
 		"当你成为其他角色使用锦囊牌的目标后，若你<b>为</b>/<b>不为</b>唯一目标，" +
 		"你可以令此牌的<b>使用者</b>/<b>至多两个其他目标</b>选择一项：" +
 		"交给你一张牌；你弃置其一张牌。",
 	voices: [
-		"可笑汝错漏百出，却仍不自知。",
-		"哼！班门弄斧。",
+		"汝等但知数黑论黄，舞文弄墨而已乎？",
+		"临机应变而百无一能者，诚为天下笑耳！",
 	],
 	skill: {
 		trigger: {
@@ -42,7 +42,7 @@ export default new SkillData("spr_qunbian|群辩", {
 			const tos = getTos(trigger, player);
 			if (tos.length == 1) {
 				event.result = await player.chooseBool({
-					prompt: get.prompt("spr_qunbian", tos[0]),
+					prompt: get.prompt("spr_miaobian", tos[0]),
 					prompt2: "令其选择交给你牌或者被你弃牌",
 					ai: () => {
 						return get.effect(
@@ -59,7 +59,7 @@ export default new SkillData("spr_qunbian|群辩", {
 			} else {
 				event.result = await player.chooseTarget({
 					selectTarget: [1, 2],
-					prompt: get.prompt("spr_qunbian"),
+					prompt: get.prompt("spr_miaobian"),
 					prompt2: `令${tos.map(get.translation).join("、")}中至多两名依次选择交给你牌或者被你弃牌`,
 					filterTarget(card, player, target) {
 						return tos.includes(target);
@@ -79,7 +79,7 @@ export default new SkillData("spr_qunbian|群辩", {
 			for (const target of event.targets.sortBySeat(_status.currentPhase)) {
 				const playerName = get.translation(player);
 				const result = await target.chooseCard({
-					prompt: `${playerName}的【${get.translation("spr_qunbian")}】发动`,
+					prompt: `${playerName}的【${get.translation("spr_miaobian")}】发动`,
 					prompt2: `选择一张牌交给${playerName}，或点“取消”被${playerName}弃置一张牌`,
 					ai(card) {
 						if (get.attitude(target, player) > 0) return 1;

@@ -6,7 +6,7 @@ import yingzi from "./skills/yingzi.js";
 import shichou from "./skills/shichou.js";
 
 // 星诸葛亮
-import qunbian from "./skills/qunbian.js";
+import miaobian from "./skills/miaobian.js";
 import zhijue from "./skills/zhijue.js";
 
 // 星关羽
@@ -41,7 +41,7 @@ export default [
 	yingzi,
 	shichou,
 
-	qunbian,
+	miaobian,
 	zhijue,
 
 	nuzhan,

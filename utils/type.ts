@@ -158,3 +158,8 @@ export type AIwuxieFunc = (
 	viewer: Player,
 	status: number,
 ) => number | void;
+
+/**
+ * `chooseCardTarget()` 里的 `oncard()` 方法
+ */
+export type OnCardFunc = (card: Card, player: Player) => any;

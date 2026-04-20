@@ -74,8 +74,7 @@ export default new SkillData("spr_siyan|肆言", {
 				target(card, player, target, result2) {
 					if (player.skills.includes("jueqing") || !target.hasFriend())
 						return;
-					if ((get.tag(card, "damage") || card.name.endsWith("damage")) &&
-						target.isTurnedOver())
+					if (get.is.damageCard(card) && target.isTurnedOver())
 						return [1, 1.5];
 				},
 			},

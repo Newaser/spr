@@ -11,7 +11,6 @@ export default new SkillData("spr_mengjin|猛进", {
 	},
 	voices: [
 		"休想跑！",
-		"趁锐气正盛，擒敌军之将！",
 	],
 	skill: {
 		trigger: {

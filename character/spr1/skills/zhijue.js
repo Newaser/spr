@@ -6,9 +6,12 @@ export default new SkillData("spr_zhijue|智绝", {
 	description:
 		`每回合每种${get.poptip("mobile_zhinangs")}各限一次，你可以将一张牌当任意智囊使用。`,
 	voices: [
-		"已有胜算七成，此策当再添三分。",
-		"以今日之时局，唯以此策解之。",
-		"尽料敌计，使其无计可施。",
+		"摇此羽扇，立唤东风！",
+		"虚者虚之，疑中生疑。",
+		"哼！班门弄斧！",
+		"管仲乐毅之用兵，未必过此。",
+		"区区雕虫小技，微不足道矣。",
+		"亮素以谋制人，岂为人谋所制？",
 	],
 	texts: {
 		"(poptip)mobile_zhinangs|智囊": "即【过河拆桥】、【无懈可击】、【无中生有】。",
@@ -70,7 +73,9 @@ export default new SkillData("spr_zhijue|智绝", {
 					},
 					/** @type {import("../../../utils/type.ts").LogAudioFunc} */
 					logAudio(event, player, name, indexedData, evt) {
-						const idx = ["wuzhong", "guohe", "wuxie"].indexOf(cardname) + 1;
+						let idx = ["wuzhong", "guohe", "wuxie"].indexOf(cardname) + 1;
+						idx *= 2;
+						idx = [idx - 1, idx].randomGet();
 						return `${URL.SKILL_AUDIO}/spr_zhijue${idx}.mp3`;
 					},
 					onuse(result, player) {

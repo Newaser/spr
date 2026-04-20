@@ -23,7 +23,8 @@ export default new CharacterSubackage("spr1|☆SPR·其一")
 			sex: "male",
 			group: "shu",
 			hp: 3,
-			skills: ["spr_qunbian", "spr_zhijue"],
+			skills: ["spr_miaobian", "spr_zhijue"],
+			groupBorder: "wu",
 		}),
 		intro:
 			"字孔明，号卧龙，琅琊阳都人，蜀汉丞相。诸葛亮只身随鲁肃过江、游说东吴群臣。诸葛亮" +

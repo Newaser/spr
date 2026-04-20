@@ -10,6 +10,7 @@ export default new SkillData("spr_jinzi|锦姿", {
 		"本回合上述技能的效果翻倍。",
 	voices: [
 		"让你们看看，我西凉健儿的雄姿！",
+		"听我号令，骑兵尽出，袭杀曹贼！",
 	],
 	skill: {
 		forced: true,

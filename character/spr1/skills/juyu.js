@@ -9,6 +9,10 @@ export default new SkillData("spr_juyu|拒御", {
 		"有淮御蜀，必保魏境无虞。",
 	],
 	skill: {
+		mark: true,
+		intro: {
+			content: () => get.skillInfoTranslation("spr_juyu"),
+		},
 		trigger: {
 			global: "useCard",
 		},

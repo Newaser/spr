@@ -92,7 +92,7 @@ export default new SkillData("spr_shigong|恃功", {
 				},
 				target(card, player, target, result2) {
 					if (!target.storage.spr_shigong &&
-						!target.storage.gettingQingmanResult)
+						!target.storage.spr_qingman_gettingResult)
 						return;
 					if (get.type(card) == "trick")
 						return [1, 0, 1, -1];
