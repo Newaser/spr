@@ -7,6 +7,10 @@ import yongan from "./skills/yongan.js";
 import juxi from "./skills/juxi.js";
 import xuzhong from "./skills/xuzhong.js";
 
+// 星陈到
+import wanglie from "./skills/wanglie.js";
+import baier from "./skills/baier.js";
+
 export default [
 	cuorui,
 	tafeng,
@@ -14,4 +18,7 @@ export default [
 	yongan,
 	juxi,
 	xuzhong,
+
+	wanglie,
+	baier,
 ];

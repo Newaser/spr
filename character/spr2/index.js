@@ -30,4 +30,19 @@ export default new CharacterSubackage("spr2|☆SPR·其二")
 		dieVoice: "国朝用命之时，奈何无计可施……",
 		rank: "bp",
 		rarity: "rare",
+	})
+
+
+	.addCharacter("spr_chendao|星陈到", {
+		basic: new Character({
+			sex: "male",
+			group: "shu",
+			hp: 4,
+			skills: ["spr_wanglie", "spr_baier"],
+		}),
+		title: "白毦督",
+		dieVoice: "征南厚重，忠心后土……",
+		victoryVoice: "victory_voice",
+		rank: "c",
+		rarity: "junk",
 	});

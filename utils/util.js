@@ -9,7 +9,7 @@ import { lib, game, ui, get, ai, _status } from "../../../noname.js";
  * @param {boolean} isRange - 是否为索引范围，默认不为
  * @returns {number} 解析后的索引
  */
-function parseIndex(idx, isRange = false) {
+export function parseIndex(idx, isRange = false) {
 	if (isRange) {
 		if (!Array.isArray(idx) || idx.length != 2) {
 			throw new Error("'idx' is suppused to be a range");
