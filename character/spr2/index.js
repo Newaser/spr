@@ -45,4 +45,19 @@ export default new CharacterSubackage("spr2|☆SPR·其二")
 		victoryVoice: "victory_voice",
 		rank: "c",
 		rarity: "junk",
+	})
+
+
+	.addCharacter("spr_chengui|星陈珪", {
+		basic: new Character({
+			sex: "male",
+			group: "qun",
+			hp: 3,
+			skills: ["spr_guimou", "spr_congshi"],
+		}),
+		title: "弄辞成掇",
+		dieVoice: "终日戏虎，竟为虎所噬……",
+		rank: "bp",
+		rarity: "rare",
 	});
+

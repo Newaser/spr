@@ -11,6 +11,10 @@ import xuzhong from "./skills/xuzhong.js";
 import wanglie from "./skills/wanglie.js";
 import baier from "./skills/baier.js";
 
+// 星陈珪
+import guimou from "./skills/guimou.js";
+import congshi from "./skills/congshi.js";
+
 export default [
 	cuorui,
 	tafeng,
@@ -21,4 +25,7 @@ export default [
 
 	wanglie,
 	baier,
+
+	guimou,
+	congshi,
 ];
