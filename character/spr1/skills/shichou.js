@@ -160,10 +160,10 @@ export default new SkillData("spr_shichou|誓仇", {
 		},
 		mod: {
 			cardUsable(card, player, num) {
-				if (card.storage && card.storage.spr_shichou) return Infinity;
+				if (card.storage?.spr_shichou) return Infinity;
 			},
 			selectTarget(card, player, range) {
-				if (card.storage && card.storage.spr_shichou && range[1] != -1)
+				if (card.storage?.spr_shichou && range[1] != -1)
 					range[1] += card.storage.cardsLength - 1;
 			},
 		},

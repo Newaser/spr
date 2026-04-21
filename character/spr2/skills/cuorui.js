@@ -25,10 +25,10 @@ export default new SkillData("spr_cuorui|挫锐", {
 		async cost(event, trigger, player) {
 			event.result = await player.chooseToDiscard({
 				prompt: get.prompt("spr_cuorui"),
-				prompt2: get.prompt2("spr_cuorui"),
+				prompt2: get.skillInfoTranslation("spr_cuorui"),
 				position: "he",
 				ai(card) {
-					if (get.attitude(player, event.player) > 0)
+					if (get.attitude(player, trigger.player) > 0)
 						return -1;
 					return 7 - get.useful(card);
 				},
