@@ -87,9 +87,9 @@ export default new SkillData("spr_miaobian|妙辩", {
 					},
 				}).forResult();
 				if (result.bool) {
-					target.give(result.cards, player);
+					await target.give(result.cards, player);
 				} else {
-					player.discardPlayerCard({
+					await player.discardPlayerCard({
 						forced: true,
 						target,
 					});

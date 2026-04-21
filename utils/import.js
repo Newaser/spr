@@ -106,7 +106,7 @@ export class CharacterData extends AbstractData {
 			if (this.info.rank) {
 				rank[this.info.rank].push(this.id);
 			}
-			if (rank.rarity && this.info.rarity) {
+			if (rank.rarity && this.info.rarity && this.info.rarity != "common") {
 				rank.rarity[this.info.rarity].push(this.id);
 			}
 		}
