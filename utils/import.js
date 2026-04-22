@@ -1,6 +1,6 @@
 import * as util from "../utils/util.js";
 import { EXTENSION, URL } from "./constants.js";
-import { lib } from "../../../noname.js";
+import { lib, game, ui, get, ai, _status } from "../../../noname.js";
 import { Character } from "../../../noname/library/element/index.js";
 
 // 适配的扩展
@@ -369,8 +369,11 @@ export class CharacterPackage {
 			for (const character of pkg.characters) {
 				const info = character.info;
 				characterBasic[character.id] = info.basic;
+				const imgStyle =
+					game.getExtensionConfig(EXTENSION.NAME, "imgStyle") ||
+					"STANDARD";
 				characterBasic[character.id].img =
-					`${URL.CHARACTER_IMAGE.STANDARD}/${character.id}.jpg`;
+					`${URL.CHARACTER_IMAGE[imgStyle]}/${character.id}.jpg`;
 				characterBasic[character.id].dieAudios =
 					[`${URL.DIE_AUDIO}/${character.id}.mp3`];
 				if (info.intro !== undefined) {

@@ -26,4 +26,7 @@ packageInfo.intro = `
   <br>支持的无名杀最低版本：v${info.minNoname}
   ${info.adaptedExts.length > 0 ?
 		`<br>适配的其他扩展：${info.adaptedExts.join("、")}` : ""}
-</p>`;
+</p>
+<hr>
+<h3 style="text-align: center;">设置</h3>
+`;

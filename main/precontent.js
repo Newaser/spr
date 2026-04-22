@@ -1,4 +1,4 @@
-import { EXTENSION, URL, STYLE } from "../utils/constants.js";
+import { EXTENSION, STYLE } from "../utils/constants.js";
 import { lib, game, ui, get, ai, _status } from "../../../noname.js";
 import characterPackage from "../character/index.js";
 

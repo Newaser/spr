@@ -11,13 +11,14 @@ export const QHLY_NAME = "千幻聆音";
 export const URL = {
 	PACKAGE_INFO: `${lib.assetURL}extension/${EXTENSION.NAME}/info.json`,
 	CHARACTER_IMAGE: {
-		STANDARD: `${lib.assetURL}extension/${EXTENSION.NAME}/image/character`,
+		STANDARD: `${lib.assetURL}extension/${EXTENSION.NAME}/image/character/standard`,
+		MOBILE: `${lib.assetURL}extension/${EXTENSION.NAME}/image/character/mobile`,
 	},
 	DIE_AUDIO: `ext:${EXTENSION.NAME}/audio/die`,
-	VICTORY_AUDIO: `ext:${EXTENSION.NAME}/qhly/character`,
+	VICTORY_AUDIO: `ext:${EXTENSION.NAME}/qhly-assets/character`,
 	SKILL_AUDIO: `ext:${EXTENSION.NAME}/audio/skill`,
 	QHLY: {
-		CHARACTER_ASSETS: `extension/${EXTENSION.NAME}/qhly/character/`,
+		CHARACTER_ASSETS: `extension/${EXTENSION.NAME}/qhly-assets/character/`,
 	},
 };
 
