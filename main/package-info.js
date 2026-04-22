@@ -1,4 +1,4 @@
-import { EXTENSION, URL } from "../utils/constants.js";
+import { URL } from "../utils/constants.js";
 import { lib } from "../../../noname.js";
 
 /** @type {importExtensionConfig['package']} */
@@ -9,13 +9,32 @@ const info = await lib.init.promises.json(URL.PACKAGE_INFO);
 packageInfo.author = `<span class="bluetext">${info.author}</span>`;
 packageInfo.version = info.version;
 
+let groupIdOnClick = `
+navigator.clipboard.writeText(${info.groupId})
+	.then(function () {
+		alert('群号复制成功');
+	})
+	.catch(function (error) {
+		alert(\`复制失败：\${error}\`);
+	});
+`;
+groupIdOnClick = groupIdOnClick.replace(/\s*\n\s*/g, "");
+
 packageInfo.intro = `
+<style>
+	.clickable {
+		cursor: pointer;
+	}
+</style>
 <span style="text-align: center;">
   <h3 style="color: darkKhaki;">
     始于对☆SP系列武将进行重置，但不止于此。
   </h3>
   <h4 style="color: cyan;">
-    扩展交流群：${info.groupId}
+    扩展交流群：
+	<u class="clickable" onclick="${groupIdOnClick}", title="复制群号">
+		${info.groupId}
+	</u>
   </h4>
 </span>
 <hr>
