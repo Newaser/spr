@@ -39,7 +39,7 @@ export default new SkillData("spr_siyan|肆言", {
 		async content(event, trigger, player) {
 			await player.useCard({
 				// @ts-expect-error card可以这样取值
-				card: { name: "wuzhong" },
+				card: { name: "wuzhong", isCard: true },
 				cards: event.cards,
 				targets: [player],
 			});

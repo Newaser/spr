@@ -20,6 +20,9 @@ import shangjia from "./skills/shangjia.js";
 import duanxie from "./skills/duanxie.js";
 import fenming from "./skills/fenming.js";
 
+// 星曹纯
+import shanjia from "./skills/shanjia.js";
+
 export default [
 	cuorui,
 	tafeng,
@@ -37,4 +40,6 @@ export default [
 	shangjia,
 	duanxie,
 	fenming,
+
+	shanjia,
 ];

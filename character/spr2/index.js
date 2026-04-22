@@ -74,5 +74,19 @@ export default new CharacterSubackage("spr2|☆SPR·其二")
 		dieVoice: "杀身为主，死而无憾……",
 		rank: "bp",
 		rarity: "rare",
-	});
+	})
 
+
+	.addCharacter("spr_caochun|星曹纯", {
+		basic: new Character({
+			sex: "male",
+			group: "wei",
+			hp: 4,
+			skills: ["spr_shanjia"],
+		}),
+		title: "锐兵坚甲",
+		dieVoice: "纯……终不负众望……",
+		victoryVoice: "小瞧虎豹骑，可是要付出代价的！",
+		rank: "am",
+		rarity: "rare",
+	});
