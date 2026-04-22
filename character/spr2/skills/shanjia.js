@@ -49,6 +49,15 @@ export default new SkillData("spr_shanjia|缮甲", {
 					forced: true,
 					prompt: "缮甲：请弃置一张牌，若为装备则你可以视为使用【杀】",
 					position: "he",
+					ai(card) {
+						let ret = 1000 - get.value(card, player);
+						const valueSha = getUsableVcards(player, "sha")
+							.some(i => player.hasValueTarget(card, false));
+						if (player.getCards("e").includes(card) && valueSha) {
+							ret += 100;
+						}
+						return ret;
+					},
 				});
 			}
 			delete player.storage.spr_shanjia;
