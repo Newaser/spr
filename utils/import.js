@@ -3,6 +3,9 @@ import { EXTENSION, URL } from "./constants.js";
 import { lib } from "../../../noname.js";
 import { Character } from "../../../noname/library/element/index.js";
 
+// 适配的扩展
+import * as qhly from "../utils/qhly.js";
+
 /**
  * @typedef {import("./type.ts").CharacterInfo} CharacterInfo
  * @typedef {import("./type.ts").SkillInfo} SkillInfo
@@ -381,20 +384,17 @@ export class CharacterPackage {
 					for (const skillId in info.audioRedirect) {
 						additionalSkills.push(new SkillData(`${skillId}__${character.id}`, {
 							voices: info.audioRedirect[skillId],
-							// skill: {},
-							skill: {
-								audio: `${URL.SKILL_AUDIO}:${info.audioRedirect[skillId].length}`,
-							},
+							skill: {},
 						}));
 					}
 				}
 				if (info.victoryVoice !== undefined) {
 					additionalSkills.push(new SkillData(`victory__${character.id}`, {
-						voices: [info.victoryVoice],
 						skill: {
 							audio: `${URL.VICTORY_AUDIO}/${character.id}/victory.mp3`,
 						},
-					}));
+					}, false));
+					translate[`#${URL.VICTORY_AUDIO}/${character.id}/victory`] = info.victoryVoice;
 				}
 			}
 			characterSort[EXTENSION.ID][pkg.id] = sort;
@@ -442,5 +442,6 @@ export class CharacterPackage {
 	 */
 	setupRuntime() {
 		this.subpkgs.forEach(pkg => pkg.setupRuntime());
+		qhly.loadCharacterPackage(this);
 	}
 }

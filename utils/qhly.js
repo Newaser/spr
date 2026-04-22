@@ -50,11 +50,7 @@ export async function loadCharacterPackage(pkg) {
 			const allSKillIds = [];
 			for (const skillId of info.basic.skills) {
 				allSKillIds.push(skillId);
-
-				const skill =
-					subpkg.skills.find(i => i.id == skillId)?.info.skill ||
-					get.info(skillId);
-				const derivation = skill.derivation;
+				const derivation = get.info(skillId).derivation;
 				if (derivation) {
 					if (typeof derivation === "string") {
 						allSKillIds.push(derivation);
@@ -65,19 +61,10 @@ export async function loadCharacterPackage(pkg) {
 					}
 				}
 			}
-
 			for (const skillId of allSKillIds) {
-				const redirect = info.audioRedirect?.[skillId];
-				const skillData = subpkg.skills.find(i => i.id == skillId);
-				if (redirect) {
-					voices[skillId] = { content: redirect.join("<br>") };
-				} else if (skillData && skillData.info.voices) {
-					voices[skillId] = { content: skillData.info.voices.join("<br>") };
-				} else {
-					const textMap = game.parseSkillTextMap(skillId, character.id);
-					const content = textMap.map(current => current.text).filter(Boolean).join("<br>");
-					voices[skillId] = { content };
-				}
+				const textMap = game.parseSkillTextMap(skillId, character.id);
+				const content = textMap.map(current => current.text).filter(Boolean).join("<br>");
+				voices[skillId] = { content };
 			}
 			taici[character.id] = voices;
 		}
