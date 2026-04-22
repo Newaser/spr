@@ -23,6 +23,10 @@ import fenming from "./skills/fenming.js";
 // 星曹纯
 import shanjia from "./skills/shanjia.js";
 
+// 星王桃王悦
+import shuangbi from "./skills/shuangbi.js";
+import tongzheng from "./skills/tongzheng.js";
+
 export default [
 	cuorui,
 	tafeng,
@@ -42,4 +46,7 @@ export default [
 	fenming,
 
 	shanjia,
+
+	shuangbi,
+	tongzheng,
 ];

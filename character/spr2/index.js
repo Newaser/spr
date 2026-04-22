@@ -43,7 +43,6 @@ export default new CharacterSubackage("spr2|☆SPR·其二")
 		}),
 		title: "白毦督",
 		dieVoice: "征南厚重，忠心后土……",
-		victoryVoice: "victory_voice",
 		rank: "c",
 		rarity: "junk",
 	})
@@ -89,4 +88,26 @@ export default new CharacterSubackage("spr2|☆SPR·其二")
 		victoryVoice: "小瞧虎豹骑，可是要付出代价的！",
 		rank: "am",
 		rarity: "rare",
+	})
+
+
+	.addCharacter("spr_wangwang|星王桃王悦", {
+		basic: new Character({
+			sex: "female",
+			group: "shu",
+			hp: 3,
+			skills: ["spr_shuangbi", "spr_tongzheng"],
+		}),
+		intro:
+			"王桃是在《花关索传》中登场的虚拟人物，盗贼王令公的" +
+			"两个女儿之一，王悦的姐姐，与妹妹都是关索之妻。姐妹俩" +
+			"原为卢塘寨山贼，以武艺与美貌而闻名，被众多男性求婚" +
+			"却皆不与理睬。她们在关索回西川认父途中与关索交手时不敌，" +
+			"因意气投合而一齐下嫁。虽为架空之人物，但四川省内有记述" +
+			"夫妻三人共同守护葭萌关一事，民间亦流传如夫妻三人曾共同" +
+			"参与诸葛亮之南蛮征伐等轶事。",
+		title: "春悦桃秾",
+		dieVoice: "妹妹，何时能再赏此景……姐姐，此景桃花似汝颜……",
+		rank: "d",
+		rarity: "junk",
 	});

@@ -111,6 +111,7 @@ export default new SkillData("spr_guimou|诡谋", {
 			beishui: {
 				charlotte: true,
 				mark: true,
+				marktext: "背水",
 				intro: {
 					content: "本回合不能对其他角色使用牌",
 				},
