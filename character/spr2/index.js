@@ -13,6 +13,7 @@ export default new CharacterSubackage("spr2|☆SPR·其二")
 		}),
 		title: "踏锋饮血",
 		dieVoice: "一生驰骋，早料到会如此……",
+		victoryVoice: "以锐不可当之勇，得胜归营！",
 		rank: "am",
 		rarity: "rare",
 	})
@@ -57,6 +58,20 @@ export default new CharacterSubackage("spr2|☆SPR·其二")
 		}),
 		title: "弄辞成掇",
 		dieVoice: "终日戏虎，竟为虎所噬……",
+		rank: "bp",
+		rarity: "rare",
+	})
+
+
+	.addCharacter("spr_chendong|星陈武董袭", {
+		basic: new Character({
+			sex: "male",
+			group: "wu",
+			hp: 4,
+			skills: ["spr_shangjia", "spr_duanxie", "spr_fenming"],
+		}),
+		title: "殒身不恤",
+		dieVoice: "杀身为主，死而无憾……",
 		rank: "bp",
 		rarity: "rare",
 	});

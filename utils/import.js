@@ -135,11 +135,17 @@ export class SkillData extends AbstractData {
 	 * 创建一个技能数据对象，用于存储技能的id、名称、信息等。
 	 * @param {string} formattedName 格式化的技能名称，格式为 `id|译名`
 	 * @param {SkillInfo} data 技能数据
+	 * @param {boolean} [autoAudio=true] 是否自动生成技能语音与台词（适用于格式化导入）。默认是
 	 */
-	constructor(formattedName, data) {
+	constructor(formattedName, data, autoAudio = true) {
 		super(formattedName, data);
 
-		if (this.info.voices?.length) {
+		/**
+		 * 是否自动生成技能语音与台词（适用于格式化导入）。默认是
+		 */
+		this.autoAudio = autoAudio;
+
+		if (this.autoAudio && this.info.voices?.length) {
 			this.info.skill.audio =
 				`${URL.SKILL_AUDIO}:${this.info.voices.length}`;
 		}
@@ -161,7 +167,7 @@ export class SkillData extends AbstractData {
 			ret[`${this.id}_info`] = this.info.description;
 		}
 
-		if (this.info.voices !== undefined) {
+		if (this.autoAudio && this.info.voices?.length) {
 			for (let i = 0; i < this.info.voices.length; i++) {
 				const voice = this.info.voices[i];
 				ret[`#${URL.SKILL_AUDIO}/${this.id}${i + 1}`] = voice;
@@ -304,9 +310,8 @@ export class CharacterPackage {
 		/**
 		 * 子包集合
 		 * @type {CharacterSubackage[]}
-		 * @protected
 		 */
-		this._subpkgs = [];
+		this.subpkgs = [];
 	}
 
 	/**
@@ -314,7 +319,7 @@ export class CharacterPackage {
 	 * @param {CharacterSubackage} subpkg 
 	 */
 	addSubackage(subpkg) {
-		this._subpkgs.push(subpkg);
+		this.subpkgs.push(subpkg);
 	}
 
 	/**
@@ -353,9 +358,9 @@ export class CharacterPackage {
 			dynamicTranslate = {},
 
 			/** @type {SkillData[]} */
-			audioRedirectSkills = [];
+			additionalSkills = [];
 
-		for (const pkg of this._subpkgs) {
+		for (const pkg of this.subpkgs) {
 			// add characters
 			const sort = [];
 			for (const character of pkg.characters) {
@@ -374,19 +379,28 @@ export class CharacterPackage {
 				sort.push(character.id);
 				if (info.audioRedirect !== undefined) {
 					for (const skillId in info.audioRedirect) {
-						audioRedirectSkills.push(new SkillData(`${skillId}__${character.id}`, {
+						additionalSkills.push(new SkillData(`${skillId}__${character.id}`, {
 							voices: info.audioRedirect[skillId],
+							// skill: {},
 							skill: {
 								audio: `${URL.SKILL_AUDIO}:${info.audioRedirect[skillId].length}`,
 							},
 						}));
 					}
 				}
+				if (info.victoryVoice !== undefined) {
+					additionalSkills.push(new SkillData(`victory__${character.id}`, {
+						voices: [info.victoryVoice],
+						skill: {
+							audio: `${URL.VICTORY_AUDIO}/${character.id}/victory.mp3`,
+						},
+					}));
+				}
 			}
 			characterSort[EXTENSION.ID][pkg.id] = sort;
 
 			// add skills
-			for (const skill of pkg.skills.concat(audioRedirectSkills)) {
+			for (const skill of pkg.skills.concat(additionalSkills)) {
 				skills[skill.id] = skill.info.skill;
 				const dynamicDesc = skill.getDynamicTranslate();
 				if (dynamicDesc !== undefined) {
@@ -427,6 +441,6 @@ export class CharacterPackage {
 	 * 运行时初始化
 	 */
 	setupRuntime() {
-		this._subpkgs.forEach(pkg => pkg.setupRuntime());
+		this.subpkgs.forEach(pkg => pkg.setupRuntime());
 	}
 }

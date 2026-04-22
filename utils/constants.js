@@ -6,13 +6,19 @@ export const EXTENSION = {
 	NAME_PREFIX: "星",
 };
 
+export const QHLY_NAME = "千幻聆音";
+
 export const URL = {
 	PACKAGE_INFO: `${lib.assetURL}extension/${EXTENSION.NAME}/info.json`,
 	CHARACTER_IMAGE: {
 		STANDARD: `${lib.assetURL}extension/${EXTENSION.NAME}/image/character`,
 	},
 	DIE_AUDIO: `ext:${EXTENSION.NAME}/audio/die`,
+	VICTORY_AUDIO: `ext:${EXTENSION.NAME}/qhly/character`,
 	SKILL_AUDIO: `ext:${EXTENSION.NAME}/audio/skill`,
+	QHLY: {
+		CHARACTER_ASSETS: `extension/${EXTENSION.NAME}/qhly/character/`,
+	},
 };
 
 export const STYLE = {

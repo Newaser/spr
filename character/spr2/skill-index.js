@@ -15,6 +15,11 @@ import baier from "./skills/baier.js";
 import guimou from "./skills/guimou.js";
 import congshi from "./skills/congshi.js";
 
+// 星陈武董袭
+import shangjia from "./skills/shangjia.js";
+import duanxie from "./skills/duanxie.js";
+import fenming from "./skills/fenming.js";
+
 export default [
 	cuorui,
 	tafeng,
@@ -28,4 +33,8 @@ export default [
 
 	guimou,
 	congshi,
+
+	shangjia,
+	duanxie,
+	fenming,
 ];
