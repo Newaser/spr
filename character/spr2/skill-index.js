@@ -27,6 +27,10 @@ import shanjia from "./skills/shanjia.js";
 import shuangbi from "./skills/shuangbi.js";
 import tongzheng from "./skills/tongzheng.js";
 
+// 星孙綝
+import xiongju from "./skills/xiongju.js";
+import shanfei from "./skills/shanfei.js";
+
 export default [
 	cuorui,
 	tafeng,
@@ -49,4 +53,7 @@ export default [
 
 	shuangbi,
 	tongzheng,
+
+	xiongju,
+	shanfei,
 ];

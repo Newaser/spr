@@ -87,3 +87,17 @@ export function parsePoptip(str) {
 	// 如果字符串不符合要求，返回 null
 	return null;
 }
+
+/**
+ * 公开延时拼点的结果
+ * @param {Player} player 拼点的发起者
+ * @param {GameEvent} delayedCompare 延时拼点事件
+ * @returns
+ */
+export function revealDelayedCompare(player, delayedCompare) {
+	const next = game.createEvent("chooseToCompare", false);
+	next.set("player", player);
+	next.set("parentEvent", delayedCompare);
+	next.setContent("chooseToCompareEffect");
+	return next;
+}

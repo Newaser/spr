@@ -110,4 +110,19 @@ export default new CharacterSubackage("spr2|☆SPR·其二")
 		dieVoice: "妹妹，何时能再赏此景……姐姐，此景桃花似汝颜……",
 		rank: "d",
 		rarity: "junk",
+	})
+
+
+	.addCharacter("spr_sunchen|星孙綝", {
+		basic: new Character({
+			sex: "male",
+			group: "wu",
+			// groupBorder: "jin",
+			hp: 4,
+			skills: ["spr_xiongju", "spr_shanfei"],
+		}),
+		title: "食髓的朝堂客",
+		dieVoice: "愿陛下念臣昔日之功……陛下？陛下！",
+		rank: "a",
+		rarity: "epic",
 	});

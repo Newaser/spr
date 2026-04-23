@@ -8,7 +8,7 @@ export const config = {
 		intro: "设置此扩展中武将插画的露头样式",
 		init: "STANDARD",
 		item: {
-			STANDARD: "不露头",
+			STANDARD: "标准",
 			MOBILE: "手杀露头",
 		},
 		/**
