@@ -15,7 +15,7 @@ export default new CharacterSubackage("spr2|☆SPR·其二")
 		dieVoice: "一生驰骋，早料到会如此……",
 		victoryVoice: "以锐不可当之勇，得胜归营！",
 		rank: "am",
-		rarity: "rare",
+		rarity: "epic",
 	})
 
 
@@ -58,7 +58,7 @@ export default new CharacterSubackage("spr2|☆SPR·其二")
 		title: "弄辞成掇",
 		dieVoice: "终日戏虎，竟为虎所噬……",
 		rank: "bp",
-		rarity: "rare",
+		rarity: "epic",
 	})
 
 
@@ -72,7 +72,7 @@ export default new CharacterSubackage("spr2|☆SPR·其二")
 		title: "殒身不恤",
 		dieVoice: "杀身为主，死而无憾……",
 		rank: "bp",
-		rarity: "rare",
+		rarity: "common",
 	})
 
 
@@ -109,7 +109,7 @@ export default new CharacterSubackage("spr2|☆SPR·其二")
 		title: "春悦桃秾",
 		dieVoice: "妹妹，何时能再赏此景……姐姐，此景桃花似汝颜……",
 		rank: "d",
-		rarity: "junk",
+		rarity: "common",
 	})
 
 
