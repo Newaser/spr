@@ -106,7 +106,7 @@ export default new SkillData("spr_guimou|诡谋", {
 				player.addTempSkill("spr_guimou_beishui");
 			}
 		},
-		group: "spr_guimou_directHitAI",
+		group: "spr_guimou_directHitAi",
 		subSkill: {
 			beishui: {
 				charlotte: true,
@@ -121,7 +121,7 @@ export default new SkillData("spr_guimou|诡谋", {
 					},
 				},
 			},
-			directHitAI: {
+			directHitAi: {
 				trigger: {
 					player: "useCardToPlayered",
 				},
@@ -137,6 +137,7 @@ export default new SkillData("spr_guimou|诡谋", {
 				firstDo: true,
 				async content(event, trigger, player) {
 					const expire = [
+						"damageBegin3",
 						"damageAfter",
 						"damageCancelled",
 						"damageZero",
@@ -155,10 +156,15 @@ export default new SkillData("spr_guimou|诡谋", {
 				ai: {
 					effect: {
 						target(card, player, target, result2) {
-							if (player.storage?.counttrigger?.spr_guimou > 0) {
+							if (player.hasSkill("spr_guimou") &&
+								player.storage.counttrigger?.spr_guimou > 0) {
 								return false;
 							}
-							if (card.name?.endsWith("damage") &&
+							// if (card.name?.endsWith("damage") &&
+							// 	get.attitude(target, player) > 0) {
+							// 	return [0, 3.5];
+							// }
+							if (get.is.damageCard(card) &&
 								get.attitude(target, player) > 0) {
 								return [0, 3.5];
 							}
