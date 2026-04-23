@@ -83,7 +83,7 @@ export default new SkillData("spr_xiongju|凶倨", {
 				ai: {
 					noSha: "respond",
 					skillTagFilter(player, tag, arg) {
-						if (player.storage.spr_xiongju_noShaAi < 7) {
+						if (player.storage.spr_xiongju_noShaAi > 7) {
 							return false;
 						}
 					},
