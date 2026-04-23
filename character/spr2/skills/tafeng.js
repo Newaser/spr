@@ -14,10 +14,7 @@ export default new SkillData("spr_tafeng|踏锋", {
 			player: "phaseZhunbei",
 		},
 		filter(event, player, name, target) {
-			return player.countCards("he", card => {
-				const cqby = get.autoViewAs({ name: "chuqibuyi" }, [card]);
-				return player.hasUseTarget(cqby);
-			}) > 0;
+			return player.hp > 0;
 		},
 		check(event, player) {
 			return player.hp > 1 &&
@@ -26,6 +23,12 @@ export default new SkillData("spr_tafeng|踏锋", {
 		async content(event, trigger, player) {
 			await player.loseHp();
 			await player.draw();
+
+			if (player.countCards("he", card => {
+				const cqby = get.autoViewAs({ name: "chuqibuyi" }, [card]);
+				return player.hasUseTarget(cqby);
+			}) == 0) return;
+
 			const result = await player.chooseCardTarget({
 				forced: true,
 				prompt: "将一张牌当【出其不意】使用",
