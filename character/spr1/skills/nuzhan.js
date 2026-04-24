@@ -59,7 +59,9 @@ export default new SkillData("spr_nuzhan|怒斩", {
 						player.countCharge(true) > 0;
 				},
 				async cost(event, trigger, player) {
-					event.result = await player.chooseToDiscard({
+					/** @type {Result} */
+					const result = await player.chooseToDiscard({
+						chooseonly: true,
 						prompt: get.prompt("spr_nuzhan"),
 						prompt2: "弃置一张牌并获得1点蓄力",
 						position: "he",
@@ -67,8 +69,15 @@ export default new SkillData("spr_nuzhan|怒斩", {
 							return 7 - get.useful(card);
 						},
 					}).forResult();
+					if (result.bool) {
+						event.result = {
+							bool: true,
+							cards: result.cards,
+						};
+					}
 				},
 				async content(event, trigger, player) {
+					await player.discard({ cards: event.cards });
 					player.addCharge();
 				},
 			},

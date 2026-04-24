@@ -16,6 +16,7 @@ export default new SkillData("spr_shanfei|擅废", {
 		limited: true,
 		skillAnimation: true,
 		animationColor: "purple",
+		line: "purple",
 		filter(event, player, name, target) {
 			return game.hasPlayer(i => i != player && i.isDamaged());
 		},
