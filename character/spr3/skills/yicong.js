@@ -21,16 +21,27 @@ export default new SkillData("spr_yicong|义从", {
 		filter(event, player, name, target) {
 			if (player.storage.nohp) return false;
 
-			const name2preHealthy = {
-				"changeHpAfter": player.hp - event.num >= player.maxHp,
-				"gainMaxHpEnd": player.hp >= player.maxHp - event.num,
-				"loseMaxHpEnd": player.hp >= player.maxHp + event.num,
-			};
-			const nowHealthy = player.hp >= player.maxHp;
+			const preHealthy = player.storage.spr_yicong;
+			if (preHealthy === undefined) return false;
+			delete player.storage.spr_yicong;
 
-			return name2preHealthy[name] != nowHealthy;
+			const nowHealthy = Boolean(player.isHealthy());
+			return preHealthy != nowHealthy;
 		},
-		content() { },
+		async content(event, trigger, player) { },
+		group: "spr_yicong_record",
+		subSkill: {
+			record: {
+				charlotte: true,
+				trigger: {
+					player: ["changeHpBegin", "gainMaxHpBegin", "loseMaxHpBegin"],
+				},
+				direct: true,
+				async content(event, trigger, player) {
+					player.storage.spr_yicong = Boolean(player.isHealthy());
+				},
+			},
+		},
 		mod: {
 			globalFrom(from, to, current) {
 				if (from.isHealthy()) {
@@ -38,7 +49,7 @@ export default new SkillData("spr_yicong|义从", {
 				}
 			},
 			globalTo(from, to, current) {
-				if (from.isDamaged()) {
+				if (to.isDamaged()) {
 					return current + 1;
 				}
 			},
