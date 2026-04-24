@@ -3,5 +3,5 @@ import characterPackage from "../character/index.js";
 
 /** @type {importExtensionConfig['content']} */
 export const content = (config, pack) => {
-	characterPackage.setupRuntime();
+	characterPackage.setupRuntime2();
 };

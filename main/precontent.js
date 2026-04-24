@@ -10,4 +10,6 @@ export const precontent = (data) => {
 	// add characters
 	game.import("character", () => characterPackage.pack());
 	lib.translate[`${EXTENSION.ID}_character_config`] = EXTENSION.NAME;
+
+	characterPackage.setupRuntime1();
 };

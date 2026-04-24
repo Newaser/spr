@@ -21,7 +21,7 @@ export type Rarity = "legend" | "epic" | "rare" | "common" | "junk";
 /**
  * **武将信息**
  * 
- * 包含武将的基本信息、介绍、称号、评级、稀有度、台词等。
+ * 包含武将的基本信息、介绍、称号、评级、稀有度、台词等。 
  */
 export interface CharacterInfo {
 	/**
@@ -52,10 +52,11 @@ export interface CharacterInfo {
 	 * 稀有度
 	 */
 	rarity?: Rarity;
-	/**
-	 * ### 技能语音重定向
+	/** ## 技能语音重定向
 	 * 
-	 * 格式：
+	 * ---
+	 * 
+	 * ### 基本格式：
 	 * ```javascript
 	 * audioRedirect: {
 	 *   "已有技能的id": [ "台词1", "台词2", ... ],
@@ -65,17 +66,35 @@ export interface CharacterInfo {
 	 * 
 	 * 对应地，相应的音频文件应命名为：
 	 * 
-	 * - `已有技能的id__武将id1.mp3`
-	 * - `已有技能的id__武将id2.mp3`
+	 * - `<已有技能的id>__<武将id>1.mp3`
+	 * - `<已有技能的id>__<武将id>2.mp3`
 	 * - `...`
 	 * 
 	 * 放在扩展的技能语音目录下。
 	 * 
 	 * ---
 	 * 
-	 * ### 案例
+	 * ### 高级格式：
 	 * 
-	 * 以武将`spr_guanyu`举例，若其有如下值：
+	 * 可以将多个技能或子技能重定向至同一组台词，格式为：
+	 * ```javascript
+	 * audioRedirect: {
+	 *   "<skillId1>|<skillId2>:<subSkillId>": [ "台词1", "台词2", ... ],
+	 *   ...
+	 * },
+	 * ```
+	 * 
+	 * 至于音频文件的名称，应以其中**首个技能**的名称为前缀，为：
+	 * 
+	 * - `<skillId1>__<武将id>1.mp3`
+	 * - `<skillId1>__<武将id>2.mp3`
+	 * - `...`
+	 * 
+	 * ---
+	 * 
+	 * ### 案例1
+	 * 
+	 * 以武将 `spr_guanyu` 举例，若其有如下值：
 	 * 
 	 * ```javascript
 	 * audioRedirect: {
@@ -89,12 +108,42 @@ export interface CharacterInfo {
 	 * 则相应的音频文件应命名为：
 	 * - `wusheng__spr_guanyu1.mp3`
 	 * - `wusheng__spr_guanyu2.mp3`
+	 * 
+	 * ---
+	 * 
+	 * ### 案例2
+	 * 
+	 * 以武将 `spr_zhaoyun` 举例，若其有如下值：
+	 * 
+	 * ```javascript
+	 * audioRedirect: {
+	 *   "longdan:sha|longdan:shan|longdan": [
+	 *     "云虽无名，亦不怯尔等半分！",
+	 *     "少年何惧千军阵，银枪龙胆鉴丹心！",
+	 *   ],
+	 * },
+	 * ```
+	 * 
+	 * 则 `spr_zhaoyun` 的技能 `longdan_sha`、`longdan_shan`、`longdan` 
+	 * （前两个为子技能）均会被重定向，且只需要两个音频文件，应命名为：
+	 * - `longdan_sha__spr_zhaoyun1.mp3`
+	 * - `longdan_sha__spr_zhaoyun2.mp3`
 	 */
 	audioRedirect?: Record<string, string[]>;
 	/**
 	 * 武将包含的其他文本信息
 	 */
 	texts?: Record<string, string>;
+	/**
+	 * 将在 `precontent` 里运行内容
+	 * @param data 武将数据自身
+	 */
+	runtime1?: (data: CharacterInfo) => any;
+	/**
+	 * 将在 `content` 里运行内容
+	 * @param data 武将数据自身
+	 */
+	runtime2?: (data: CharacterInfo) => any;
 }
 
 /**
@@ -126,6 +175,20 @@ export interface SkillInfo {
 	 * 技能包含的其他文本信息
 	 */
 	texts?: Record<string, string>;
+	/**
+	 * 将在 `precontent` 里运行内容
+	 * @param data 技能数据自身
+	 */
+	runtime1?: (data: SkillInfo) => any;
+	/**
+	 * 将在 `content` 里运行内容
+	 * @param data 技能数据自身
+	 */
+	runtime2?: (data: SkillInfo) => any;
+	/**
+	 * 是否禁止自动生成技能语音与台词（适用于格式化导入）。默认不禁止
+	 */
+	disableAutoAudio?: boolean;
 }
 
 type AudioInfo = AudioInfo[] | string | number | boolean;

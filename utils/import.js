@@ -30,7 +30,7 @@ class AbstractData {
 	get name() { return this.#name; }
 	/**
 	 * 数据信息
-	 * @type {T}
+	 * @returns {T}
 	 */
 	get info() { return this.#info; }
 
@@ -67,6 +67,15 @@ export class CharacterData extends AbstractData {
 		super(formattedName, data);
 	}
 
+	/**
+	 * 将技能语音重定向的信息转化为其名字，为其中第一个技能名
+	 * @param {string} redirectInfo 技能语音重定向的信息
+	 * @returns {string} 重定向的名字
+	 */
+	static redirectInfo2Name(redirectInfo) {
+		return redirectInfo.split("|")[0].split(":").join("_");
+	}
+
 	/** 
 	 * 获取武将相关的翻译文本
 	 * @returns {Record<string,string>} 
@@ -86,10 +95,11 @@ export class CharacterData extends AbstractData {
 		}
 
 		if (this.info.audioRedirect !== undefined) {
-			for (const [skillId, voices] of Object.entries(this.info.audioRedirect)) {
+			for (const [redirectInfo, voices] of Object.entries(this.info.audioRedirect)) {
+				const redirectName = CharacterData.redirectInfo2Name(redirectInfo);
 				for (let i = 0; i < voices.length; i++) {
 					const key =
-						`#ext:${EXTENSION.NAME}/audio/skill/${skillId}__${this.id}${i + 1}`;
+						`#ext:${EXTENSION.NAME}/audio/skill/${redirectName}__${this.id}${i + 1}`;
 					ret[key] = voices[i];
 				}
 			}
@@ -120,11 +130,26 @@ export class CharacterData extends AbstractData {
 	 */
 	registerAudioRedirects() {
 		if (this.info.audioRedirect !== undefined) {
-			for (const skillId in this.info.audioRedirect) {
-				if (!lib.skill[skillId].audioname2) {
-					lib.skill[skillId].audioname2 = {};
+			for (const redirectInfo in this.info.audioRedirect) {
+				const redirectName = CharacterData.redirectInfo2Name(redirectInfo);
+				for (const skillId of redirectInfo.split("|")) {
+					const parts = skillId.split(":");
+					if (parts.length == 1) {
+						if (!lib.skill[skillId].audioname2) {
+							lib.skill[skillId].audioname2 = {};
+						}
+						lib.skill[skillId].audioname2[this.id] = `${redirectName}__${this.id}`;
+					} else {
+						const [id1, id2] = parts;
+						const subSkill = lib.skill[id1]?.subSkill?.[id2];
+						if (subSkill) {
+							if (!subSkill.audioname2) {
+								subSkill.audioname2 = {};
+							}
+							subSkill.audioname2[this.id] = `${redirectName}__${this.id}`;
+						}
+					}
 				}
-				lib.skill[skillId].audioname2[this.id] = `${skillId}__${this.id}`;
 			}
 		}
 	}
@@ -138,17 +163,11 @@ export class SkillData extends AbstractData {
 	 * 创建一个技能数据对象，用于存储技能的id、名称、信息等。
 	 * @param {string} formattedName 格式化的技能名称，格式为 `id|译名`
 	 * @param {SkillInfo} data 技能数据
-	 * @param {boolean} [autoAudio=true] 是否自动生成技能语音与台词（适用于格式化导入）。默认是
 	 */
-	constructor(formattedName, data, autoAudio = true) {
+	constructor(formattedName, data) {
 		super(formattedName, data);
 
-		/**
-		 * 是否自动生成技能语音与台词（适用于格式化导入）。默认是
-		 */
-		this.autoAudio = autoAudio;
-
-		if (this.autoAudio && this.info.voices?.length) {
+		if (this.info.disableAutoAudio !== true && this.info.voices?.length) {
 			this.info.skill.audio =
 				`${URL.SKILL_AUDIO}:${this.info.voices.length}`;
 		}
@@ -170,7 +189,7 @@ export class SkillData extends AbstractData {
 			ret[`${this.id}_info`] = this.info.description;
 		}
 
-		if (this.autoAudio && this.info.voices?.length) {
+		if (this.info.disableAutoAudio !== true && this.info.voices?.length) {
 			for (let i = 0; i < this.info.voices.length; i++) {
 				const voice = this.info.voices[i];
 				ret[`#${URL.SKILL_AUDIO}/${this.id}${i + 1}`] = voice;
@@ -291,12 +310,28 @@ export class CharacterSubackage {
 	}
 
 	/**
-	 * 运行时初始化
+	 * 运行时初始化，在扩展包的 `precontent` 中运行
 	 */
-	setupRuntime() {
+	setupRuntime1() {
+		this.characters.forEach(character => {
+			character.info.runtime1?.(character.info);
+		});
+		this.skills.forEach(skill => {
+			skill.info.runtime1?.(skill.info);
+		});
+	}
+
+	/**
+	 * 运行时初始化，在扩展包的 `content` 中运行
+	 */
+	setupRuntime2() {
 		this.characters.forEach(character => {
 			character.registerRank();
 			character.registerAudioRedirects();
+			character.info.runtime2?.(character.info);
+		});
+		this.skills.forEach(skill => {
+			skill.info.runtime2?.(skill.info);
 		});
 	}
 }
@@ -384,19 +419,21 @@ export class CharacterPackage {
 				}
 				sort.push(character.id);
 				if (info.audioRedirect !== undefined) {
-					for (const skillId in info.audioRedirect) {
-						additionalSkills.push(new SkillData(`${skillId}__${character.id}`, {
-							voices: info.audioRedirect[skillId],
+					for (const redirectInfo in info.audioRedirect) {
+						const redirectName = CharacterData.redirectInfo2Name(redirectInfo);
+						additionalSkills.push(new SkillData(`${redirectName}__${character.id}`, {
+							voices: info.audioRedirect[redirectInfo],
 							skill: {},
 						}));
 					}
 				}
 				if (info.victoryVoice !== undefined) {
 					additionalSkills.push(new SkillData(`victory__${character.id}`, {
+						disableAutoAudio: true,
 						skill: {
 							audio: `${URL.VICTORY_AUDIO}/${character.id}/victory.mp3`,
 						},
-					}, false));
+					}));
 					translate[`#${URL.VICTORY_AUDIO}/${character.id}/victory`] = info.victoryVoice;
 				}
 			}
@@ -441,10 +478,19 @@ export class CharacterPackage {
 	}
 
 	/**
-	 * 运行时初始化
+	 * 运行时初始化，在扩展包的 `precontent` 中运行
 	 */
-	setupRuntime() {
-		this.subpkgs.forEach(pkg => pkg.setupRuntime());
+	setupRuntime1() {
+		this.subpkgs.forEach(pkg => {
+			pkg.setupRuntime1();
+		});
+	}
+
+	/**
+	 * 运行时初始化，在扩展包的 `content` 中运行
+	 */
+	setupRuntime2() {
+		this.subpkgs.forEach(pkg => pkg.setupRuntime2());
 		qhly.loadCharacterPackage(this);
 	}
 }

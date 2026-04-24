@@ -21,7 +21,7 @@ export default new CharacterSubackage("spr3|☆SPR·其三")
 		rank: "a",
 		rarity: "epic",
 		audioRedirect: {
-			"longdan": [
+			"longdan|longdan:sha|longdan:shan": [
 				"云虽无名，亦不怯尔等半分！",
 				"少年何惧千军阵，银枪龙胆鉴丹心！",
 			],

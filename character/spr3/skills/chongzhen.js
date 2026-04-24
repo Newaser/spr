@@ -15,6 +15,6 @@ export default new SkillData("spr_chongzhen|冲阵", {
 			"且其与你距离1以外，你可以发动“驰越”对应的效果。",
 	},
 	skill: {
-
+		inherit: "chongzhen",
 	},
 });
