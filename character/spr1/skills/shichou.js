@@ -93,21 +93,18 @@ export default new SkillData("spr_shichou|誓仇", {
 	skill: {
 		enable: "chooseToUse",
 		filter(event, player, name, target) {
-			return (
-				event.filterCard(
-					{
-						name: "sha",
-						storage: {
-							spr_shichou: true,
-						},
-					},
-					player,
-					event,
-				) && player.countCards("h") > 0
-			);
+			const sha = {
+				name: "sha",
+				storage: {
+					spr_shichou: true,
+				},
+			};
+			return event.filterCard(sha, player, event) &&
+				player.countCards("h") > 0;
 		},
 		hiddenCard(player, name) {
-			return name == "sha";
+			if (player.countCards("h") > 0)
+				return name == "sha";
 		},
 		chooseButton: {
 			dialog(event, player) {

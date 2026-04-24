@@ -12,8 +12,8 @@ export default new SkillData("spr_siyan|肆言", {
 			player: "damageEnd",
 		},
 		filter(event, player, name, target) {
-			return player.countCards("he") > 0 &&
-				player.getCards("he").some(c => player.canUse({
+			return player.countCards("hes") > 0 &&
+				player.getCards("hes").some(c => player.canUse({
 					name: "wuzhong",
 					cards: [c],
 				}, player));
@@ -22,7 +22,7 @@ export default new SkillData("spr_siyan|肆言", {
 			event.result = await player.chooseCard({
 				prompt: get.prompt("spr_siyan"),
 				prompt2: get.skillInfoTranslation("spr_siyan"),
-				position: "he",
+				position: "hes",
 				filterCard(card, player, event) {
 					return player.canUse({
 						name: "wuzhong",

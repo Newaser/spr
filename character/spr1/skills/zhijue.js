@@ -23,13 +23,13 @@ export default new SkillData("spr_zhijue|智绝", {
 		},
 		hiddenCard(player, name) {
 			return (
-				player.countCards("he") > 0 &&
+				player.countCards("hes") > 0 &&
 				!player.storage.spr_zhijue_used.includes("wuxie") &&
 				name == "wuxie"
 			);
 		},
 		filter(event, player, name, target) {
-			if (player.countCards("he") == 0) return false;
+			if (player.countCards("hes") == 0) return false;
 			for (const zhinang of get.zhinangs()) {
 				if (!player.storage.spr_zhijue_used.includes(zhinang) &&
 					event.filterCard({ name: zhinang }, player, event)) {

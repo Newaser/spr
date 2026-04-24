@@ -135,12 +135,12 @@ export interface CharacterInfo {
 	 */
 	texts?: Record<string, string>;
 	/**
-	 * 将在 `precontent` 里运行内容
+	 * 将在扩展包的 `precontent()` 里运行内容
 	 * @param data 武将数据自身
 	 */
 	runtime1?: (data: CharacterInfo) => any;
 	/**
-	 * 将在 `content` 里运行内容
+	 * 将在扩展包的 `content()` 里运行内容
 	 * @param data 武将数据自身
 	 */
 	runtime2?: (data: CharacterInfo) => any;
@@ -176,12 +176,12 @@ export interface SkillInfo {
 	 */
 	texts?: Record<string, string>;
 	/**
-	 * 将在 `precontent` 里运行内容
+	 * 将在扩展包的 `precontent()` 里运行内容
 	 * @param data 技能数据自身
 	 */
 	runtime1?: (data: SkillInfo) => any;
 	/**
-	 * 将在 `content` 里运行内容
+	 * 将在扩展包的 `content()` 里运行内容
 	 * @param data 技能数据自身
 	 */
 	runtime2?: (data: SkillInfo) => any;

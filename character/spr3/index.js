@@ -1,6 +1,7 @@
 import skills from "./skill-index.js";
 import { CharacterSubackage } from "../../utils/import.js";
 import { Character } from "../../../../noname/library/element/index.js";
+import { lib } from "../../../../noname.js";
 
 export default new CharacterSubackage("spr3|☆SPR·其三")
 	.addSkills(skills)
@@ -54,4 +55,29 @@ export default new CharacterSubackage("spr3|☆SPR·其三")
 		dieVoice: "微功未效，有辱国恩……",
 		rank: "bp",
 		rarity: "rare",
+	})
+
+
+	.addCharacter("spr_chengpu|星程普", {
+		basic: new Character({
+			sex: "male",
+			group: "wu",
+			hp: 4,
+			skills: ["weizhong", "spr_chunlao", "spr_lihuo"],
+		}),
+		title: "厉火燃战",
+		dieVoice: "病疠缠身，终天命难违……",
+		rank: "c",
+		rarity: "junk",
+		audioRedirect: {
+			"weizhong": [
+				"三朝旧将，威令犹在！",
+				"军心未散，尚可一战！",
+			],
+			"benghuai": ["以暴讨贼，竟遭报应吗……"],
+		},
+		runtime2(data) {
+			lib.skill["weizhong"].audio = 2;
+			lib.skill["benghuai"].audio = 1;
+		},
 	});

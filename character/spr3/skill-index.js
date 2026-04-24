@@ -10,6 +10,10 @@ import xiandeng from "./skills/xiandeng.js";
 import junbing from "./skills/junbing.js";
 import quji from "./skills/quji.js";
 
+// 星程普
+import chunlao from "./skills/chunlao.js";
+import lihuo from "./skills/lihuo.js";
+
 export default [
 	yicong,
 	chongzhen,
@@ -19,4 +23,7 @@ export default [
 
 	junbing,
 	quji,
+
+	chunlao,
+	lihuo,
 ];

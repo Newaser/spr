@@ -24,7 +24,7 @@ export default new SkillData("spr_tafeng|踏锋", {
 			await player.loseHp();
 			await player.draw();
 
-			if (player.countCards("he", card => {
+			if (player.countCards("hes", card => {
 				const cqby = get.autoViewAs({ name: "chuqibuyi" }, [card]);
 				return player.hasUseTarget(cqby);
 			}) == 0) return;
@@ -34,7 +34,7 @@ export default new SkillData("spr_tafeng|踏锋", {
 				prompt: "将一张牌当【出其不意】使用",
 
 				filterCard: true,
-				position: "he",
+				position: "hes",
 
 				filterTarget(card, player, target) {
 					return player.canUse("chuqibuyi", target);
