@@ -50,6 +50,9 @@ export default new SkillData("spr_shanfei|擅废", {
 			await to.disableEquip({ slots: toDisable, source: player });
 		},
 		ai: {
+			order(item, player) {
+				return get.order({ name: "guohe" }) + 0.1;
+			},
 			result: {
 				target: -3,
 			},

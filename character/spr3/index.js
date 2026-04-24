@@ -40,4 +40,18 @@ export default new CharacterSubackage("spr3|☆SPR·其三")
 		dieVoice: "不能再为主公，杀敌了……",
 		rank: "c",
 		rarity: "junk",
+	})
+
+
+	.addCharacter("spr_simalang|星司马朗", {
+		basic: new Character({
+			sex: "male",
+			group: "wei",
+			hp: 3,
+			skills: ["spr_junbing", "spr_quji"],
+		}),
+		title: "躬亲致治",
+		dieVoice: "微功未效，有辱国恩……",
+		rank: "bp",
+		rarity: "rare",
 	});

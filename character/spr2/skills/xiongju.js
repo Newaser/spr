@@ -91,6 +91,9 @@ export default new SkillData("spr_xiongju|凶倨", {
 			},
 		},
 		ai: {
+			order(item, player) {
+				return get.order({ name: "juedou" }) + 0.1;
+			},
 			result: {
 				target(player, target, card) {
 					const juedouEff = get.effect(
