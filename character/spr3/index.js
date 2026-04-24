@@ -18,7 +18,7 @@ export default new CharacterSubackage("spr3|☆SPR·其三")
 		title: "威名尽显",
 		dieVoice: "河北名将，果真名不虚传……",
 		victoryVoice: "今日磐河救主，定叫天下知我锋芒！",
-		rank: "a",
+		rank: "ap",
 		rarity: "epic",
 		audioRedirect: {
 			"longdan|longdan:sha|longdan:shan": [
@@ -26,5 +26,18 @@ export default new CharacterSubackage("spr3|☆SPR·其三")
 				"少年何惧千军阵，银枪龙胆鉴丹心！",
 			],
 		},
-	});
+	})
 
+
+	.addCharacter("spr_yuejin|星乐进", {
+		basic: new Character({
+			sex: "male",
+			group: "wei",
+			hp: 4,
+			skills: ["spr_xiaoguo", "spr_xiandeng"],
+		}),
+		title: "奋强突固",
+		dieVoice: "不能再为主公，杀敌了……",
+		rank: "c",
+		rarity: "junk",
+	});

@@ -13,7 +13,7 @@ export default new CharacterSubackage("spr1|☆SPR·其一")
 		}),
 		title: "杵杆摧敌",
 		dieVoice: "血仇无报，坎坷一生，唉……",
-		rank: "ap",
+		rank: "s",
 		rarity: "legend",
 	})
 
@@ -50,7 +50,7 @@ export default new CharacterSubackage("spr1|☆SPR·其一")
 			"解白马之围，受封汉寿亭侯。得知刘备下落后，前往投奔。",
 		title: "单骑千里",
 		dieVoice: "大哥，三弟，云长去矣……",
-		rank: "a",
+		rank: "d",
 		rarity: "common",
 		audioRedirect: {
 			"wusheng": [
@@ -90,7 +90,7 @@ export default new CharacterSubackage("spr1|☆SPR·其一")
 		}),
 		title: "正南义北",
 		dieVoice: "吾君在北，但求面北而亡。",
-		rank: "a",
+		rank: "am",
 		rarity: "epic",
 	})
 
@@ -104,7 +104,7 @@ export default new CharacterSubackage("spr1|☆SPR·其一")
 		}),
 		title: "神勇壮猛",
 		dieVoice: "黄须金甲，也难敌骨肉毒心……",
-		rank: "bp",
+		rank: "c",
 		rarity: "junk",
 	})
 
@@ -118,7 +118,7 @@ export default new CharacterSubackage("spr1|☆SPR·其一")
 		}),
 		title: "垂问秦淮",
 		dieVoice: "五子哀母，不惜其身，淮又安能坐视……",
-		rank: "a",
+		rank: "b",
 		rarity: "rare",
 	})
 
@@ -132,7 +132,7 @@ export default new CharacterSubackage("spr1|☆SPR·其一")
 		}),
 		title: "醉琴卧花",
 		dieVoice: "世间的成败得失，都要怪红颜祸水吗……",
-		rank: "c",
+		rank: "bm",
 		rarity: "rare",
 	});
 

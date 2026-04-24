@@ -29,7 +29,7 @@ export default new CharacterSubackage("spr2|☆SPR·其二")
 		}),
 		title: "介然毕命",
 		dieVoice: "国朝用命之时，奈何无计可施……",
-		rank: "bp",
+		rank: "b",
 		rarity: "rare",
 	})
 
@@ -57,7 +57,7 @@ export default new CharacterSubackage("spr2|☆SPR·其二")
 		}),
 		title: "弄辞成掇",
 		dieVoice: "终日戏虎，竟为虎所噬……",
-		rank: "bp",
+		rank: "a",
 		rarity: "epic",
 	})
 
@@ -71,7 +71,7 @@ export default new CharacterSubackage("spr2|☆SPR·其二")
 		}),
 		title: "殒身不恤",
 		dieVoice: "杀身为主，死而无憾……",
-		rank: "bp",
+		rank: "d",
 		rarity: "common",
 	})
 
@@ -86,7 +86,7 @@ export default new CharacterSubackage("spr2|☆SPR·其二")
 		title: "锐兵坚甲",
 		dieVoice: "纯……终不负众望……",
 		victoryVoice: "小瞧虎豹骑，可是要付出代价的！",
-		rank: "am",
+		rank: "bp",
 		rarity: "rare",
 	})
 
