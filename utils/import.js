@@ -111,7 +111,19 @@ export class CharacterData extends AbstractData {
 	}
 
 	/**
-	 * 将武将的评级、稀有度注册到游戏内（须运行时操作）
+	 * 绑定至同名武将替换序列
+	 */
+	registerCharacterReplace() {
+		// TODO
+		// //@ts-expect-error 可以这样的
+		// const replaces = window.noname_character_replace;
+		// const trueId = this.id.split("_")[1];
+		// replaces[trueId] = replaces[trueId] || [];
+		// replaces[trueId].push(this.id);
+	}
+
+	/**
+	 * 将武将的评级、稀有度注册到游戏内（须运行时2操作）
 	 */
 	registerRank() {
 		const rank = /** @type {any} */ (lib).rank;
@@ -126,7 +138,7 @@ export class CharacterData extends AbstractData {
 	}
 
 	/**
-	 * 将武将的技能语音重定向注册到游戏内（须运行时操作）
+	 * 将武将的技能语音重定向注册到游戏内（须运行时2操作）
 	 */
 	registerAudioRedirects() {
 		if (this.info.audioRedirect !== undefined) {
@@ -326,6 +338,9 @@ export class CharacterSubackage {
 	 */
 	setupRuntime2() {
 		this.characters.forEach(character => {
+			if (!character.info.disableAutoReplace) {
+				character.registerCharacterReplace();
+			}
 			character.registerRank();
 			character.registerAudioRedirects();
 			character.info.runtime2?.(character.info);

@@ -83,7 +83,7 @@ export default new CharacterSubackage("spr3|☆SPR·其三")
 	})
 
 
-	.addCharacter("spr_zhenfu|星甄宓", {
+	.addCharacter("spr_zhenji|星甄宓", {
 		basic: new Character({
 			sex: "female",
 			group: "wei",

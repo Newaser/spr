@@ -144,6 +144,10 @@ export interface CharacterInfo {
 	 * @param data 武将数据自身
 	 */
 	runtime2?: (data: CharacterInfo) => any;
+	/**
+	 * 是否禁止自动绑定至同名武将替换序列。默认不禁止
+	 */
+	disableAutoReplace?: boolean;
 }
 
 /**
