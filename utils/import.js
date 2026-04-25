@@ -114,12 +114,11 @@ export class CharacterData extends AbstractData {
 	 * 绑定至同名武将替换序列
 	 */
 	registerCharacterReplace() {
-		// TODO
 		// //@ts-expect-error 可以这样的
-		// const replaces = window.noname_character_replace;
-		// const trueId = this.id.split("_")[1];
-		// replaces[trueId] = replaces[trueId] || [];
-		// replaces[trueId].push(this.id);
+		const replaces = lib.characterReplace;
+		const trueId = this.id.split("_")[1];
+		replaces[trueId] = replaces[trueId] || [];
+		replaces[trueId].push(this.id);
 	}
 
 	/**

@@ -177,7 +177,8 @@ export default new SkillData("spr_guimou|诡谋", {
 			effect: {
 				player(card, player, target, result1) {
 					if (player.storage?.counttrigger?.spr_guimou > 0 ||
-						card.name?.endsWith("damage")) {
+						card.name?.endsWith("damage") ||
+						!target) {
 						return;
 					}
 					if (get.is.damageCard(card) &&

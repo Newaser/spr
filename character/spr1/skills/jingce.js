@@ -111,7 +111,7 @@ export default new SkillData("spr_jingce|精策", {
 						game.log(
 							player,
 							"获得",
-							`【${get.translation("spr_juyv")}】`,
+							`【${get.translation("spr_juyu")}】`,
 							"直到其下回合开始",
 						);
 					}

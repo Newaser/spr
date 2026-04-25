@@ -18,7 +18,8 @@ export default new SkillData("spr_miaosuan|庙算", {
 					"damage",
 					evt =>
 						evt.card && evt.getParent(2) == event,
-				);
+				) &&
+				event.player.countGainableCards(player) > 0;
 		},
 		logTarget: "player",
 		async content(event, trigger, player) {

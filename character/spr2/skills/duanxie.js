@@ -73,7 +73,8 @@ export default new SkillData("spr_duanxie|断绁", {
 			order: 7.2,
 			effect: {
 				player(card, player, target, result1) {
-					if (target.hasSkill("nzry_jieying") ||
+					if (!target ||
+						target.hasSkill("nzry_jieying") ||
 						target.hasSkill("drlt_qianjie"))
 						return 0;
 					if (card.storage?.spr_duanxie) {

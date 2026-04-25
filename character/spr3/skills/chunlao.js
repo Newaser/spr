@@ -7,7 +7,8 @@ import { lib, game, ui, get, ai, _status } from "../../../../../noname.js";
  * @returns {boolean}
  */
 function chunlaoAvailable(player) {
-	return player.hasSkill("spr_chunlao") &&
+	return player &&
+		player.hasSkill("spr_chunlao") &&
 		player.storage?.counttrigger?.spr_chunlao == 0;
 }
 
