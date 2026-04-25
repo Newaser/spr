@@ -117,4 +117,20 @@ export default new CharacterSubackage("spr3|☆SPR·其三")
 		victoryVoice: "算无遗策，方可搅动风云，独善其身！",
 		rank: "s",
 		rarity: "epic",
+	})
+
+
+	.addCharacter("spr_gongsunyuan|星公孙渊", {
+		basic: new Character({
+			sex: "male",
+			group: "qun",
+			hp: 4,
+			isZhugong: true,
+			skills: ["spr_huaiyi", "juliao", "spr_yanwang"],
+		}),
+		title: "狡徒悬海",
+		dieVoice: "流星骤陨，三军皆溃，看来……大势去矣……",
+		rank: "c",
+		rarity: "junk",
 	});
+
