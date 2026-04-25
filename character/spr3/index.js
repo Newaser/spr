@@ -102,5 +102,19 @@ export default new CharacterSubackage("spr3|☆SPR·其三")
 		victoryVoice: "驾云车而出游，揽河洛之胜景。",
 		rank: "s",
 		rarity: "legend",
-	});
+	})
 
+
+	.addCharacter("spr_jiaxu|星贾诩", {
+		basic: new Character({
+			sex: "male",
+			group: "qun",
+			hp: 3,
+			skills: ["spr_shencun", "spr_miaosuan", "spr_shanhuo", "spr_yaoji"],
+		}),
+		title: "神谟庙算",
+		dieVoice: "此非智计有失，实乃天意使然……",
+		victoryVoice: "算无遗策，方可搅动风云，独善其身！",
+		rank: "s",
+		rarity: "epic",
+	});

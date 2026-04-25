@@ -19,6 +19,12 @@ import hanying from "./skills/hanying.js";
 import chenyuan from "./skills/chenyuan.js";
 import luoshang from "./skills/luoshang.js";
 
+// 星贾诩
+import shencun from "./skills/shencun.js";
+import miaosuan from "./skills/miaosuan.js";
+import shanhuo from "./skills/shanhuo.js";
+import yaoji from "./skills/yaoji.js";
+
 export default [
 	yicong,
 	chongzhen,
@@ -35,4 +41,9 @@ export default [
 	hanying,
 	chenyuan,
 	luoshang,
+
+	shencun,
+	miaosuan,
+	shanhuo,
+	yaoji,
 ];
