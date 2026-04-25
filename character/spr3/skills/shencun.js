@@ -18,5 +18,12 @@ export default new SkillData("spr_shencun|慎存", {
 		async content(event, trigger, player) {
 			trigger.cancel();
 		},
+		ai: {
+			noShan: true,
+			filterDamage: true,
+			skillTagFilter(player, tag, arg) {
+				return arg?.num > 1;
+			},
+		},
 	},
 });

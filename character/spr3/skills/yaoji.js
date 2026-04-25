@@ -5,12 +5,24 @@ import { lib, game, ui, get, ai, _status } from "../../../../../noname.js";
 /**
  * @returns {string[]}
  */
-function getdamageCommonTricks() {
+function getDamageCommonTricks() {
 	return lib.inpile.filter(i => {
 		//@ts-expect-error damageCard可以这样传参
 		return get.is.damageCard({ name: i }) &&
 			get.type(i) == "trick";
 	});
+}
+
+/**
+ * @param {Player} player 
+ * @returns {Array}
+ */
+function getOptTrick(player) {
+	const tricks = getDamageCommonTricks();
+	tricks.sort((a, b) => {
+		return player.getUseValue(b) - player.getUseValue(a);
+	});
+	return [tricks[0], player.getUseValue(tricks[0])];
 }
 
 export default new SkillData("spr_yaoji|要计", {
@@ -25,18 +37,17 @@ export default new SkillData("spr_yaoji|要计", {
 		usable: 1,
 		hiddenCard(player, name) {
 			if (!player.isTempBanned("spr_yaoji")) {
-				return getdamageCommonTricks().some(i => name == i);
+				return getDamageCommonTricks().some(i => name == i);
 			}
 		},
 		filter(event, player, name, target) {
-			console.log(getdamageCommonTricks());
 			return !player.isTempBanned("spr_yaoji") &&
-				getdamageCommonTricks().some(i =>
+				getDamageCommonTricks().some(i =>
 					event.filterCard({ name: i, isCard: true }, player, event));
 		},
 		chooseButton: {
 			dialog(event, player) {
-				const list = getdamageCommonTricks().filter(i =>
+				const list = getDamageCommonTricks().filter(i =>
 					event.filterCard({ name: i, isCard: true }, player, event));
 				return ui.create.dialog([list, "vcard"]);
 			},
@@ -83,6 +94,18 @@ export default new SkillData("spr_yaoji|要计", {
 					);
 					delete player.storage["temp_ban_spr_yaoji"];
 					player.removeSkill(event.name);
+				},
+			},
+		},
+		ai: {
+			order(item, player) {
+				const [optTrick] = getOptTrick(player);
+				return get.order({ name: optTrick });
+			},
+			result: {
+				player(player, target, card) {
+					const [_, useValue] = getOptTrick(player);
+					return useValue;
 				},
 			},
 		},

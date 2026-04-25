@@ -28,5 +28,14 @@ export default new SkillData("spr_miaosuan|庙算", {
 				position: "he",
 			});
 		},
+		ai: {
+			effect: {
+				target(card, player, target, result2) {
+					if (!get.is.damageCard(card) && get.type2(card) == "trick") {
+						return [1, 1, 1, -1];
+					}
+				},
+			},
+		},
 	},
 });
