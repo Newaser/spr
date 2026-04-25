@@ -14,6 +14,11 @@ import quji from "./skills/quji.js";
 import chunlao from "./skills/chunlao.js";
 import lihuo from "./skills/lihuo.js";
 
+// 星甄宓
+import hanying from "./skills/hanying.js";
+import chenyuan from "./skills/chenyuan.js";
+import luoshang from "./skills/luoshang.js";
+
 export default [
 	yicong,
 	chongzhen,
@@ -26,4 +31,8 @@ export default [
 
 	chunlao,
 	lihuo,
+
+	hanying,
+	chenyuan,
+	luoshang,
 ];

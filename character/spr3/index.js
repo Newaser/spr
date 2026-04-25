@@ -80,4 +80,27 @@ export default new CharacterSubackage("spr3|☆SPR·其三")
 			lib.skill["weizhong"].audio = 2;
 			lib.skill["benghuai"].audio = 1;
 		},
+	})
+
+
+	.addCharacter("spr_zhenfu|星甄宓", {
+		basic: new Character({
+			sex: "female",
+			group: "wei",
+			hp: 3,
+			skills: ["spr_hanying", "spr_chenyuan", "spr_luoshang"],
+		}),
+		intro:
+			"文昭甄皇后（183年1月26日—221年8月4日），名不明史称甄夫人，" +
+			"中山无极（今河北省无极县）人，上蔡令甄逸之女。魏文帝曹丕的妻子，" +
+			"魏明帝曹叡的生母。<br>延康元年（220年），曹丕继位魏王，六月率军" +
+			"南征，甄氏被留在邺城。同年十月，曹丕称帝，山阳公刘协进献二女为曹丕妃嫔，" +
+			"后宫中文德郭皇后、李贵人和阴贵人都得到宠幸。甄氏愈发失意，流露出一些" +
+			"怨恨的话语，曹丕大怒，黄初二年（221年）六月，遣使赐死甄氏，葬于邺城。",
+		title: "薄幸幽兰",
+		dieVoice: "揽騑辔以抗策，怅盘桓而不能去……",
+		victoryVoice: "驾云车而出游，揽河洛之胜景。",
+		rank: "s",
+		rarity: "legend",
 	});
+

@@ -30,7 +30,8 @@ export default new SkillData("spr_chunlao|醇醪", {
 		},
 		usable: 1,
 		async content(event, trigger, player) {
-			await game.asyncDraw([trigger.player, trigger.source].sortBySeat());
+			const drawers = [trigger.player, trigger.source];
+			await game.asyncDraw(drawers.sortBySeat(_status.currentPhase));
 			await trigger.player.recover();
 			await trigger.source.useCard({
 				// @ts-expect-error card可以这样取值
