@@ -1,4 +1,5 @@
 import { Character } from "../../../noname/library/element/index.js";
+import { ChooseBase, CheckCardTargetParams } from "@/library/element/Player/type.d";
 
 /** 武将评级 */
 export type Rank = "s" | "ap" | "a" | "am" | "bp" | "b" | "bm" | "c" | "d";
@@ -233,3 +234,9 @@ export type AIwuxieFunc = (
  * `chooseCardTarget()` 里的 `oncard()` 方法
  */
 export type OnCardFunc = (card: Card, player: Player) => any;
+
+export interface UtilChooseToViewAsParams extends ChooseBase, CheckCardTargetParams {
+	viewAs: Skill["viewAs"];
+	viewAsFilter?: Skill["viewAsFilter"];
+	onuse?: Skill["onuse"];
+}

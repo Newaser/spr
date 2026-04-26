@@ -101,3 +101,54 @@ export function revealDelayedCompare(player, delayedCompare) {
 	next.setContent("chooseToCompareEffect");
 	return next;
 }
+
+/**
+ * 选择视为使用牌
+ * @param {Player} player 执行者
+ * @param {import("./type.ts").UtilChooseToViewAsParams} params 
+ * @returns {GameEvent}
+ */
+export function chooseToViewAs(player, params) {
+	const {
+		forced,
+		prompt,
+		prompt2,
+		filterCard,
+		...restParams
+	} = params;
+
+	const backupId = crypto.randomUUID();
+	lib.skill[backupId] = {
+		popname: true,
+		log: false,
+		filterCard(card, player) {
+			let ret = get.itemtype(card) == "card";
+			if (filterCard) {
+				const raw = (typeof filterCard == "function") ?
+					filterCard(card, player) : filterCard;
+				ret &&= raw;
+			}
+			return ret;
+		},
+		...restParams,
+	};
+
+	/** @type {GameEvent} */
+	const next = player.chooseToUse(),
+		str1 = prompt || "请选择你要视为使用的牌",
+		str2 = prompt2 || "";
+	next.set("openskilldialog", `###${str1}###${str2}`);
+	next.set("norestore", true);
+	next.set("_backupevent", backupId);
+	next.set("custom", {
+		add: {},
+		replace: { window() { } },
+	});
+	next.backup(backupId);
+	next.forced = forced || false;
+	next.then(() => {
+		delete lib.skill[backupId];
+	});
+
+	return next;
+}

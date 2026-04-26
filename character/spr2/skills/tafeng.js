@@ -1,3 +1,4 @@
+import * as util from "../../../utils/util.js";
 import { SkillData } from "../../../utils/import.js";
 import { lib, game, ui, get, ai, _status } from "../../../../../noname.js";
 
@@ -29,7 +30,9 @@ export default new SkillData("spr_tafeng|踏锋", {
 				return player.hasUseTarget(cqby);
 			}) == 0) return;
 
-			const result = await player.chooseCardTarget({
+			await util.chooseToViewAs(player, {
+				viewAs: { name: "chuqibuyi" },
+
 				forced: true,
 				prompt: "将一张牌当【出其不意】使用",
 
@@ -47,15 +50,7 @@ export default new SkillData("spr_tafeng|踏锋", {
 					const cqby = { name: "chuqibuyi", isCard: true };
 					return get.effect(target, cqby, player, player);
 				},
-			}).forResult();
-			if (result.bool) {
-				await player.useCard({
-					//@ts-expect-error card can be like this
-					card: { name: "chuqibuyi" },
-					cards: result.cards,
-					targets: result.targets,
-				});
-			}
+			});
 		},
 	},
 });

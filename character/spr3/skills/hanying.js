@@ -1,3 +1,4 @@
+import * as util from "../../../utils/util.js";
 import { SkillData } from "../../../utils/import.js";
 import { lib, game, ui, get, ai, _status } from "../../../../../noname.js";
 
@@ -39,38 +40,19 @@ export default new SkillData("spr_hanying|寒影", {
 		},
 		async content(event, trigger, player) {
 			const to = event.targets[0];
-			/**
-			 * @todo 更好的触发转化牌方式
-			 * @type {Result}
-			 */
-			const result = await to.chooseCardTarget({
+			const result = await util.chooseToViewAs(to, {
+				viewAs: icesha,
 				prompt: "【寒影】效果发动",
 				prompt2: "你须将一张【影】当冰【杀】使用，否则获得一张【影】",
-
-				filterCard(card, player, event) {
+				filterCard(card, player) {
 					return card.name == "ying";
 				},
 				position: "hes",
-
-				filterTarget(card, player, target) {
-					return player.canUse(icesha, target);
-				},
-
-				ai1(card) {
+				ai1(/** @type {Card} */ card) {
 					return 1;
 				},
-				ai2(target) {
-					return get.effect(target, icesha, player, player);
-				},
 			}).forResult();
-			if (result.bool) {
-				await player.useCard({
-					//@ts-expect-error card can be like this
-					card: icesha,
-					cards: result.cards,
-					targets: result.targets,
-				});
-			} else {
+			if (!result?.bool) {
 				await to.gain(lib.card.ying.getYing(1), "gain2");
 			}
 		},
