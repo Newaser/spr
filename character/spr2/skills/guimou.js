@@ -126,7 +126,7 @@ export default new SkillData("spr_guimou|诡谋", {
 					player: "useCardToPlayered",
 				},
 				filter(event, player, name, target) {
-					if (player.storage?.counttrigger?.spr_guimou > 0) {
+					if (player.storage.counttrigger?.spr_guimou > 0) {
 						return false;
 					}
 					return get.is.damageCard(event.card) &&
@@ -160,10 +160,6 @@ export default new SkillData("spr_guimou|诡谋", {
 								player.storage.counttrigger?.spr_guimou > 0) {
 								return false;
 							}
-							// if (card.name?.endsWith("damage") &&
-							// 	get.attitude(target, player) > 0) {
-							// 	return [0, 3.5];
-							// }
 							if (get.is.damageCard(card) &&
 								get.attitude(target, player) > 0) {
 								return [0, 3.5];
@@ -176,7 +172,7 @@ export default new SkillData("spr_guimou|诡谋", {
 		ai: {
 			effect: {
 				player(card, player, target, result1) {
-					if (player.storage?.counttrigger?.spr_guimou > 0 ||
+					if (player.storage.counttrigger?.spr_guimou > 0 ||
 						card.name?.endsWith("damage") ||
 						!target) {
 						return;

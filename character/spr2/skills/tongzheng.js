@@ -33,7 +33,7 @@ export default new SkillData("spr_tongzheng|同征", {
 			threaten: 1.1,
 			effect: {
 				target(card, player, target, result2) {
-					if (player.storage?.counttrigger?.spr_tongzheng > 0) {
+					if (target.storage.counttrigger?.spr_tongzheng > 0) {
 						return;
 					}
 					if (get.is.damageCard(card) &&

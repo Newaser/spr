@@ -9,7 +9,7 @@ import { lib, game, ui, get, ai, _status } from "../../../../../noname.js";
 function chunlaoAvailable(player) {
 	return player &&
 		player.hasSkill("spr_chunlao") &&
-		player.storage?.counttrigger?.spr_chunlao == 0;
+		player.storage.counttrigger?.spr_chunlao == 0;
 }
 
 export default new SkillData("spr_chunlao|醇醪", {
