@@ -23,5 +23,5 @@ export const URL = {
 };
 
 export const STYLE = {
-	EXTENSION_NAME_PREFIX: { color: "#FFECB3", nature: "soilmm" },
+	// EXTENSION_NAME_PREFIX: { color: "#FFECB3", nature: "soilmm" },
 };

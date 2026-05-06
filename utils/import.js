@@ -1,5 +1,5 @@
 import * as util from "../utils/util.js";
-import { EXTENSION, URL } from "./constants.js";
+import { EXTENSION, URL, STYLE } from "./constants.js";
 import { lib, game, ui, get, ai, _status } from "../../../noname.js";
 import { Character } from "../../../noname/library/element/index.js";
 
@@ -495,6 +495,13 @@ export class CharacterPackage {
 	 * 运行时初始化，在扩展包的 `precontent` 中运行
 	 */
 	setupRuntime1() {
+		// set name prefix style
+		if (STYLE.EXTENSION_NAME_PREFIX)
+			lib.namePrefix.set(
+				EXTENSION.NAME_PREFIX,
+				STYLE.EXTENSION_NAME_PREFIX,
+			);
+
 		this.subpkgs.forEach(pkg => {
 			pkg.setupRuntime1();
 		});
