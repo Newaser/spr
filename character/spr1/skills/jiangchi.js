@@ -92,7 +92,6 @@ export default new SkillData("spr_jiangchi|将驰", {
 					}
 				},
 				async content(event, trigger, player) {
-					// util.playSkillAudio("spr_nuzhan", [1, 2, 3]);
 					if (event.cost_data && event.cost_data.spr_jiangchi === true) {
 						await player.draw();
 					} else {

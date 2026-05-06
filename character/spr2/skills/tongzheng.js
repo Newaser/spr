@@ -26,7 +26,7 @@ export default new SkillData("spr_tongzheng|同征", {
 		},
 		async content(event, trigger, player) {
 			_status.currentPhase.line(player);
-			await player.draw(2);
+			await player.draw({ num: 2, source: _status.currentPhase });
 			await player.recover();
 		},
 		ai: {
