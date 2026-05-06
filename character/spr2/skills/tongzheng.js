@@ -19,7 +19,7 @@ export default new SkillData("spr_tongzheng|同征", {
 			event.result = await cur.chooseBool({
 				prompt: get.prompt("spr_tongzheng", player),
 				prompt2: "令其摸两张牌并回复1点体力",
-				ai(event, player) {
+				ai(event, _) {
 					return get.attitude(cur, player) > 0;
 				},
 			}).forResult();
