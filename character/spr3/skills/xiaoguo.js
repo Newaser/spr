@@ -53,7 +53,7 @@ export default new SkillData("spr_xiaoguo|骁果", {
 					return get.type(card) == "equip";
 				},
 				ai(card) {
-					return Infinity - get.value(card, to);
+					return 100 - get.value(card, to);
 				},
 			}).forResult();
 			if (!result.bool) {

@@ -26,7 +26,7 @@ export default new SkillData("spr_chenyuan|陈怨", {
 					if (minNum > 4) {
 						return get.attitude(player, target);
 					}
-					return Infinity - get.attitude(player, target);
+					return 100 - get.attitude(player, target);
 				},
 			}).forResult();
 		},

@@ -35,7 +35,7 @@ export default new SkillData("spr_juyu|拒御", {
 				ai(card) {
 					//@ts-expect-error 谋看破是存在的
 					if (lib.skill.sbkanpo.subSkill.kanpo.check(trigger, player))
-						return Infinity - get.value(card, player);
+						return 100 - get.value(card, player);
 					return -1;
 				},
 			}).forResult();

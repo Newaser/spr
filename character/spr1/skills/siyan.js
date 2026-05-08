@@ -32,7 +32,7 @@ export default new SkillData("spr_siyan|肆言", {
 				ai(card) {
 					if (player.isLinked() && !player.isTurnedOver())
 						return -1;
-					return Infinity - get.value(card);
+					return 100 - get.value(card);
 				},
 			}).forResult();
 		},
