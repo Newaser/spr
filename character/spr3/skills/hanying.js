@@ -26,7 +26,7 @@ export default new SkillData("spr_hanying|寒影", {
 	},
 	skill: {
 		trigger: {
-			player: ["phaseZhunbei", "phaseJieshu"],
+			player: ["phaseZhunbeiBegin", "phaseJieshuBegin"],
 		},
 		async cost(event, trigger, player) {
 			event.result = await player.chooseTarget({

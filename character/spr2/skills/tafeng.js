@@ -12,7 +12,7 @@ export default new SkillData("spr_tafeng|踏锋", {
 	],
 	skill: {
 		trigger: {
-			player: "phaseZhunbei",
+			player: "phaseZhunbeiBegin",
 		},
 		filter(event, player, name, target) {
 			return player.hp > 0;
