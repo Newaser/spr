@@ -26,7 +26,7 @@ export default new SkillData("spr_junbing|郡兵", {
 						return false;
 					}
 					const evt = event.getl(current);
-					return evt?.h?.length;
+					return evt?.hs?.length;
 				})
 				.sortBySeat(_status.currentPhase);
 		},
