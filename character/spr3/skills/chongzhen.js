@@ -42,6 +42,16 @@ export default new SkillData("spr_chongzhen|冲阵", {
 	},
 	skill: {
 		inherit: "chongzhen",
+		filter(event, player, name, target) {
+			if (event.card.name != "sha" && event.card.name != "shan") {
+				return false;
+			}
+			if (!event.skill ||
+				event.skill.indexOf("fanghun") + event.skill.indexOf("longdan") == -2) {
+				return false;
+			}
+			return getChongzhenTarget(event).countGainableCards(player, "he") > 0;
+		},
 		prompt2(event, player) {
 			const to = getChongzhenTarget(event);
 			return `获得${get.translation(to)}的一张牌`;
