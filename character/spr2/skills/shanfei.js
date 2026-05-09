@@ -36,7 +36,7 @@ export default new SkillData("spr_shanfei|擅废", {
 			// 失去主公技
 			for (const skill of to.skills) {
 				if (get.info(skill).zhuSkill) {
-					to.removeSkill(skill);
+					to.removeSkillLog(skill);
 				}
 			}
 

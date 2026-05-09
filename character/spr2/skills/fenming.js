@@ -79,7 +79,7 @@ export default new SkillData("spr_fenming|奋命", {
 			if (control == "失去体力") {
 				await player.loseHp();
 			} else {
-				player.removeSkill(control);
+				player.removeSkillLog(control);
 			}
 			await player.gainPlayerCard({
 				forced: true,

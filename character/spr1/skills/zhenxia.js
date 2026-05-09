@@ -24,7 +24,7 @@ export default new SkillData("spr_zhenxia|贞瑕", {
 			player.awakenSkill(event.name);
 			await player.recover();
 			await trigger.source.recover();
-			player.addSkill("spr_huoshui");
+			player.addSkillLog("spr_huoshui");
 		},
 		derivation: "spr_huoshui",
 		ai: {

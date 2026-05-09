@@ -29,7 +29,13 @@ export default new SkillData("spr_jinzi|锦姿", {
 			player.addTempSkill("spr_jinzi_shown");
 			player.storage.spr_jinzi_shown = x;
 			for (let i = 0; i < Math.min(x, 3); i++) {
-				player.addTempSkill(DERIVED_SKILLS[i]);
+				const skill = DERIVED_SKILLS[i];
+				player.addTempSkill(skill);
+				game.log(
+					player,
+					"本回合获得",
+					`【${get.translation(skill)}】`,
+				);
 			}
 			await game.delay(3);
 		},
