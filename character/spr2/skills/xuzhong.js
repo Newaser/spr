@@ -23,14 +23,16 @@ export default new SkillData("spr_xuzhong|恤众", {
 				event.player.countCards("h") < player.countCards("h")
 			);
 		},
-		check(event, player, triggername, target) {
-			return get.attitude(player, event.player) > 0;
-		},
 		async cost(event, trigger, player) {
 			event.result = await player.chooseCard({
 				prompt: get.prompt("spr_xuzhong"),
 				prompt2: get.skillInfoTranslation("spr_xuzhong"),
 				position: "he",
+				ai(card) {
+					if (get.attitude(player, trigger.player) <= 0)
+						return -1;
+					return get.useful(card, trigger.player);
+				},
 			}).forResult();
 		},
 		async content(event, trigger, player) {
