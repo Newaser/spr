@@ -43,6 +43,7 @@ export default new SkillData("spr_junbing|郡兵", {
 					target: to,
 					forced: true,
 					prompt: `郡兵：你须交给${get.translation(to)}一张牌`,
+					position: "he",
 					ai(card) {
 						if (get.attitude(player, to) > 0) {
 							if (to.isPhaseUsing()) {
