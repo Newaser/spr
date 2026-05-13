@@ -26,8 +26,11 @@ export default new SkillData("spr_wanglie|往烈", {
 			return card.name == ui.selected.cards[0].name;
 		},
 		complexCard: true,
-		check(/** @type {Card} */card) {
-			return ui.selected.cards.length > 1 ? 0 : 10 - get.value(card);
+		check(/** @type {Card} */ card) {
+			let eff = 10 - get.value(card);
+			if (card.name == "sha")
+				eff += 10;
+			return ui.selected.cards.length > 1 ? 0 : eff;
 		},
 
 		filterTarget: true,
@@ -86,7 +89,6 @@ export default new SkillData("spr_wanglie|往烈", {
 			order(item, player) {
 				return get.order({ name: "sha" }) + 0.1;
 			},
-			expose: 0.4,
 			result: {
 				target(player, target, card) {
 					return player == target ? 1 : 2;

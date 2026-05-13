@@ -35,10 +35,6 @@ export default new SkillData("spr_nuzhan|怒斩", {
 				filterCard: true,
 				position: "he",
 				prompt: "弃置一张牌并获得1点蓄力",
-				/** @param {Card} card */
-				check(card) {
-					return 7 - get.value(card);
-				},
 				async content(event, trigger, player) {
 					player.addCharge();
 				},

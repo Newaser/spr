@@ -24,13 +24,6 @@ export default new SkillData("spr_duanxie|断绁", {
 		viewAsFilter(player) {
 			return player.countCards("hes") > 0;
 		},
-		/**
-		 * @param {Card} card
-		 */
-		check(card) {
-			const player = get.player();
-			return 5 + get.useful(card, player) - get.value(card, player);
-		},
 		group: [
 			"spr_duanxie_before",
 			"spr_duanxie_after",

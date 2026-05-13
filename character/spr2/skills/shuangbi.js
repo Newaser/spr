@@ -59,8 +59,5 @@ export default new SkillData("spr_shuangbi|双璧", {
 				},
 			},
 		},
-		ai: {
-			expose: 0.8,
-		},
 	},
 });
