@@ -5,7 +5,7 @@ const DERIVED_SKILLS = ["spr_mashu", "spr_mengjin", "spr_yingzi"];
 
 export default new SkillData("spr_jinzi|锦姿", {
 	description:
-		"<b>锁定技</b>，回合开始时，你展示手牌并执行前X项（X为手牌花色数）：本回合获得" +
+		"<b>锁定技</b>，回合开始时，你展示手牌并执行前X项（X为其中包含的花色数）：本回合获得" +
 		`${get.poptip("spr_mashu")}/${get.poptip("spr_mengjin")}/${get.poptip("spr_yingzi")}；` +
 		"本回合上述技能的效果翻倍。",
 	voices: [

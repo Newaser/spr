@@ -51,7 +51,7 @@ async function redirectDamage(redirector, trigger, source) {
 
 export default new SkillData("spr_guimou|诡谋", {
 	description:
-		"每回合限一次，当一名角色受到你造成的伤害时，你可以选择一项：" +
+		"每回合限一次，当你对一名角色造成伤害时，你可以选择一项：" +
 		`转移此伤害；摸两张牌。<i>${get.poptip("rule_beishui")}：` +
 		"本回合你不能对其他角色使用牌。</i>然后该角色执行未被选择的项。",
 	voices: [
@@ -60,7 +60,7 @@ export default new SkillData("spr_guimou|诡谋", {
 	],
 	skill: {
 		trigger: {
-			source: "damageBegin4",
+			source: "damageBegin2",
 		},
 		usable: 1,
 		filter(event, player, name, target) {
