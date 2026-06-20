@@ -45,6 +45,7 @@ export default new SkillData("spr_shanhuo|煽祸", {
 					filterCard(card, player, event) {
 						return to.canUse({ name: "jiu", cards: [card] }, to);
 					},
+					position: "he",
 				}).forResult();
 				to.useCard({
 					//@ts-expect-error 可以这样
@@ -60,6 +61,7 @@ export default new SkillData("spr_shanhuo|煽祸", {
 					filterCard(card, player, event) {
 						return to.hasUseTarget({ name: "guohe", cards: [card] });
 					},
+					position: "he",
 					filterTarget(card, player, target) {
 						return to.canUse({ name: "guohe", cards: [card] }, target);
 					},
