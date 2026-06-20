@@ -56,7 +56,7 @@ export default new SkillData("spr_jiangchi|将驰", {
 		direct: true,
 		delay: false,
 		async content(event, trigger, player) {
-			event.trigger("spr_jiangchi_invoke");
+			await event.trigger("spr_jiangchi_invoke");
 		},
 		group: [
 			"spr_jiangchi_invoke",
