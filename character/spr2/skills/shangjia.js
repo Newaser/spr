@@ -31,7 +31,6 @@ export default new SkillData("spr_shangjia|上甲", {
 			if (result.control == "摸一张牌") {
 				await player.draw();
 			} else {
-				//@ts-expect-error directHit必为Player[]
 				trigger.directHit.addArray(game.players);
 			}
 		},

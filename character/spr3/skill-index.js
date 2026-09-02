@@ -29,6 +29,10 @@ import yaoji from "./skills/yaoji.js";
 import huaiyi from "./skills/huaiyi.js";
 import yanwang from "./skills/yanwang.js";
 
+// 星张郃
+import zhilue from "./skills/zhilue.js";
+import bianzhen from "./skills/bianzhen.js";
+
 export default [
 	yicong,
 	chongzhen,
@@ -53,4 +57,7 @@ export default [
 
 	huaiyi,
 	yanwang,
+
+	zhilue,
+	bianzhen,
 ];

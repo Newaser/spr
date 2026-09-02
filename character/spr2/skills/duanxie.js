@@ -16,7 +16,6 @@ export default new SkillData("spr_duanxie|断绁", {
 		position: "hes",
 		viewAs: {
 			name: "tiesuo",
-			// @ts-expect-error viewAs里可以放storage
 			storage: {
 				spr_duanxie: [],
 			},

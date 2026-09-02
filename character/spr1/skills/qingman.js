@@ -8,7 +8,6 @@ const
 	jiu = {
 		name: "jiu",
 		isCard: true,
-		// @ts-expect-error viewAs里可以放storage
 		storage: { spr_qingman: true },
 	},
 	juedou = { name: "juedou", isCard: true };

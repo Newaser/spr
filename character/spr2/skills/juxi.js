@@ -31,7 +31,6 @@ export default new SkillData("spr_juxi|拒袭", {
 		position: "h",
 		viewAs: {
 			name: "sha",
-			//@ts-expect-error 'storage' can be here
 			storage: { spr_juxi: true },
 		},
 		async precontent(event, trigger, player) {

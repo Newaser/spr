@@ -72,7 +72,6 @@ export default new SkillData("spr_wanglie|往烈", {
 			});
 			/** @type {import("../../../utils/type.ts").OnCardFunc} */
 			evt.oncard = (card, _) => {
-				//@ts-expect-error directHit必为Player[]
 				_status.event.directHit.addArray(game.players);
 				util.playSkillAudio("spr_wanglie", 3, false, player);
 				player.line(to, "fire");

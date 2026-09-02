@@ -127,10 +127,27 @@ export default new CharacterSubackage("spr3|☆SPR·其三")
 			hp: 4,
 			isZhugong: true,
 			skills: ["spr_huaiyi", "juliao", "spr_yanwang"],
+			isUnseen: true,
 		}),
 		title: "狡徒悬海",
 		dieVoice: "流星骤陨，三军皆溃，看来……大势去矣……",
 		rank: "c",
 		rarity: "junk",
+	})
+
+
+	.addCharacter("spr_zhanghe|星张郃", {
+		basic: new Character({
+			sex: "male",
+			group: "qun",
+			hp: 4,
+			skills: ["spr_zhilue", "spr_bianzhen"],
+		}),
+		title: "横戈跃马",
+		dieVoice: "吾筹划而思，奈何还是慢了一步……",
+		victoryVoice: "天易之理可胜，知略更甚以往！",
+		rank: "am",
+		rarity: "epic",
 	});
+
 

@@ -178,7 +178,6 @@ export default new SkillData("spr_xunxin|熏心", {
 			});
 			/** @type {import("../../../utils/type.ts").OnCardFunc} */
 			evt.oncard = (card, player) => {
-				//@ts-expect-error directHit必为Player[]
 				_status.event.directHit.addArray(game.players);
 			};
 			await evt;
