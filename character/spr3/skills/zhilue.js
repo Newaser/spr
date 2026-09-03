@@ -85,7 +85,7 @@ class NumberRecorder {
 
 export default new SkillData("spr_zhilue|知略", {
 	description:
-		"当你使用牌时，若此牌与的点数为你使用的前两张有点数的牌的点数之<b>和</b>/<b>差</b>，" +
+		"当你使用牌时，若此牌的点数等于你使用的前两张有点数的牌的点数之<b>和</b>/<b>差</b>，" +
 		"你可选择一项：令一名角色<b>摸</b>/<b>弃置</b>两张牌；移动场上一张牌。",
 	voices: [
 		"知敌之薄弱，略我之计谋。",
