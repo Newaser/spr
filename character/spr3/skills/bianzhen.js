@@ -8,15 +8,14 @@ export default new SkillData("spr_bianzhen|变阵", {
 		"将者，上不制（于）天，下不制（于）地，中不制（于）人。",
 	],
 	skill: {
+		round: 1,
 		trigger: {
 			global: "phaseBegin",
 		},
 		filter(event, player, name, indexedData) {
-			return event.phaseList?.length > 1 && player.countMark("spr_bianzhen_used") < 1;
+			return event.phaseList?.length > 1;
 		},
 		async content(event, trigger, player) {
-			player.addTempSkill("spr_bianzhen_used", "roundStart");
-			player.addMark("spr_bianzhen_used", 1, false);
 			const
 				filter = phase => lib.phaseName.includes(phase),
 				standardPhases = trigger.phaseList.map((name, index) => [index + 1, "", name]).filter(info => filter(info[2]));
@@ -44,36 +43,6 @@ export default new SkillData("spr_bianzhen|变阵", {
 						],
 					],
 				],
-				processAI(list) {
-					const { lastPhaseList: preList, player, filterOk } = get.event();
-					const moved = list[0][1][0].slice(0);
-					let newList = [];
-					const addPhase = (name, pre) => {
-						const index = moved.findIndex(info => info[2] == name);
-						if (index < 0) {
-							return newList;
-						}
-						const tempList = [newList, moved.splice(index, 1)];
-						if (pre === true) {
-							tempList.reverse();
-						}
-						newList = tempList.flat();
-						return newList;
-					};
-					addPhase("phaseUse");
-					const bool = player.countCards("hs", card => player.hasValueTarget(card)) <= 1;
-					addPhase("phaseDraw", bool);
-					const bool2 = player.needsToDiscard() <= 0;
-					addPhase("phaseDiscard", bool2);
-					addPhase("phaseJudge");
-					while (moved.length) {
-						addPhase(moved.randomGet()[2], Math.random() > 0.5);
-					}
-					if (!filterOk([newList])) {
-						newList = [...newList.slice(0, -2), ...newList.slice(-2).reverse()];
-					}
-					return [newList];
-				},
 			}).forResult();
 			if (!result?.bool || !result.moved?.length) {
 				return;
@@ -83,12 +52,6 @@ export default new SkillData("spr_bianzhen|变阵", {
 				const newIndex = standardPhases[index][0] - 1;
 				trigger.phaseList[newIndex] = name;
 			});
-		},
-		subSkill: {
-			used: {
-				charlotte: true,
-				onremove: true,
-			},
 		},
 	},
 });
