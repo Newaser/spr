@@ -3,7 +3,7 @@ import { SkillData } from "../../../utils/import.js";
 import { lib, game, ui, get, ai, _status } from "../../../../../noname.js";
 
 export default new SkillData("spr_chaoxi|潮汐", {
-	description: "<b>转换技</b>，<b>锁定技</b>，摸牌阶段开始时，阳：你摸两张牌。阴：你弃置两张牌。",
+	description: "<b>转换技</b>，<b>锁定技</b>，准备阶段，阳：你摸两张牌。阴：你弃置两张牌。",
 	voices: [
 		"（涨潮声）",
 		"（退潮声）",
@@ -20,12 +20,12 @@ export default new SkillData("spr_chaoxi|潮汐", {
 		forced: true,
 		intro: {
 			content(storage, player, skill) {
-				return "<b>锁定技</b>，摸牌阶段开始时，" +
+				return "<b>锁定技</b>，准备阶段，" +
 					`${storage ? "你弃置两张牌。" : "你摸两张牌。"}`;
 			},
 		},
 		trigger: {
-			player: "phaseDrawBegin",
+			player: "phaseZhunbeiBegin",
 		},
 		async content(event, trigger, player) {
 			player.changeZhuanhuanji(event.name);
