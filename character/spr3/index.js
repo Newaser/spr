@@ -148,6 +148,18 @@ export default new CharacterSubackage("spr3|☆SPR·其三")
 		victoryVoice: "天易之理可胜，知略更甚以往！",
 		rank: "am",
 		rarity: "epic",
+	})
+
+
+	.addCharacter("spr_yanjun|星严畯", {
+		basic: new Character({
+			sex: "male",
+			group: "wu",
+			hp: 3,
+			skills: ["spr_guanchao", "spr_xunxian"],
+		}),
+		title: "志存补益",
+		dieVoice: "著作……还……没完成……",
+		rank: "bm",
+		rarity: "rare",
 	});
-
-

@@ -33,6 +33,11 @@ import yanwang from "./skills/yanwang.js";
 import zhilue from "./skills/zhilue.js";
 import bianzhen from "./skills/bianzhen.js";
 
+// 星严畯
+import guanchao from "./skills/guanchao.js";
+import chaoxi from "./skills/chaoxi.js";
+import xunxian from "./skills/xunxian.js";
+
 export default [
 	yicong,
 	chongzhen,
@@ -60,4 +65,8 @@ export default [
 
 	zhilue,
 	bianzhen,
+
+	guanchao,
+	chaoxi,
+	xunxian,
 ];
