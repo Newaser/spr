@@ -2,46 +2,45 @@ import { SkillData } from "../../../utils/import.js";
 import { lib, game, ui, get, ai, _status } from "../../../../../noname.js";
 
 export default new SkillData("spr_xunxian|逊贤", {
-	description: "当你于回合内因弃置或于回合外非因弃置而失去牌后，你可以令一名其他角色获得这些牌。",
+	description: "每轮限一次，你可以将两张牌交给一名其他角色，视为使用一张【无懈可击】。",
 	voices: [
 		"督军之才，子明强于我甚多。",
 		"此间重任，公卿可担之。",
 	],
 	skill: {
-		trigger: {
-			global: [
-				"loseAfter",
-				"equipAfter",
-				"addJudgeAfter",
-				"gainAfter",
-				"loseAsyncAfter",
-				"addToExpansionAfter",
-			],
+		enable: "chooseToUse",
+		viewAs: {
+			name: "wuxie",
+			isCard: true,
 		},
-		filter(event, player, name, indexedData) {
-			return (_status.currentPhase == player && event.type == "discard" ||
-				_status.currentPhase != player && event.type != "discard") &&
-				(event.getl?.(player)?.hs?.someInD("od") || event.getl?.(player)?.es?.someInD("od")) &&
+		viewAsFilter(player) {
+			return !player.hasSkill("spr_xunxian_used") &&
+				player.countCards("he") >= 2 &&
 				game.hasPlayer(i => i != player);
 		},
-		async cost(event, trigger, player) {
-			event.result = await player.chooseTarget({
-				prompt: "逊贤：你可以令一名其他角色获得你失去的牌",
+		selectCard: -1,
+		filterCard: (card, player) => false,
+		async precontent(event, trigger, player) {
+			/** @type {Result} */
+			const result = await player.chooseCardTarget({
+				forced: true,
+				prompt: "逊贤：须交给一名其他角色两张牌，视为使用【无懈可击】",
+				selectCard: 2,
+				position: "he",
 				filterTarget(card, player, target) {
 					return target != player;
 				},
-				ai(target) {
+				ai2(target) {
 					return get.attitude(player, target);
 				},
 			}).forResult();
+			await player.addTempSkill("spr_xunxian_used", "roundEnd");
+			await player.give(result.cards, result.targets[0]);
 		},
-		async content(event, trigger, player) {
-			const cards = trigger.getl?.(player)?.hs?.filterInD("od")
-				.concat(trigger.getl?.(player)?.es?.filterInD("od"));
-			await event.targets[0].gain({
-				cards,
-				animate: "gain2",
-			});
+		hiddenCard(player, name) {
+			if (get.info("spr_xunxian").viewAsFilter?.(player))
+				return name == "wuxie";
 		},
+		subSkill: { used: {} },
 	},
 });

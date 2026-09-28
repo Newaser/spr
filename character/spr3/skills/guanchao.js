@@ -28,7 +28,7 @@ export default new SkillData("spr_guanchao|观潮", {
 				prompt: "观潮：你可以令一名角色获得或转换【潮汐】",
 				ai(target) {
 					let ret = get.attitude(player, target);
-					if (target.storage.spr_chaoxi === false)
+					if (target.hasSkill("spr_chaoxi") && !target.storage.spr_chaoxi)
 						ret = - ret;
 					return ret;
 				},
