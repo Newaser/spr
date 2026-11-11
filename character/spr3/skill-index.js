@@ -25,14 +25,6 @@ import miaosuan from "./skills/miaosuan.js";
 import shanhuo from "./skills/shanhuo.js";
 import yaoji from "./skills/yaoji.js";
 
-// 星公孙渊
-import huaiyi from "./skills/huaiyi.js";
-import yanwang from "./skills/yanwang.js";
-
-// 星张郃
-import zhilue from "./skills/zhilue.js";
-import bianzhen from "./skills/bianzhen.js";
-
 // 星严畯
 import guanchao from "./skills/guanchao.js";
 import chaoxi from "./skills/chaoxi.js";
@@ -59,12 +51,6 @@ export default [
 	miaosuan,
 	shanhuo,
 	yaoji,
-
-	huaiyi,
-	yanwang,
-
-	zhilue,
-	bianzhen,
 
 	guanchao,
 	chaoxi,
