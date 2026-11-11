@@ -2,7 +2,7 @@ import { SkillData } from "../../../utils/import.js";
 import { lib, game, ui, get, ai, _status } from "../../../../../noname.js";
 
 export default new SkillData("spr_xunxian|逊贤", {
-	description: "每轮限一次，你可以将两张牌交给一名其他角色，视为使用一张【无懈可击】。",
+	description: "每轮限一次，你可以交给一名其他角色三张牌，视为使用一张【无懈可击】。",
 	voices: [
 		"督军之才，子明强于我甚多。",
 		"此间重任，公卿可担之。",
@@ -15,7 +15,7 @@ export default new SkillData("spr_xunxian|逊贤", {
 		},
 		viewAsFilter(player) {
 			return !player.hasSkill("spr_xunxian_used") &&
-				player.countCards("he") >= 2 &&
+				player.countCards("he") >= 3 &&
 				game.hasPlayer(i => i != player);
 		},
 		selectCard: -1,
@@ -25,7 +25,7 @@ export default new SkillData("spr_xunxian|逊贤", {
 			const result = await player.chooseCardTarget({
 				forced: true,
 				prompt: "逊贤：须交给一名其他角色两张牌，视为使用【无懈可击】",
-				selectCard: 2,
+				selectCard: 3,
 				position: "he",
 				filterTarget(card, player, target) {
 					return target != player;
